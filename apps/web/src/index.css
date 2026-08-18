@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0d0c;
+  --fg: #e7e1d4;
+  --muted: #8a9a8e;
+  --accent: #e8b86d;
+  --live: #8fe8b4;
+  --line: rgba(232, 184, 109, 0.16);
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #e7e1d4;
+  --fg: #161410;
+  --muted: #5a5246;
+  --accent: #8a4b12;
+  --live: #1f6b45;
+  --line: rgba(22, 20, 16, 0.14);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
+}
+
+.scanlines::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 3px
+  );
+  opacity: 0.35;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+html.light .bg-ink,
+html.light .bg-ink\/90,
+html.light .bg-ink-2\/80,
+html.light .bg-ink-2\/70,
+html.light .bg-ink-2,
+html.light .bg-ink-3 {
+  background-color: #f4efe4;
+}
+
+html.light .text-paper {
+  color: #161410;
+}
+
+html.light .text-steel {
+  color: #5a5246;
+}
+
+html.light .border-line {
+  border-color: rgba(22, 20, 16, 0.16);
+}
+
+html.light .shadow-hud {
+  box-shadow: 0 0 0 1px rgba(138, 75, 18, 0.2), 0 24px 80px rgba(22, 20, 16, 0.08);
+}

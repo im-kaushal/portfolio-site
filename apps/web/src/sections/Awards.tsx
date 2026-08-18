@@ -1,0 +1,60 @@
+import { awards, certs, education } from "../content/site";
+import { HudFrame } from "../components/HudFrame";
+
+function Seal({ code }: { code: string }) {
+  return (
+    <svg viewBox="0 0 88 88" className="h-20 w-20" aria-hidden>
+      <polygon
+        points="44,4 80,24 80,64 44,84 8,64 8,24"
+        fill="none"
+        stroke="#e8b86d"
+        strokeWidth="1.5"
+      />
+      <text
+        x="44"
+        y="50"
+        textAnchor="middle"
+        fill="#8fe8b4"
+        fontFamily="IBM Plex Mono, monospace"
+        fontSize="11"
+      >
+        {code}
+      </text>
+    </svg>
+  );
+}
+
+export function Awards() {
+  return (
+    <section id="awards" className="mx-auto max-w-6xl px-4 py-16">
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Clearance</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">Awards & certifications</h2>
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
+        {awards.map((a) => (
+          <HudFrame key={a.id} className="p-5">
+            <p className="font-mono text-[10px] uppercase tracking-widest text-steel">Award</p>
+            <h3 className="mt-2 font-serif text-2xl text-paper">
+              {a.title} {a.note}
+            </h3>
+            <p className="mt-1 text-sm text-steel">{a.org}</p>
+          </HudFrame>
+        ))}
+      </div>
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {certs.map((c) => (
+          <HudFrame key={c.id} className="flex items-center gap-3 p-4">
+            <Seal code={c.code} />
+            <div>
+              <h3 className="font-serif text-lg text-paper">{c.title}</h3>
+              <p className="font-mono text-[10px] uppercase text-steel">{c.issuer}</p>
+              <p className="mt-1 font-mono text-[10px] text-amber">SEAL // PLACEHOLDER</p>
+            </div>
+          </HudFrame>
+        ))}
+      </div>
+      <p className="mt-8 font-mono text-xs text-steel">
+        {education.degree} · {education.school} · {education.score}
+      </p>
+    </section>
+  );
+}
