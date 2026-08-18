@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "pnpm --parallel --filter @portfolio/web --filter @portfolio/api dev",
-    "build": "pnpm --filter @portfolio/api build && pnpm --filter @portfolio/web build",
+    "build": "pnpm --filter @portfolio/api build && pnpm --filter @portfolio/web build && node -e \"const fs=require('fs'); fs.rmSync('dist',{recursive:true,force:true}); fs.cpSync('apps/web/dist','dist',{recursive:true});\"",
     "lint": "eslint .",
     "typecheck": "pnpm -r --if-present typecheck",
     "test": "pnpm -r --if-present test"
