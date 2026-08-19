@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import type { IncomingMessage, ServerResponse } from "http";
-import express from "express";
 import { createNestApp } from "../apps/api/dist/bootstrap";
 
 let cached:
@@ -12,10 +11,9 @@ export default async function handler(
   res: ServerResponse,
 ): Promise<void> {
   if (!cached) {
-    const server = express();
-    const app = await createNestApp(server);
+    const app = await createNestApp();
     await app.init();
-    cached = server;
+    cached = app.getHttpAdapter().getInstance();
   }
   cached(req, res);
 }
