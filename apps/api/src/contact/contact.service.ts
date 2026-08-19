@@ -32,6 +32,9 @@ export const defaultMailer: Mailer = {
       text: payload.text,
     });
     if (error) {
+      if (process.env.NODE_ENV !== "production") {
+        console.error("[contact] Resend error:", error);
+      }
       throw new HttpException(
         "Failed to send message. Try email or WhatsApp instead.",
         HttpStatus.BAD_GATEWAY,
