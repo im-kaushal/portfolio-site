@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import type { IncomingMessage, ServerResponse } from "http";
-import { createNestApp } from "../apps/api/dist/bootstrap";
+import { createNestApp } from "../../api/dist/bootstrap";
 
 let cached:
   | ((req: IncomingMessage, res: ServerResponse) => void)

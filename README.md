@@ -8,7 +8,7 @@ Public email on the site: `work.kaushal@yahoo.com`. The form recipient is `CONTA
 
 - `apps/web` — React 18 + Vite + Tailwind + Framer Motion
 - `apps/api` — NestJS (`GET /api/health`, `POST /api/contact`)
-- `api/index.ts` — Vercel serverless entry that boots Nest
+- `apps/web/api/index.ts` — Vercel serverless entry (all `/api/*` requests rewrite here; catch-all filenames are Next.js-only)
 - `apps/web/public/Kaushal_Kumar_Resume.pdf` — downloadable resume
 
 ## Local run
@@ -58,6 +58,45 @@ Deploy is **Vercel Git integration**, not a custom GitHub deploy token.
 5. Every push to `main` rebuilds production. Pull requests get preview URLs.
 
 **GitHub Actions** (`.github/workflows/ci.yml`) run lint, typecheck, test, and build on PRs/pushes. They do not deploy.
+
+## Custom domain: kausal.in
+
+Project on Vercel: **portfolio-site-web** ([Domains settings](https://vercel.com/portfolio-28a5/portfolio-site-web/settings/domains)).
+
+### 1. Add the domain in Vercel
+
+1. Open **Settings → Domains** for the project above.
+2. Add **`kausal.in`** and **`www.kausal.in`**.
+3. Vercel will show the DNS records you need (copy them from the dashboard — they can differ slightly per account).
+
+### 2. Configure DNS at your registrar
+
+Where you bought **kausal.in** (GoDaddy, Namecheap, Google Domains, etc.), add:
+
+| Type | Name | Value |
+|---|---|---|
+| **A** | `@` | `76.76.21.21` |
+| **CNAME** | `www` | `cname.vercel-dns.com` |
+
+If Vercel shows a different CNAME (e.g. `cname.vercel-dns-0.com`), use that instead.
+
+DNS can take up to 48 hours; usually it is live within an hour. Vercel issues HTTPS automatically once DNS verifies.
+
+### 3. Set production env on the custom domain
+
+In Vercel → **Environment Variables**, set for **Production**:
+
+```
+WEB_ORIGIN=https://kausal.in,https://www.kausal.in
+```
+
+(Keep `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and `CONTACT_FROM_EMAIL` as well.)
+
+### 4. Redeploy
+
+After DNS verifies, trigger **Redeploy** on the latest production deployment so `WEB_ORIGIN` and the build apply to **kausal.in**.
+
+> **Note:** Build output is the repo root `dist/` folder (copied from `apps/web/dist` during `pnpm build`). If deploy fails with “No Output Directory named dist”, clear any override in Vercel **Settings → General → Output Directory** so `vercel.json` applies, or set it explicitly to `dist`.
 
 ## Contact actions
 
