@@ -24,6 +24,7 @@ export const nav = [
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "awards", label: "Awards", href: "/#awards" },
+  { id: "kind-words", label: "Kind words", href: "/#kind-words" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
@@ -223,6 +224,82 @@ export const awards = [
   { id: "ex1", kind: "award" as const, title: "Excellence Award", org: "HashedIn / Deloitte", note: "×2" },
   { id: "rising", kind: "award" as const, title: "Rising Star", org: "HashedIn / Deloitte", note: "" },
 ];
+
+export type KindWord = {
+  id: string;
+  channel: string;
+  source: string;
+  quote: string;
+  letterSrc?: string;
+  letterAlt?: string;
+  variant?: "featured" | "highlight";
+};
+
+export const kindWords = {
+  intro:
+    "Sharing some kind words from my manager and leads that mean a lot to me:",
+  items: [
+    {
+      id: "mtrust-leads",
+      channel: "CH.01",
+      source: "Manager and leads · mTrust coordinator flow",
+      variant: "featured",
+      quote:
+        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track. His proactive communication, accountability, and ability to translate requirements into a solid, user-focused implementation were critical to the success of this effort.",
+    },
+    {
+      id: "citi-manager",
+      channel: "CH.02",
+      source: "Manager assessment · Citi engagement · HashedIn RT review",
+      variant: "featured",
+      quote:
+        "Thank you for your contributions towards the success of the organisation. Your continuous efforts on ensuring we stay on track with the project goals have helped the client immensely.",
+    },
+    {
+      id: "citi-overall",
+      channel: "CH.03",
+      source: "Delivery lead · Citi engagement · HashedIn RT review",
+      variant: "featured",
+      quote:
+        "Kaushal has consistently demonstrated outstanding performance above role expectations. With an impressive ability to adapt, self-learn, and add value across multiple business streams, he delivered reliably even under challenging circumstances. His initiative in taking on new domains, dedication to high-quality output, and positive influence on teams are strong indicators of potential for higher responsibility and leadership. Kaushal serves as a role model for resilience, technical depth, and cross-functional teamwork.",
+    },
+    {
+      id: "citi-delivery",
+      channel: "HL.01",
+      source: "Delivery & process · Citi",
+      variant: "highlight",
+      quote:
+        "Consistently delivered on commitments across frontend and backend on ETD1-Fenix, Fusion Brokerage, and Fusion Clear, with minimal onboarding time.",
+    },
+    {
+      id: "citi-communication",
+      channel: "HL.02",
+      source: "Business communication · Citi",
+      variant: "highlight",
+      quote:
+        "Provided thorough written updates and regular client and stakeholder meetings; bridged QA, frontend, backend, and clients.",
+    },
+    {
+      id: "citi-leadership",
+      channel: "HL.03",
+      source: "Leadership · Citi",
+      variant: "highlight",
+      quote:
+        "Volunteered for challenging assignments including backend and DevOps; mentored 10+ developers on setup and tooling.",
+    },
+    {
+      id: "spot-award",
+      channel: "CH.04",
+      source: "Deloitte Spot Award letter",
+      variant: "featured",
+      quote:
+        "Being a FrontEnd developer who had recently joined, Kaushal takes initiative in BE activities too - and participated in developing a BE utility code, which reduced the manual Testing efforts by 60%, leading to appreciation from client side.",
+      letterSrc: "/deloitte-spot-award-letter.png",
+      letterAlt:
+        "Deloitte Spot Award letter recognizing Kaushal Kumar for frontend initiative and a backend utility that cut manual testing effort by 60 percent. The award value on the letter is redacted.",
+    },
+  ] satisfies KindWord[],
+} as const;
 
 export const certs = [
   { id: "claude", code: "CLAUDE", title: "Claude Architect", issuer: "Anthropic" },
