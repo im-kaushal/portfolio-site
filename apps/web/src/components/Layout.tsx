@@ -34,7 +34,7 @@ export function Layout() {
           <Link to="/" className="font-mono text-xs uppercase tracking-[0.25em] text-amber">
             {site.callsign}
           </Link>
-          <nav aria-label="Primary" className="hidden items-center gap-4 md:flex">
+          <nav aria-label="Primary" className="hidden items-center gap-3 lg:flex">
             {nav.map((item) => (
               <a
                 key={item.id}
