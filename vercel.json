@@ -3,7 +3,6 @@
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "comment": "Vercel project Root Directory is apps/web — see apps/web/vercel.json for API routes.",
   "rewrites": [
     { "source": "/((?!api).*)", "destination": "/index.html" }
   ]
