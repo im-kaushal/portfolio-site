@@ -8,7 +8,7 @@ Public email on the site: `work.kaushal@yahoo.com`. The form recipient is `CONTA
 
 - `apps/web` — React 18 + Vite + Tailwind + Framer Motion
 - `apps/api` — NestJS (`GET /api/health`, `POST /api/contact`)
-- `api/index.ts` — Vercel serverless entry that boots Nest
+- `api/[[...path]].ts` — Vercel serverless entry (catch-all for `/api/*`)
 - `apps/web/public/Kaushal_Kumar_Resume.pdf` — downloadable resume
 
 ## Local run

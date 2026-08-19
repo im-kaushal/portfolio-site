@@ -5,14 +5,13 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "functions": {
-    "api/index.ts": {
+    "api/**/*.ts": {
       "maxDuration": 10,
       "includeFiles": "apps/api/**"
     }
   },
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
