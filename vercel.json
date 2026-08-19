@@ -1,26 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": null,
   "installCommand": "pnpm install --frozen-lockfile",
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
-  "functions": {
-    "api/**/*.ts": {
-      "maxDuration": 10,
-      "includeFiles": "apps/api/**"
-    }
-  },
+  "comment": "Vercel project Root Directory is apps/web — see apps/web/vercel.json for API routes.",
   "rewrites": [
     { "source": "/((?!api).*)", "destination": "/index.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "X-Frame-Options", "value": "DENY" }
-      ]
-    }
   ]
 }
