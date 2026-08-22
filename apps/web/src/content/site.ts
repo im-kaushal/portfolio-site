@@ -15,15 +15,26 @@ export const site = {
   headshotSrc: "/kaushal-headshot.png",
   summary:
     "Frontend Software Engineer with 3.5+ years building scalable web and mobile applications in React, Angular, React Native, Next.js, and TypeScript — performance, architecture, and shipping enterprise-grade product at scale.",
+  openToWork: {
+    headline: "Open to frontend & full-stack roles",
+    detail: "Bengaluru · remote-friendly · React, Angular, React Native",
+  },
+  bookCall: {
+    label: "Book a call",
+    href: "https://wa.me/919142043244?text=Hi%20Kaushal%2C%20I%27d%20like%20to%20schedule%20a%20short%20intro%20call%20about%20a%20role.",
+    hint: "WhatsApp · 20 min intro",
+  },
 } as const;
 
 export const nav = [
   { id: "work", label: "Work", href: "/#work" },
-  { id: "impact", label: "Impact", href: "/#impact" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "awards", label: "Awards", href: "/#awards" },
   { id: "kind-words", label: "Kind words", href: "/#kind-words" },
+  { id: "impact", label: "Impact", href: "/#impact" },
+  { id: "quality", label: "Quality", href: "/#quality" },
+  { id: "live-desk", label: "Live desk", href: "/#live-desk" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
@@ -35,6 +46,24 @@ export const impact = [
   { id: "mentees", readout: "150+", label: "Mentees", note: "HashedIn intern guild" },
   { id: "defects", readout: "187+", label: "Defects closed", note: "Damco mobile UAT" },
 ] as const;
+
+export const qualityProof = {
+  intro:
+    "Measured on production operator surfaces and this portfolio — not vanity scores on marketing pages.",
+  lighthouse: [
+    { id: "perf", label: "Performance", score: 94, note: "LCP-focused delivery" },
+    { id: "a11y", label: "Accessibility", score: 100, note: "WCAG 2.1 AA patterns" },
+    { id: "bp", label: "Best practices", score: 100, note: "Modern asset loading" },
+    { id: "seo", label: "SEO", score: 92, note: "Semantic structure" },
+  ],
+  engineering: [
+    { id: "lcp", label: "LCP", before: "3.2s", after: "2.1s", delta: "−35%", context: "mTrust queue" },
+    { id: "bundle", label: "JS bundle", before: "412 KB", after: "296 KB", delta: "−28%", context: "route split + cache" },
+    { id: "coverage", label: "Unit / E2E", before: "62%", after: "91%", delta: "+29pp", context: "critical paths" },
+    { id: "defects", label: "Defect burn", before: "—", after: "187+", delta: "1 sprint", context: "mobile UAT" },
+  ],
+  stack: ["Jest", "RTL", "Cypress", "Jasmine", "Lighthouse", "SonarQube", "WCAG 2.1 AA"],
+} as const;
 
 export type CaseStudy = {
   slug: "marriott" | "citi" | "colina";

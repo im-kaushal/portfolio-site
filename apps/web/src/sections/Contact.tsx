@@ -4,6 +4,7 @@ import { HudFrame } from "../components/HudFrame";
 
 const actions = [
   { href: `mailto:${site.publicEmail}`, label: "Email me", hint: site.publicEmail },
+  { href: site.bookCall.href, label: site.bookCall.label, hint: site.bookCall.hint },
   { href: site.whatsapp, label: "WhatsApp", hint: "wa.me" },
   { href: site.linkedin, label: "LinkedIn", hint: "im-kaushal" },
   { href: site.github, label: "GitHub", hint: "im-kaushal" },
@@ -53,15 +54,37 @@ export function Contact() {
     <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Uplink</p>
       <h2 className="mt-2 font-serif text-4xl text-paper">Contact</h2>
-      <p className="mt-3 max-w-2xl text-base leading-relaxed text-steel">
+
+      <HudFrame label="STATUS" className="mt-6 p-4">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
+              Availability
+            </p>
+            <p className="mt-1 font-serif text-xl text-paper">{site.openToWork.headline}</p>
+            <p className="mt-1 text-sm text-steel">{site.openToWork.detail}</p>
+          </div>
+          <a
+            href={site.bookCall.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border border-amber bg-amber px-4 py-2 font-mono text-xs uppercase tracking-widest text-ink hover:bg-transparent hover:text-amber"
+          >
+            {site.bookCall.label}
+          </a>
+        </div>
+      </HudFrame>
+
+      <p className="mt-6 max-w-2xl text-base leading-relaxed text-steel">
         Have a role, a product idea, or a hard frontend problem? Send a message — I read
         everything and typically reply within one to two business days. You can also reach me
         directly at{" "}
         <a href={`mailto:${site.publicEmail}`} className="text-phosphor hover:text-amber">
           {site.publicEmail}
         </a>
-        , WhatsApp, or the links beside the form.
+        , book a short call, or use the links beside the form.
       </p>
+
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <HudFrame label="MSG.TX" className="p-5">
           <form onSubmit={onSubmit} className="space-y-4" noValidate>
@@ -103,13 +126,23 @@ export function Contact() {
                 <input name="website" tabIndex={-1} autoComplete="off" />
               </label>
             </div>
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="border border-amber bg-amber px-4 py-2 font-mono text-xs uppercase tracking-widest text-ink disabled:opacity-60"
-            >
-              {status === "sending" ? "Transmitting…" : "Send message"}
-            </button>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="border border-amber bg-amber px-4 py-2 font-mono text-xs uppercase tracking-widest text-ink disabled:opacity-60"
+              >
+                {status === "sending" ? "Transmitting…" : "Send message"}
+              </button>
+              <a
+                href={site.bookCall.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-line px-4 py-2 font-mono text-xs uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor"
+              >
+                {site.bookCall.label}
+              </a>
+            </div>
             {status === "ok" ? (
               <p role="status" className="font-mono text-sm text-phosphor">
                 Thanks — your message is on its way. I&apos;ll reply soon.
@@ -127,6 +160,8 @@ export function Contact() {
             <a
               key={a.label}
               href={a.href}
+              target={a.href.startsWith("http") ? "_blank" : undefined}
+              rel={a.href.startsWith("http") ? "noopener noreferrer" : undefined}
               className="flex items-center justify-between border border-line px-4 py-3 font-mono text-sm text-paper hover:border-amber hover:text-amber"
             >
               <span>{a.label}</span>

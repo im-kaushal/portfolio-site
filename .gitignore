@@ -14,4 +14,7 @@ coverage
 !.vscode/extensions.json
 apps/web/dist
 apps/api/dist
+apps/web/api/nest-dist
+api/nest-dist
 *.tsbuildinfo
+.env*

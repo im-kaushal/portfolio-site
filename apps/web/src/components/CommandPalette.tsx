@@ -28,6 +28,23 @@ export function CommandPalette() {
     return [
       ...jumps,
       {
+        id: "live-desk",
+        label: "Open synthetic desk",
+        hint: "mTrust demo",
+        run: () => {
+          navigate("/");
+          requestAnimationFrame(() => {
+            document.getElementById("live-desk")?.scrollIntoView({ behavior: "smooth" });
+          });
+        },
+      },
+      {
+        id: "book",
+        label: site.bookCall.label,
+        hint: site.bookCall.hint,
+        run: () => window.open(site.bookCall.href, "_blank", "noopener,noreferrer"),
+      },
+      {
         id: "email",
         label: "Copy email",
         hint: site.publicEmail,

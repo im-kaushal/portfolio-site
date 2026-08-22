@@ -19,6 +19,9 @@ export function Hero() {
           {site.name}
         </h1>
         <p className="mt-4 max-w-xl text-lg text-steel">{site.title}</p>
+        <p className="mt-2 font-mono text-xs uppercase tracking-widest text-phosphor">
+          {site.openToWork.headline} · {site.openToWork.detail}
+        </p>
         <p className="mt-2 font-mono text-sm text-amber">
           {site.years} yrs · React · Angular · React Native
         </p>
@@ -45,8 +48,8 @@ export function Hero() {
           </a>
         </div>
       </motion.div>
-      <HudFrame label="OP.01" className="relative overflow-hidden scanlines">
-        <div className="aspect-[6/7]">
+      <HudFrame label="OP.01" className="relative">
+        <div className="relative aspect-[6/7] overflow-hidden scanlines">
           <OperatorIdentityArt />
         </div>
       </HudFrame>
