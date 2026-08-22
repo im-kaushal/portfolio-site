@@ -78,6 +78,14 @@ body {
   color: var(--bg);
 }
 
+.profile-portrait {
+  filter: brightness(0.92) contrast(1.06) saturate(0.82);
+}
+
+html.light .profile-portrait {
+  filter: brightness(1.02) contrast(1.04) saturate(0.95);
+}
+
 html.light .bg-ink,
 html.light .bg-ink\/90,
 html.light .bg-ink-2\/80,

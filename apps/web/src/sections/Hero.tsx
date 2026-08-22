@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { clients, site } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
-import { PortraitPlaceholder } from "../components/PortraitPlaceholder";
+import { ProfilePortrait } from "../components/ProfilePortrait";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -54,7 +54,7 @@ export function Hero() {
       </motion.div>
       <HudFrame label="ID.SCAN" className="relative overflow-hidden scanlines">
         <div className="aspect-[6/7]">
-          <PortraitPlaceholder />
+          <ProfilePortrait />
         </div>
       </HudFrame>
     </section>

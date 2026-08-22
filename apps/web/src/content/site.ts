@@ -12,6 +12,7 @@ export const site = {
   linkedin: "https://linkedin.com/in/im-kaushal",
   github: "https://github.com/im-kaushal",
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
+  headshotSrc: "/kaushal-headshot.png",
   summary:
     "I build the operator surfaces that enterprises actually run on — dense tables, trust workflows, and mobile policies — then shave the milliseconds until they feel inevitable.",
 } as const;
