@@ -57,6 +57,12 @@ export function CommandPalette() {
         run: () => window.open(site.linkedin, "_blank", "noopener,noreferrer"),
       },
       {
+        id: "huntai",
+        label: "Open HuntAI live",
+        hint: "huntai-kappa.vercel.app",
+        run: () => window.open("https://huntai-kappa.vercel.app", "_blank", "noopener,noreferrer"),
+      },
+      {
         id: "github",
         label: "Open GitHub",
         hint: "im-kaushal",

@@ -28,6 +28,7 @@ export const site = {
 
 export const nav = [
   { id: "work", label: "Work", href: "/#work" },
+  { id: "builds", label: "Builds", href: "/#builds" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "awards", label: "Awards", href: "/#awards" },
@@ -189,6 +190,31 @@ export const caseStudies: CaseStudy[] = [
     ],
     role: "Software Engineer · mobile frontend",
     period: "Damco Solutions · Jul 2023 — Feb 2024",
+  },
+];
+
+export type PersonalProject = {
+  id: string;
+  code: string;
+  name: string;
+  title: string;
+  blurb: string;
+  stack: string[];
+  liveHref: string;
+  repoHref: string;
+};
+
+export const personalProjects: PersonalProject[] = [
+  {
+    id: "huntai",
+    code: "BUILD-01",
+    name: "HuntAI",
+    title: "Job search command center",
+    blurb:
+      "Explainable job matching, pipeline tracking, and application-prep drafts for software engineers — live on Vercel.",
+    stack: ["TypeScript", "Node", "Vercel"],
+    liveHref: "https://huntai-kappa.vercel.app",
+    repoHref: "https://github.com/im-kaushal/HuntAI",
   },
 ];
 
