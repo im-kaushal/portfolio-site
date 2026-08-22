@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
-import { clients, site } from "../content/site";
+import { site } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
-import { ProfilePortrait } from "../components/ProfilePortrait";
+import { OperatorIdentityArt } from "../components/OperatorIdentityArt";
 
 export function Hero() {
   const reduce = useReducedMotion();
@@ -44,17 +44,10 @@ export function Hero() {
             Download resume
           </a>
         </div>
-        <ul className="mt-10 flex flex-wrap gap-6 font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
-          {clients.map((c) => (
-            <li key={c} className="border-b border-line pb-1">
-              {c}
-            </li>
-          ))}
-        </ul>
       </motion.div>
-      <HudFrame label="ID.SCAN" className="relative overflow-hidden scanlines">
+      <HudFrame label="OP.01" className="relative overflow-hidden scanlines">
         <div className="aspect-[6/7]">
-          <ProfilePortrait />
+          <OperatorIdentityArt />
         </div>
       </HudFrame>
     </section>

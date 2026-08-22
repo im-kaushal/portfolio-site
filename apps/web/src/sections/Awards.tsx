@@ -1,4 +1,4 @@
-import { awards, certs, education, learningCerts, site } from "../content/site";
+import { awards, certs, education, learningCerts } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
 
 function Seal({ code }: { code: string }) {
@@ -66,23 +66,28 @@ export function Awards() {
       </div>
       <div className="mt-8">
         <p className="font-mono text-[10px] uppercase tracking-widest text-steel">
-          LinkedIn Learning ·{" "}
-          <a
-            href={site.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-phosphor hover:text-amber"
-          >
-            profile
-          </a>
+          Courses & additional credentials
         </p>
-        <ul className="mt-3 flex flex-wrap gap-2">
+        <ul className="mt-3 flex flex-col gap-2">
           {learningCerts.map((c) => (
             <li
               key={c.title}
-              className="border border-line px-2 py-1 font-mono text-xs text-paper/90"
+              className="flex flex-wrap items-center justify-between gap-2 border border-line px-3 py-2"
             >
-              {c.title}
+              <span className="font-mono text-xs text-paper/90">
+                {c.title}
+                <span className="text-steel"> · {c.issuer}</span>
+              </span>
+              {c.href ? (
+                <a
+                  href={c.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[10px] uppercase tracking-widest text-phosphor hover:text-amber"
+                >
+                  Verify →
+                </a>
+              ) : null}
             </li>
           ))}
         </ul>

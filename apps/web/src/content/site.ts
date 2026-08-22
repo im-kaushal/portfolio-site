@@ -14,10 +14,8 @@ export const site = {
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "Frontend Software Engineer with 3.5+ years building scalable web and mobile applications in React, Angular, React Native, Next.js, and TypeScript — enterprise delivery for Marriott, Citi Bank, and Colina Insurance across banking, hospitality, and insurance.",
+    "Frontend Software Engineer with 3.5+ years building scalable web and mobile applications in React, Angular, React Native, Next.js, and TypeScript — performance, architecture, and shipping enterprise-grade product at scale.",
 } as const;
-
-export const clients = ["Marriott", "Citi Bank", "Colina Insurance"] as const;
 
 export const nav = [
   { id: "work", label: "Work", href: "/#work" },
@@ -388,7 +386,7 @@ export const certs: Cert[] = [
     title: "AWS Certified Developer — Associate",
     issuer: "Amazon Web Services",
     date: "Apr 2026",
-    href: "https://aws.amazon.com/certification/certified-developer-associate/",
+    href: "https://cp.certmetrics.com/amazon/en/public/verify/credential/e06c1f6d26b042a486b99c2dfc02935e",
   },
   {
     id: "ccp",
@@ -396,24 +394,47 @@ export const certs: Cert[] = [
     title: "AWS Certified Cloud Practitioner",
     issuer: "Amazon Web Services",
     date: "May 2025",
-    href: "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+    href: "https://cp.certmetrics.com/amazon/en/public/verify/credential/2d2646378b4a40ac9d80121ce6009059",
   },
   {
     id: "jss",
     code: "JSSEC",
     title: "JavaScript Security Specialization",
-    issuer: "Infosec",
+    issuer: "Coursera · Infosec",
     date: "Mar 2025",
-    href: "https://www.linkedin.com/in/im-kaushal/details/certifications/",
+    href: "https://www.coursera.org/account/accomplishments/specialization/B3F5X2CVYUG6",
   },
 ];
 
-export const learningCerts = [
-  { title: "TypeScript Essential Training", issuer: "LinkedIn Learning" },
+export type LearningCert = {
+  title: string;
+  issuer: string;
+  href?: string;
+};
+
+const linkedInCertsUrl =
+  "https://www.linkedin.com/in/im-kaushal/details/certifications/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BKKhD3d47QYiECcOcaGgcnQ%3D%3D";
+
+export const learningCerts: LearningCert[] = [
+  {
+    title: "TypeScript Essential Training",
+    issuer: "LinkedIn Learning",
+    href: linkedInCertsUrl,
+  },
+  {
+    title: "Become a React Native Developer",
+    issuer: "LinkedIn Learning",
+    href: linkedInCertsUrl,
+  },
+  {
+    title: "Java Full-Stack",
+    issuer: "Certification",
+    href: "https://drive.google.com/file/d/1IYyMNcewy_oAE8xdrSD2rvweyCfJIkIm/view",
+  },
   { title: "Search Engine Optimization", issuer: "LinkedIn Learning" },
   { title: "Git & GitHub", issuer: "LinkedIn Learning" },
   { title: "SQL", issuer: "LinkedIn Learning" },
-] as const;
+];
 
 export type KindWord = {
   id: string;

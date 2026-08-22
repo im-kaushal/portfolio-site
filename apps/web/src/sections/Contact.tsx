@@ -53,9 +53,14 @@ export function Contact() {
     <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Uplink</p>
       <h2 className="mt-2 font-serif text-4xl text-paper">Contact</h2>
-      <p className="mt-3 max-w-2xl text-steel">
-        Form goes through NestJS → Resend into an inbox you configure (Gmail-ready). Public address on
-        this page stays {site.publicEmail}.
+      <p className="mt-3 max-w-2xl text-base leading-relaxed text-steel">
+        Have a role, a product idea, or a hard frontend problem? Send a message — I read
+        everything and typically reply within one to two business days. You can also reach me
+        directly at{" "}
+        <a href={`mailto:${site.publicEmail}`} className="text-phosphor hover:text-amber">
+          {site.publicEmail}
+        </a>
+        , WhatsApp, or the links beside the form.
       </p>
       <div className="mt-8 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <HudFrame label="MSG.TX" className="p-5">
@@ -107,7 +112,7 @@ export function Contact() {
             </button>
             {status === "ok" ? (
               <p role="status" className="font-mono text-sm text-phosphor">
-                Received. I will reply from the configured inbox.
+                Thanks — your message is on its way. I&apos;ll reply soon.
               </p>
             ) : null}
             {status === "error" ? (
