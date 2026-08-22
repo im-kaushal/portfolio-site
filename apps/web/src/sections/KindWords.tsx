@@ -3,24 +3,35 @@ import { motion, useReducedMotion } from "framer-motion";
 import { HudFrame } from "../components/HudFrame";
 import { kindWords, type KindWord } from "../content/site";
 
-function QuoteBlock({ item, large }: { item: KindWord; large?: boolean }) {
+function QuoteBlock({
+  item,
+  onOpenLetter,
+  letterOpen = false,
+}: {
+  item: KindWord;
+  onOpenLetter?: () => void;
+  letterOpen?: boolean;
+}) {
   return (
-    <HudFrame label={item.channel} className="p-6 md:p-8">
+    <HudFrame label={item.channel} className="relative p-6 md:p-8">
       <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">{item.source}</p>
       <blockquote className="mt-4">
-        <p
-          className={
-            large
-              ? "font-serif text-xl leading-relaxed text-paper md:text-2xl"
-              : "text-base leading-relaxed text-paper/90"
-          }
-        >
-          “{item.quote}”
-        </p>
+        <p className="font-sans text-base leading-relaxed text-paper/90">“{item.quote}”</p>
         <footer className="mt-4 font-mono text-[11px] uppercase tracking-widest text-steel md:mt-6">
           — {item.source}
         </footer>
       </blockquote>
+      {item.letterSrc && onOpenLetter ? (
+        <button
+          type="button"
+          onClick={onOpenLetter}
+          className="absolute bottom-3 right-3 border border-amber bg-ink/90 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-amber transition hover:bg-amber hover:text-ink"
+          aria-haspopup="dialog"
+          aria-expanded={letterOpen}
+        >
+          Open letter preview
+        </button>
+      ) : null}
     </HudFrame>
   );
 }
@@ -28,7 +39,7 @@ function QuoteBlock({ item, large }: { item: KindWord; large?: boolean }) {
 export function KindWords() {
   const reduce = useReducedMotion();
   const [letterOpen, setLetterOpen] = useState(false);
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const featured = kindWords.items.filter(
     (item) => item.variant !== "highlight" && !item.letterSrc,
@@ -39,7 +50,7 @@ export function KindWords() {
   useEffect(() => {
     if (!letterOpen) return;
     const prev = document.activeElement as HTMLElement | null;
-    closeRef.current?.focus();
+    dialogRef.current?.focus();
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setLetterOpen(false);
     }
@@ -57,17 +68,32 @@ export function KindWords() {
       <p className="mt-3 max-w-2xl text-steel">{kindWords.intro}</p>
 
       <div className="mt-8 space-y-8">
-        {featured.map((item, index) => (
+        {featured.map((item) => (
           <motion.div
             key={item.id}
             initial={reduce ? false : { opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.45, delay: index * 0.05 }}
+            transition={{ duration: 0.45 }}
           >
-            <QuoteBlock item={item} large={index === 0} />
+            <QuoteBlock item={item} />
           </motion.div>
         ))}
+
+        {spot ? (
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.45 }}
+          >
+            <QuoteBlock
+              item={spot}
+              onOpenLetter={() => setLetterOpen(true)}
+              letterOpen={letterOpen}
+            />
+          </motion.div>
+        ) : null}
       </div>
 
       {highlights.length > 0 ? (
@@ -78,9 +104,11 @@ export function KindWords() {
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {highlights.map((item) => (
               <HudFrame key={item.id} label={item.channel} className="p-5">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">{item.source}</p>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
+                  {item.source}
+                </p>
                 <blockquote className="mt-3">
-                  <p className="text-sm leading-relaxed text-paper/90">“{item.quote}”</p>
+                  <p className="font-sans text-sm leading-relaxed text-paper/90">“{item.quote}”</p>
                 </blockquote>
               </HudFrame>
             ))}
@@ -88,58 +116,22 @@ export function KindWords() {
         </div>
       ) : null}
 
-      {spot ? (
-        <div className="mt-10 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-          <QuoteBlock item={spot} />
-          {spot.letterSrc ? (
-            <HudFrame label="DOC.SCAN" className="overflow-hidden">
-              <button
-                type="button"
-                onClick={() => setLetterOpen(true)}
-                className="group relative block w-full text-left"
-                aria-haspopup="dialog"
-                aria-expanded={letterOpen}
-              >
-                <img
-                  src={spot.letterSrc}
-                  alt={spot.letterAlt}
-                  className="h-64 w-full object-cover object-top opacity-90 transition group-hover:opacity-100 md:h-full"
-                />
-                <span className="absolute bottom-3 left-3 border border-amber bg-ink/90 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-amber">
-                  Open letter preview
-                </span>
-              </button>
-            </HudFrame>
-          ) : null}
-        </div>
-      ) : null}
-
       {letterOpen && spot?.letterSrc ? (
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/80 px-4 py-8 backdrop-blur-sm"
+          ref={dialogRef}
+          tabIndex={-1}
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/94 p-4 outline-none"
           role="dialog"
           aria-modal="true"
-          aria-labelledby="spot-letter-title"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setLetterOpen(false);
-          }}
+          aria-label={spot.letterAlt}
+          onClick={() => setLetterOpen(false)}
         >
-          <HudFrame className="max-h-[90vh] w-full max-w-3xl overflow-auto p-4">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <h3 id="spot-letter-title" className="font-mono text-xs uppercase tracking-widest text-amber">
-                Spot Award letter
-              </h3>
-              <button
-                ref={closeRef}
-                type="button"
-                onClick={() => setLetterOpen(false)}
-                className="font-mono text-[11px] uppercase tracking-widest text-steel hover:text-amber"
-              >
-                Close
-              </button>
-            </div>
-            <img src={spot.letterSrc} alt={spot.letterAlt} className="w-full border border-line" />
-          </HudFrame>
+          <img
+            src={spot.letterSrc}
+            alt={spot.letterAlt}
+            className="max-h-[92vh] max-w-[min(92vw,48rem)] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       ) : null}
     </section>

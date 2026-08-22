@@ -27,11 +27,6 @@ export function CaseStudyPage() {
         {study.role} · {study.period}
       </p>
       <p className="mt-6 text-lg leading-relaxed text-paper/80">{study.blurb}</p>
-      <HudFrame className="mt-8 aspect-video" label="STILL // PENDING">
-        <div className="flex h-full items-center justify-center bg-ink-3 font-mono text-xs uppercase tracking-widest text-steel">
-          Project still — drop a screenshot here later
-        </div>
-      </HudFrame>
       <section className="mt-10">
         <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Stack</h2>
         <ul className="mt-3 flex flex-wrap gap-2">
@@ -41,6 +36,16 @@ export function CaseStudyPage() {
             </li>
           ))}
         </ul>
+      </section>
+      <section className="mt-10">
+        <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Project highlights</h2>
+        <HudFrame className="mt-3 p-5">
+          <ul className="list-disc space-y-2 pl-5 text-paper/80">
+            {study.highlights.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+        </HudFrame>
       </section>
       <section className="mt-10">
         <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Outcomes</h2>

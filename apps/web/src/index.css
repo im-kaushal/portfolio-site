@@ -16,6 +16,8 @@ html.light {
   color-scheme: light;
   --bg: #e7e1d4;
   --fg: #161410;
+  --fg-soft: rgba(22, 20, 16, 0.82);
+  --fg-muted: rgba(22, 20, 16, 0.7);
   --muted: #5a5246;
   --accent: #8a4b12;
   --live: #1f6b45;
@@ -78,8 +80,74 @@ body {
   color: var(--bg);
 }
 
+.operator-art-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(143, 232, 180, 0.12) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(232, 184, 109, 0.14) 0%, transparent 40%),
+    linear-gradient(160deg, #121614 0%, #0b0d0c 55%, #1a201c 100%);
+}
+
+.operator-art-pulse {
+  animation: operator-art-pulse 4s ease-in-out infinite;
+}
+
+.operator-scan-line {
+  animation: operator-scan 5s linear infinite;
+}
+
+.operator-reticle {
+  animation: operator-reticle 6s ease-in-out infinite;
+}
+
+@keyframes operator-art-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@keyframes operator-scan {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(260px);
+    opacity: 0;
+  }
+}
+
+@keyframes operator-reticle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+html.light .operator-art-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(31, 107, 69, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(138, 75, 18, 0.1) 0%, transparent 40%),
+    linear-gradient(160deg, #f4efe4 0%, #e7e1d4 55%, #f4efe4 100%);
+}
+
 html.light .bg-ink,
 html.light .bg-ink\/90,
+html.light .bg-ink\/94,
+html.light .bg-ink\/70,
+html.light .bg-ink\/60,
 html.light .bg-ink-2\/80,
 html.light .bg-ink-2\/70,
 html.light .bg-ink-2,
@@ -87,18 +155,94 @@ html.light .bg-ink-3 {
   background-color: #f4efe4;
 }
 
-html.light .text-paper {
-  color: #161410;
+html.light .bg-ink\/90 {
+  background-color: rgba(244, 239, 228, 0.94);
+}
+
+html.light .bg-ink\/94 {
+  background-color: rgba(244, 239, 228, 0.97);
+}
+
+html.light .bg-ink\/70,
+html.light .bg-ink\/60 {
+  background-color: rgba(244, 239, 228, 0.88);
+}
+
+html.light .text-paper,
+html.light .text-paper\/90 {
+  color: var(--fg);
+}
+
+html.light .text-paper\/80 {
+  color: var(--fg-soft);
+}
+
+html.light .text-paper\/70 {
+  color: var(--fg-muted);
 }
 
 html.light .text-steel {
   color: #5a5246;
 }
 
+html.light .text-phosphor,
+html.light .text-phosphor\/90,
+html.light .text-phosphor\/80 {
+  color: #1f6b45;
+}
+
+html.light .text-amber,
+html.light .text-amber\/90,
+html.light .text-amber\/80 {
+  color: #8a4b12;
+}
+
+html.light .hover\:text-paper:hover {
+  color: var(--fg);
+}
+
+html.light .hover\:text-phosphor:hover {
+  color: #1f6b45;
+}
+
 html.light .border-line {
   border-color: rgba(22, 20, 16, 0.16);
 }
 
+html.light .border-line\/50 {
+  border-color: rgba(22, 20, 16, 0.12);
+}
+
+html.light .border-amber\/25 {
+  border-color: rgba(138, 75, 18, 0.35);
+}
+
+html.light .border-amber\/40 {
+  border-color: rgba(138, 75, 18, 0.45);
+}
+
 html.light .shadow-hud {
   box-shadow: 0 0 0 1px rgba(138, 75, 18, 0.2), 0 24px 80px rgba(22, 20, 16, 0.08);
+}
+
+html.light .operator-art {
+  background-color: #ebe4d8;
+}
+
+html.light .operator-art .border-amber\/25 {
+  border-color: rgba(138, 75, 18, 0.4);
+}
+
+html.light .scanlines::after {
+  opacity: 0.12;
+}
+
+html.light input.text-paper,
+html.light textarea.text-paper {
+  color: var(--fg);
+  background-color: #f0e9dc;
+}
+
+html.light .bg-ink-3 {
+  background-color: #e8e0d2;
 }
