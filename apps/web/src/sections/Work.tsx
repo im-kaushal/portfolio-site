@@ -15,12 +15,22 @@ export function Work() {
             </p>
             <h3 className="mt-2 font-serif text-2xl text-paper">{study.title}</h3>
             <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">{study.blurb}</p>
-            <Link
-              to={`/work/${study.slug}`}
-              className="mt-6 inline-block font-mono text-xs uppercase tracking-widest text-amber hover:underline"
-            >
-              Open file →
-            </Link>
+            <div className="mt-6 flex flex-wrap gap-4">
+              <Link
+                to={`/work/${study.slug}`}
+                className="font-mono text-xs uppercase tracking-widest text-amber hover:underline"
+              >
+                Open file →
+              </Link>
+              {study.slug === "marriott" ? (
+                <a
+                  href="#live-desk"
+                  className="font-mono text-xs uppercase tracking-widest text-phosphor hover:underline"
+                >
+                  Try live desk →
+                </a>
+              ) : null}
+            </div>
           </HudFrame>
         ))}
       </div>

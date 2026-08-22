@@ -19,6 +19,9 @@ export function Hero() {
           {site.name}
         </h1>
         <p className="mt-4 max-w-xl text-lg text-steel">{site.title}</p>
+        <p className="mt-2 font-mono text-xs uppercase tracking-widest text-phosphor">
+          {site.openToWork.headline} · {site.openToWork.detail}
+        </p>
         <p className="mt-2 font-mono text-sm text-amber">
           {site.years} yrs · React · Angular · React Native
         </p>
