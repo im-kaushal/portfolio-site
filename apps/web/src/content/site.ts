@@ -14,10 +14,10 @@ export const site = {
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "I build the operator surfaces that enterprises actually run on — dense tables, trust workflows, and mobile policies — then shave the milliseconds until they feel inevitable.",
+    "Frontend Software Engineer with 3.5+ years building scalable web and mobile applications in React, Angular, React Native, Next.js, and TypeScript — enterprise delivery for Marriott, Citi Bank, and Colina Insurance across banking, hospitality, and insurance.",
 } as const;
 
-export const clients = ["Marriott", "Citi", "Colina"] as const;
+export const clients = ["Marriott", "Citi Bank", "Colina Insurance"] as const;
 
 export const nav = [
   { id: "work", label: "Work", href: "/#work" },
@@ -31,11 +31,11 @@ export const nav = [
 
 export const impact = [
   { id: "lcp", readout: "−35%", label: "LCP", note: "Marriott mTrust" },
-  { id: "bundle", readout: "−28%", label: "JS bundle", note: "route + query trim" },
-  { id: "tti", readout: "4.1→2.6s", label: "Settlements TTI", note: "Citi ops desk" },
-  { id: "tests", readout: "90%+", label: "Coverage", note: "critical paths" },
-  { id: "mentees", readout: "150+", label: "Mentees", note: "guild + campus" },
-  { id: "defects", readout: "187+", label: "Defects closed", note: "settlement QA" },
+  { id: "bundle", readout: "−28%", label: "JS bundle", note: "code splitting + caching" },
+  { id: "tti", readout: "4.1→2.6s", label: "Page load", note: "Citi settlements UI" },
+  { id: "tests", readout: "90%+", label: "Test coverage", note: "Jest, RTL, Cypress, Jasmine" },
+  { id: "mentees", readout: "150+", label: "Mentees", note: "HashedIn intern guild" },
+  { id: "defects", readout: "187+", label: "Defects closed", note: "Damco mobile UAT" },
 ] as const;
 
 export type CaseStudy = {
@@ -47,6 +47,7 @@ export type CaseStudy = {
   stack: string[];
   outcomes: string[];
   architecture: string[];
+  highlights: string[];
   role: string;
   period: string;
 };
@@ -56,66 +57,111 @@ export const caseStudies: CaseStudy[] = [
     slug: "marriott",
     code: "CASE-01",
     client: "Marriott",
-    title: "mTrust — trust operations console",
+    title: "mTrust incident management",
     blurb:
-      "A React + TanStack operator panel for hotel trust workflows, with agentic-AI assists for triage — rebuilt so the first paint is a decision, not a spinner.",
-    stack: ["React", "TypeScript", "TanStack Query", "TanStack Table", "Agentic AI"],
+      "Coordinator persona UI for hotel trust operations — incident workflows, breached SER monitoring, and agentic-AI assists without opening ServiceNow.",
+    stack: [
+      "React.js",
+      "TypeScript",
+      "Context API",
+      "TanStack Query",
+      "TanStack Table",
+      "ServiceNow",
+      "Agentic AI",
+      "Claude Live Link",
+    ],
     outcomes: [
-      "Largest Contentful Paint down 35% on the primary trust queue.",
-      "JavaScript payload down 28% via route-level splitting and query coalescing.",
-      "Operator flows stay keyboard-first: filters, bulk actions, and row inspection.",
+      "Largest Contentful Paint down 35% on primary operator views.",
+      "JavaScript bundle down 28% via code splitting, lazy loading, and caching.",
+      "Coordinator UI removed the need for direct ServiceNow interaction.",
     ],
     architecture: [
-      "TanStack Query as the cache of record for queue + entity views; mutations invalidate by tag, not page.",
-      "Virtualized tables for dense reputational events; column defs live next to the domain types.",
-      "Agentic assist is a side channel: suggestions never block the core CRUD path.",
-      "Design tokens borrowed from a HUD — status, severity, and SLA clocks — instead of a marketing theme.",
+      "TanStack Query for queue and entity caching; mutations invalidate by domain tags.",
+      "Virtualized tables for dense incident data with keyboard-first filters and bulk actions.",
+      "Agentic AI conversational layer as a side channel — never blocks core CRUD paths.",
+      "Incident lifecycle: advanced filters, breached SERs, reopen/close, automated email triggers.",
     ],
-    role: "Frontend engineer",
-    period: "HashedIn by Deloitte · 2024–present",
+    highlights: [
+      "Single-handedly architected and developed the entire Coordinator persona UI in React.",
+      "Built incident management workflows: filters, breached SER monitoring, reopen/close, and email notifications.",
+      "Integrated agentic AI conversational interfaces and TanStack Query/Table for data-heavy views.",
+    ],
+    role: "Software Engineer I · frontend lead",
+    period: "HashedIn by Deloitte · Mar 2026 — Present",
   },
   {
     slug: "citi",
     code: "CASE-02",
-    client: "Citi",
-    title: "Settlements — ops desk",
+    client: "Citi Bank",
+    title: "Financial applications & settlements",
     blurb:
-      "Angular + Spring Boot + Kafka surfaces for settlement operations: exception queues, audit trails, and the kind of tables that cannot lie.",
-    stack: ["Angular", "TypeScript", "Spring Boot", "Kafka"],
+      "Angular trade-settlement desk plus Spring Boot/Kafka backends — massive tabular UIs, BDD automation, production releases, and a contract-testing utility for QA.",
+    stack: [
+      "Angular",
+      "TypeScript",
+      "Java",
+      "Spring Boot",
+      "Kafka",
+      "Jenkins",
+      "Harness",
+      "Lightspeed",
+      "Helm",
+      "Kubernetes",
+      "Gherkin",
+    ],
     outcomes: [
-      "Time-to-interactive on the main desk 4.1s → 2.6s.",
-      "187+ defects closed across settlement and exception paths.",
-      "90%+ automated coverage on the critical settlement journeys.",
+      "Average page load time 4.1s → 2.6s on the settlements desk.",
+      "Jasmine test coverage beyond 90% on settlement-critical UI paths.",
+      "Contract-testing utility cut manual Kafka/database QA effort ~60%.",
     ],
     architecture: [
-      "Kafka-backed event stream for settlement state; the UI subscribes to projections, not raw topics.",
-      "Angular modules split by desk (intake, exception, audit) to keep change isolated.",
-      "Spring Boot APIs own idempotency and audit; the client never invents money movement.",
-      "Performance work targeted hydration of the exception grid, not vanity Lighthouse scores.",
+      "High-performance Angular UI for trade settlements with Excel upload/export on massive datasets.",
+      "Settlement trade processing via Spring Boot, Kafka topics, and trade-routing by trade type.",
+      "BDD suites (Component, Template, Integration) with Gherkin — Harness hooks across 15+ services.",
+      "End-to-end production releases via Lightspeed for two enterprise services with KT documentation.",
     ],
-    role: "Frontend / full-stack collaborator",
-    period: "Damco + later programs · 2023–2024",
+    highlights: [
+      "Engineered settlement trade processing flow: Kafka topics, routing logic, BDD cases, and Confluence runbooks.",
+      "Authored BDD automation validating async Kafka flows via Harness post-deployment hooks.",
+      "Owned full-stack Java + Angular contract-testing visualization utility for inbound/outbound flow comparisons.",
+      "Managed production releases: change requests, environment configs, deployment validation, and KT sessions.",
+    ],
+    role: "Software Engineer I · frontend & full-stack",
+    period: "HashedIn by Deloitte · Jan 2025 — Feb 2026",
   },
   {
     slug: "colina",
     code: "CASE-03",
     client: "Colina Insurance",
-    title: "Policyholder mobile — App Store & Play",
+    title: "Policyholder mobile app",
     blurb:
-      "React Native app for insurance self-serve: policies, claims intake, and document capture, shipped to both public stores.",
-    stack: ["React Native", "TypeScript", "REST"],
+      "Cross-platform React Native insurance app — offline-first sync, Firebase and Realm, shipped to Apple App Store and Google Play.",
+    stack: [
+      "React Native",
+      "TypeScript",
+      "Redux Toolkit",
+      "Firebase",
+      "Realm",
+      "REST APIs",
+    ],
     outcomes: [
-      "Shipped to Apple App Store and Google Play.",
-      "Shared TypeScript models between form validation and API contracts.",
-      "Offline-tolerant capture for documents in low-signal environments.",
+      "Launched on Apple App Store and Google Play Store.",
+      "Three production-grade React Native apps delivered at Damco.",
+      "187+ critical UI and API defects resolved ahead of UAT.",
     ],
     architecture: [
-      "Navigation grouped by policy vs. claim so first-time users never mix intents.",
-      "Native modules only where the OS demanded them (camera, secure storage).",
-      "Release trains aligned to store review windows; feature flags for in-flight claims.",
+      "Offline-first synchronization with Realm and Firebase Firestore.",
+      "Reusable React Native UI library using Clean Architecture and component composition.",
+      "OAuth/JWT authentication, Redux Saga, and React Native Paper component system.",
+      "Responsive components optimized across screen sizes and device classes.",
     ],
-    role: "Mobile frontend",
-    period: "Product delivery · 2023–2024",
+    highlights: [
+      "Architected and launched cross-platform insurance app with Firebase, Realm, and REST APIs.",
+      "Built reusable UI components and performance-tuned experiences across Android and iOS.",
+      "Integrated offline-first data sync and REST backends for critical policyholder workflows.",
+    ],
+    role: "Software Engineer · mobile frontend",
+    period: "Damco Solutions · Jul 2023 — Feb 2024",
   },
 ];
 
@@ -132,49 +178,69 @@ export const timeline: Role[] = [
   {
     id: "hashedin",
     org: "HashedIn by Deloitte",
-    title: "Frontend Software Engineer",
+    title: "Software Engineer I",
     dates: "Jul 2024 — Present",
     location: "Bengaluru",
     points: [
-      "Shipping Marriott mTrust: React, TanStack, and agentic-AI assists for trust operations.",
-      "Performance and accessibility on dense enterprise consoles — not marketing pages.",
+      "Marriott mTrust: React coordinator UI, TanStack, agentic AI — LCP −35%, bundle −28%.",
+      "Citi Bank: Angular settlements desk, Spring Boot/Kafka flows, BDD automation, production releases.",
+      "Elevated test coverage to 90%+ with React Testing Library, Jest, Cypress, and Jasmine.",
+      "Mentored 150+ interns in React/Angular; code reviews and cross-functional Agile delivery.",
     ],
   },
   {
     id: "huntsjob",
     org: "HuntsJob",
-    title: "Consultant",
+    title: "Software Consultant",
     dates: "Mar 2024 — Jun 2024",
     points: [
-      "Contract frontend delivery between Damco and HashedIn; rapid ramp on client stacks.",
+      "Pixel-perfect React Native UI refresh and improved mobile user experience.",
+      "Integrated Firebase Cloud Messaging for real-time notifications.",
+      "Deployed to Google Play Store with release compliance and client iteration cycles.",
+      "Mentored three junior developers on React Native fundamentals.",
     ],
   },
   {
     id: "damco",
-    org: "Damco",
+    org: "Damco Solutions",
     title: "Software Engineer",
-    dates: "Jan 2023 — Feb 2024",
+    dates: "Jul 2023 — Feb 2024",
+    location: "Noida",
     points: [
-      "Citi settlements desk: Angular UI over Spring Boot + Kafka.",
-      "Closed 187+ defects and lifted coverage on settlement-critical paths.",
+      "Delivered three production React Native apps to App Store and Google Play.",
+      "Built reusable RN UI library with Clean Architecture; Firebase, Realm, Redux Saga, OAuth/JWT.",
+      "Resolved 187+ critical UI/API defects for UAT readiness within a single sprint cycle.",
+      "Contributed across five projects (three production, two internal) on the mobile team.",
+    ],
+  },
+  {
+    id: "damco-trainee",
+    org: "Damco Solutions",
+    title: "Software Engineer Trainee",
+    dates: "Jan 2023 — Jun 2023",
+    location: "Noida",
+    points: [
+      "Five-month intensive training on enterprise software delivery under senior engineers.",
+      "Offline-first sync logic and REST API integration for cross-platform mobile workflows.",
     ],
   },
   {
     id: "chegg",
-    org: "Chegg",
-    title: "Subject Matter Expert",
-    dates: "Earlier",
+    org: "Chegg India",
+    title: "Subject Matter Expert · Computer Science",
+    dates: "Mar 2021 — Sep 2022",
     points: [
-      "Mentored 150+ learners on CS fundamentals while shipping production software.",
+      "Authored and reviewed computer science learning content and student assessments.",
     ],
   },
   {
     id: "anteelo",
     org: "Anteelo",
     title: "SEO Intern",
-    dates: "Earlier",
+    dates: "Aug 2021 — Sep 2021",
     points: [
-      "Learned how pages actually get found — still informs Core Web Vitals work.",
+      "Keyword research and on-page SEO for client websites; led a team of three co-interns.",
+      "Client reporting on ranking and visibility improvements on search results.",
     ],
   },
 ];
@@ -182,49 +248,172 @@ export const timeline: Role[] = [
 export const skillGroups = [
   {
     id: "frontend",
-    label: "Frontend",
+    label: "Frontend & mobile",
     items: [
-      "React",
+      "React.js (18+)",
+      "Next.js",
       "Angular",
       "React Native",
       "TypeScript",
-      "TanStack Query / Table",
-      "Vite",
-      "Tailwind",
+      "JavaScript (ES6+)",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
     ],
   },
   {
     id: "architecture",
-    label: "Architecture",
+    label: "Architecture & state",
     items: [
-      "Design systems",
-      "Performance (LCP / TTI)",
-      "Accessibility",
-      "Modular monoliths",
-      "Operator UX",
+      "Redux Toolkit",
+      "Context API",
+      "TanStack Query",
+      "Component libraries",
+      "Atomic Design",
+      "Clean Architecture",
+      "Micro-frontends",
     ],
   },
   {
     id: "quality",
-    label: "Quality",
-    items: ["Jest", "Testing Library", "90%+ coverage", "Defect triage"],
+    label: "Performance & quality",
+    items: [
+      "Core Web Vitals",
+      "Lighthouse",
+      "WCAG 2.1 AA",
+      "Jest",
+      "React Testing Library",
+      "Cypress",
+      "Jasmine",
+      "Storybook",
+      "SonarQube",
+    ],
   },
   {
     id: "backend",
-    label: "Backend / cloud",
-    items: ["Spring Boot", "Kafka", "REST", "AWS"],
+    label: "Backend & cloud",
+    items: [
+      "Java",
+      "Spring Boot",
+      "REST APIs",
+      "Kafka",
+      "MongoDB",
+      "PostgreSQL",
+      "Redis",
+      "Firebase",
+      "AWS (EC2, S3, Lambda)",
+    ],
+  },
+  {
+    id: "devops",
+    label: "DevOps & tooling",
+    items: [
+      "Docker",
+      "Kubernetes",
+      "OpenShift",
+      "Helm",
+      "Jenkins",
+      "Harness",
+      "Git",
+      "Bitbucket",
+      "Splunk",
+    ],
   },
   {
     id: "ai",
-    label: "AI",
-    items: ["Agentic AI assists", "Claude Architect"],
+    label: "AI-assisted engineering",
+    items: [
+      "GitHub Copilot",
+      "Cursor",
+      "Claude Code",
+      "Agentic AI",
+      "Prompt engineering",
+    ],
   },
 ] as const;
 
-export const awards = [
-  { id: "ex1", kind: "award" as const, title: "Excellence Award", org: "HashedIn / Deloitte", note: "×2" },
-  { id: "rising", kind: "award" as const, title: "Rising Star", org: "HashedIn / Deloitte", note: "" },
+export type Award = {
+  id: string;
+  title: string;
+  org: string;
+  date: string;
+  note: string;
+};
+
+export const awards: Award[] = [
+  {
+    id: "excellence-jun",
+    title: "Excellence Award",
+    org: "HashedIn by Deloitte",
+    date: "Jun 2026",
+    note: "End-to-end ownership of high-priority production features; technical design and ADRs.",
+  },
+  {
+    id: "excellence-jan",
+    title: "Excellence Award",
+    org: "HashedIn by Deloitte",
+    date: "Jan 2026",
+    note: "Mentored 150+ engineers with fair evaluations while maintaining delivery velocity.",
+  },
+  {
+    id: "rising",
+    title: "Rising Star Award",
+    org: "HashedIn by Deloitte · Citi Bank",
+    date: "May 2025",
+    note: "Java/React utility automating data-flow and version comparisons for QA — Spot Award recognition.",
+  },
 ];
+
+export type Cert = {
+  id: string;
+  code: string;
+  title: string;
+  issuer: string;
+  date: string;
+  href: string;
+};
+
+export const certs: Cert[] = [
+  {
+    id: "claude",
+    code: "CLAUDE",
+    title: "Claude Certified Architect — Foundations",
+    issuer: "Anthropic",
+    date: "Jun 2026",
+    href: "https://www.anthropic.com/claude/certifications",
+  },
+  {
+    id: "dva",
+    code: "DVA",
+    title: "AWS Certified Developer — Associate",
+    issuer: "Amazon Web Services",
+    date: "Apr 2026",
+    href: "https://aws.amazon.com/certification/certified-developer-associate/",
+  },
+  {
+    id: "ccp",
+    code: "CCP",
+    title: "AWS Certified Cloud Practitioner",
+    issuer: "Amazon Web Services",
+    date: "May 2025",
+    href: "https://aws.amazon.com/certification/certified-cloud-practitioner/",
+  },
+  {
+    id: "jss",
+    code: "JSSEC",
+    title: "JavaScript Security Specialization",
+    issuer: "Infosec",
+    date: "Mar 2025",
+    href: "https://www.linkedin.com/in/im-kaushal/details/certifications/",
+  },
+];
+
+export const learningCerts = [
+  { title: "TypeScript Essential Training", issuer: "LinkedIn Learning" },
+  { title: "Search Engine Optimization", issuer: "LinkedIn Learning" },
+  { title: "Git & GitHub", issuer: "LinkedIn Learning" },
+  { title: "SQL", issuer: "LinkedIn Learning" },
+] as const;
 
 export type KindWord = {
   id: string;
@@ -302,15 +491,9 @@ export const kindWords = {
   ] satisfies KindWord[],
 } as const;
 
-export const certs = [
-  { id: "claude", code: "CLAUDE", title: "Claude Architect", issuer: "Anthropic" },
-  { id: "dva", code: "DVA", title: "AWS Developer Associate", issuer: "Amazon Web Services" },
-  { id: "ccp", code: "CCP", title: "AWS Cloud Practitioner", issuer: "Amazon Web Services" },
-  { id: "jss", code: "JSSEC", title: "JavaScript Security", issuer: "Certification" },
-];
-
 export const education = {
   school: "Lovely Professional University",
   degree: "B.Tech, Computer Science & Engineering",
+  period: "2019 — 2023",
   score: "CGPA 7.61",
 };
