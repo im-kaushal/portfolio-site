@@ -28,13 +28,13 @@ export const site = {
 
 export const nav = [
   { id: "work", label: "Work", href: "/#work" },
-  { id: "live-desk", label: "Live desk", href: "/#live-desk" },
-  { id: "impact", label: "Impact", href: "/#impact" },
-  { id: "quality", label: "Quality", href: "/#quality" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "awards", label: "Awards", href: "/#awards" },
   { id: "kind-words", label: "Kind words", href: "/#kind-words" },
+  { id: "impact", label: "Impact", href: "/#impact" },
+  { id: "quality", label: "Quality", href: "/#quality" },
+  { id: "live-desk", label: "Live desk", href: "/#live-desk" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 

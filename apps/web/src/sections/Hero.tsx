@@ -48,8 +48,8 @@ export function Hero() {
           </a>
         </div>
       </motion.div>
-      <HudFrame label="OP.01" className="relative overflow-hidden scanlines">
-        <div className="aspect-[6/7]">
+      <HudFrame label="OP.01" className="relative">
+        <div className="relative aspect-[6/7] overflow-hidden scanlines">
           <OperatorIdentityArt />
         </div>
       </HudFrame>

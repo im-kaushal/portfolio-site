@@ -167,7 +167,7 @@ export function MtrustDeskDemo() {
         <kbd className="border border-line px-1">k</kbd> move).
       </p>
 
-      <HudFrame label="DESK.LIVE" className="mt-8 overflow-hidden">
+      <HudFrame label="DESK.LIVE" className="mt-8">
         <div ref={rootRef} className="outline-none" tabIndex={-1}>
           <div className="flex flex-wrap items-center gap-3 border-b border-line bg-ink-2/80 p-3">
             <input

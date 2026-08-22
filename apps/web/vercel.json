@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "cd ../.. && pnpm install --frozen-lockfile",
-  "buildCommand": "cd ../.. && pnpm --filter @portfolio/api build && pnpm --filter @portfolio/web build",
+  "buildCommand": "cd ../.. && pnpm --filter @portfolio/api build && pnpm --filter @portfolio/web build && node scripts/copy-build-output.cjs",
   "outputDirectory": "dist",
   "functions": {
     "api/**/*.ts": {

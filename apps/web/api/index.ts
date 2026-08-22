@@ -1,6 +1,16 @@
 import "reflect-metadata";
 import type { IncomingMessage, ServerResponse } from "http";
-import { createNestApp } from "../../api/dist/bootstrap";
+import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+
+const require = createRequire(
+  typeof __dirname !== "undefined"
+    ? __filename
+    : fileURLToPath(import.meta.url),
+);
+const { createNestApp } = require("./nest-dist/bootstrap.js") as {
+  createNestApp: () => Promise<import("@nestjs/common").INestApplication>;
+};
 
 let cached:
   | ((req: IncomingMessage, res: ServerResponse) => void)
@@ -15,5 +25,5 @@ export default async function handler(
     await app.init();
     cached = app.getHttpAdapter().getInstance();
   }
-  cached(req, res);
+  cached!(req, res);
 }
