@@ -1,4 +1,5 @@
 import { Awards } from "../sections/Awards";
+import { Builds } from "../sections/Builds";
 import { Contact } from "../sections/Contact";
 import { Experience } from "../sections/Experience";
 import { Hero } from "../sections/Hero";
@@ -16,6 +17,7 @@ export function HomePage() {
       <Impact />
       <QualityProof />
       <Work />
+      <Builds />
       <MtrustDeskDemo />
       <Experience />
       <Skills />
