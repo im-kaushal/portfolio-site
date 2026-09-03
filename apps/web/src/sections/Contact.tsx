@@ -7,7 +7,7 @@ import { LiveVoiceUplink } from "../components/LiveVoiceUplink";
 const actions = [
   { href: `mailto:${site.publicEmail}`, label: "Email me", hint: site.publicEmail },
   { href: site.bookCall.href, label: site.bookCall.label, hint: site.bookCall.hint },
-  { href: site.whatsapp, label: "WhatsApp", hint: "wa.me" },
+  { href: site.instagram, label: "Instagram", hint: "@kausal.in" },
   { href: site.linkedin, label: "LinkedIn", hint: "im-kaushal" },
   { href: site.github, label: "GitHub", hint: "im-kaushal" },
   { href: `tel:${site.phoneTel}`, label: "Call", hint: site.phoneDisplay },
@@ -77,7 +77,7 @@ export function Contact() {
       form.reset();
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Could not send. Use email or WhatsApp.");
+      setError(err instanceof Error ? err.message : "Could not send. Use email or direct channels.");
     }
   }
 

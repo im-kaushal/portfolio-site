@@ -7,14 +7,16 @@ function Seal({ code }: { code: string }) {
       <polygon
         points="44,4 80,24 80,64 44,84 8,64 8,24"
         fill="none"
-        stroke="#e8b86d"
+        stroke="currentColor"
         strokeWidth="1.5"
+        className="text-amber"
       />
       <text
         x="44"
         y="50"
         textAnchor="middle"
-        fill="#8fe8b4"
+        fill="currentColor"
+        className="text-phosphor"
         fontFamily="IBM Plex Mono, monospace"
         fontSize="11"
       >

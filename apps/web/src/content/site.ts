@@ -10,6 +10,8 @@ export const site = {
   phoneDisplay: "+91 79705 13448",
   phoneTel: "+917970513448",
   whatsapp: "https://wa.me/917970513448",
+  instagram: "https://www.instagram.com/kausal.in",
+  instagramHandle: "@kausal.in",
   linkedin: "https://www.linkedin.com/in/im-kaushal",
   github: "https://github.com/im-kaushal",
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
@@ -28,15 +30,15 @@ export const site = {
 } as const;
 
 export const nav = [
+  { id: "skills", label: "Skills", href: "/#skills" },
+  { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "work", label: "Work", href: "/#work" },
   { id: "builds", label: "Builds", href: "/#builds" },
-  { id: "experience", label: "Timeline", href: "/#experience" },
-  { id: "skills", label: "Skills", href: "/#skills" },
-  { id: "education", label: "Education", href: "/#education" },
   { id: "awards", label: "Awards", href: "/#awards" },
   { id: "kind-words", label: "Kind Words", href: "/#kind-words" },
   { id: "impact", label: "Impact", href: "/#impact" },
   { id: "quality", label: "Quality", href: "/#quality" },
+  { id: "education", label: "Education", href: "/#education" },
   { id: "live-desk", label: "Live Desk", href: "/#live-desk" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;

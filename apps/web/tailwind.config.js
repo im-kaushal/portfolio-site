@@ -6,18 +6,18 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: "#0b0d0c",
-          2: "#121614",
-          3: "#1a201c",
+          DEFAULT: "rgb(var(--color-ink) / <alpha-value>)",
+          2: "rgb(var(--color-ink-2) / <alpha-value>)",
+          3: "rgb(var(--color-ink-3) / <alpha-value>)",
         },
-        line: "#2c3830",
+        line: "rgb(var(--color-line) / <alpha-value>)",
         amber: {
-          DEFAULT: "#e8b86d",
-          dim: "#9a7540",
+          DEFAULT: "rgb(var(--color-amber) / <alpha-value>)",
+          dim: "rgb(var(--color-amber-dim) / <alpha-value>)",
         },
-        phosphor: "#8fe8b4",
-        paper: "#e7e1d4",
-        steel: "#8a9a8e",
+        phosphor: "rgb(var(--color-phosphor) / <alpha-value>)",
+        paper: "rgb(var(--color-paper) / <alpha-value>)",
+        steel: "rgb(var(--color-steel) / <alpha-value>)",
       },
       fontFamily: {
         serif: ['"Instrument Serif"', "Georgia", "serif"],

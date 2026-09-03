@@ -10,18 +10,40 @@
   --accent: #e8b86d;
   --live: #8fe8b4;
   --line: rgba(232, 184, 109, 0.16);
+
+  /* Dynamic color channels for Tailwind color system */
+  --color-ink: 11 13 12;
+  --color-ink-2: 18 22 20;
+  --color-ink-3: 26 32 28;
+  --color-line: 44 56 48;
+  --color-amber: 232 184 109;
+  --color-amber-dim: 154 117 64;
+  --color-phosphor: 143 232 180;
+  --color-paper: 231 225 212;
+  --color-steel: 138 154 142;
 }
 
 html.light {
   color-scheme: light;
-  --bg: #e7e1d4;
+  --bg: #f4efe4;
   --fg: #161410;
-  --fg-soft: rgba(22, 20, 16, 0.82);
-  --fg-muted: rgba(22, 20, 16, 0.7);
+  --fg-soft: rgba(22, 20, 16, 0.85);
+  --fg-muted: rgba(22, 20, 16, 0.72);
   --muted: #5a5246;
-  --accent: #8a4b12;
-  --live: #1f6b45;
+  --accent: #9a4b0e;
+  --live: #166534;
   --line: rgba(22, 20, 16, 0.14);
+
+  /* Day (Light) mode dynamic color channels: high contrast and WCAG AA verified */
+  --color-ink: 244 239 228;
+  --color-ink-2: 250 246 239;
+  --color-ink-3: 232 224 210;
+  --color-line: 180 168 150;
+  --color-amber: 154 75 14;
+  --color-amber-dim: 180 83 9;
+  --color-phosphor: 22 101 52;
+  --color-paper: 22 20 16;
+  --color-steel: 85 78 68;
 }
 
 html,
@@ -138,111 +160,38 @@ body {
 
 html.light .operator-art-bg {
   background:
-    radial-gradient(circle at 20% 20%, rgba(31, 107, 69, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(138, 75, 18, 0.1) 0%, transparent 40%),
-    linear-gradient(160deg, #f4efe4 0%, #e7e1d4 55%, #f4efe4 100%);
+    radial-gradient(circle at 20% 20%, rgba(22, 101, 52, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(154, 75, 14, 0.1) 0%, transparent 40%),
+    linear-gradient(160deg, #faf6ee 0%, #f4efe4 55%, #faf6ee 100%);
 }
 
-html.light .bg-ink,
-html.light .bg-ink\/90,
-html.light .bg-ink\/94,
-html.light .bg-ink\/70,
-html.light .bg-ink\/60,
-html.light .bg-ink-2\/80,
-html.light .bg-ink-2\/70,
-html.light .bg-ink-2,
-html.light .bg-ink-3 {
-  background-color: #f4efe4;
-}
-
-html.light .bg-ink\/90 {
-  background-color: rgba(244, 239, 228, 0.94);
-}
-
-html.light .bg-ink\/94 {
-  background-color: rgba(244, 239, 228, 0.97);
-}
-
-html.light .bg-ink\/70,
-html.light .bg-ink\/60 {
-  background-color: rgba(244, 239, 228, 0.88);
-}
-
-html.light .text-paper,
-html.light .text-paper\/90 {
-  color: var(--fg);
-}
-
-html.light .text-paper\/80 {
-  color: var(--fg-soft);
-}
-
-html.light .text-paper\/70 {
-  color: var(--fg-muted);
-}
-
-html.light .text-steel {
-  color: #5a5246;
-}
-
-html.light .text-phosphor,
-html.light .text-phosphor\/90,
-html.light .text-phosphor\/80 {
-  color: #1f6b45;
-}
-
-html.light .text-amber,
-html.light .text-amber\/90,
-html.light .text-amber\/80 {
-  color: #8a4b12;
-}
-
-html.light .hover\:text-paper:hover {
-  color: var(--fg);
-}
-
-html.light .hover\:text-phosphor:hover {
-  color: #1f6b45;
-}
-
-html.light .border-line {
-  border-color: rgba(22, 20, 16, 0.16);
-}
-
-html.light .border-line\/50 {
-  border-color: rgba(22, 20, 16, 0.12);
-}
-
-html.light .border-amber\/25 {
-  border-color: rgba(138, 75, 18, 0.35);
-}
-
-html.light .border-amber\/40 {
-  border-color: rgba(138, 75, 18, 0.45);
+html.light .text-ink {
+  color: #faf6ef !important;
 }
 
 html.light .shadow-hud {
-  box-shadow: 0 0 0 1px rgba(138, 75, 18, 0.2), 0 24px 80px rgba(22, 20, 16, 0.08);
+  box-shadow: 0 0 0 1px rgba(154, 75, 14, 0.22), 0 20px 60px rgba(22, 20, 16, 0.08);
 }
 
 html.light .operator-art {
-  background-color: #ebe4d8;
+  background-color: #f0e9dc;
 }
 
 html.light .operator-art .border-amber\/25 {
-  border-color: rgba(138, 75, 18, 0.4);
+  border-color: rgba(154, 75, 14, 0.4);
 }
 
 html.light .scanlines::after {
   opacity: 0.12;
 }
 
-html.light input.text-paper,
-html.light textarea.text-paper {
+html.light input,
+html.light textarea {
   color: var(--fg);
-  background-color: #f0e9dc;
+  background-color: #faf6ef;
 }
 
-html.light .bg-ink-3 {
-  background-color: #e8e0d2;
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: rgba(90, 82, 70, 0.65);
 }

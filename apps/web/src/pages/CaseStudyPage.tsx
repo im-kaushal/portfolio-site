@@ -39,7 +39,7 @@ export function CaseStudyPage() {
       </section>
       <section className="mt-10">
         <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Project Highlights</h2>
-        <HudFrame className="mt-3 p-5">
+        <HudFrame className="mt-3" contentClassName="p-5">
           <ul className="list-disc space-y-2 pl-5 text-paper/80">
             {study.highlights.map((h) => (
               <li key={h} className="text-justify">{h}</li>

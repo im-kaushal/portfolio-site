@@ -28,7 +28,7 @@ export function CommandPalette() {
     return [
       ...jumps,
       {
-        id: "live-desk",
+        id: "quick-live-desk",
         label: "Open synthetic desk",
         hint: "mTrust demo",
         run: () => {
@@ -67,6 +67,12 @@ export function CommandPalette() {
         label: "Open GitHub",
         hint: "im-kaushal",
         run: () => window.open(site.github, "_blank", "noopener,noreferrer"),
+      },
+      {
+        id: "instagram",
+        label: "Open Instagram",
+        hint: site.instagramHandle,
+        run: () => window.open(site.instagram, "_blank", "noopener,noreferrer"),
       },
       {
         id: "resume",

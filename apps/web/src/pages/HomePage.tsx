@@ -17,14 +17,14 @@ export function HomePage() {
       <Hero />
       <Impact />
       <QualityProof />
+      <Skills />
+      <Experience />
       <Work />
       <Builds />
-      <MtrustDeskDemo />
-      <Experience />
-      <Skills />
-      <Education />
       <Awards />
       <KindWords />
+      <Education />
+      <MtrustDeskDemo />
       <Contact />
     </main>
   );
