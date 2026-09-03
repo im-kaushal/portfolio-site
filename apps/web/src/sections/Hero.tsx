@@ -18,33 +18,40 @@ export function Hero() {
         <h1 className="mt-4 font-serif text-5xl leading-[0.95] text-paper md:text-7xl">
           {site.name}
         </h1>
-        <p className="mt-4 max-w-xl text-lg text-steel">{site.title}</p>
-        <p className="mt-2 font-mono text-xs uppercase tracking-widest text-phosphor">
+        <p className="mt-3 font-mono text-sm text-amber font-medium">
+          {site.headline}
+        </p>
+        <p className="mt-3 font-mono text-xs uppercase tracking-widest text-phosphor">
           {site.openToWork.headline} · {site.openToWork.detail}
         </p>
-        <p className="mt-2 font-mono text-sm text-amber">
-          {site.years} yrs · React · Angular · React Native
-        </p>
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-paper/80">{site.summary}</p>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <p className="mt-6 max-w-xl text-justify text-base leading-relaxed text-paper/85">{site.summary}</p>
+        <div className="mt-8 flex flex-wrap items-center gap-3">
           <a
             href="#work"
-            className="border border-amber bg-amber px-4 py-2 font-mono text-xs uppercase tracking-widest text-ink hover:bg-transparent hover:text-amber"
+            className="border border-amber bg-amber px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-ink hover:bg-transparent hover:text-amber transition-colors"
           >
-            View work
+            View Work
           </a>
           <a
             href="#contact"
-            className="border border-line px-4 py-2 font-mono text-xs uppercase tracking-widest text-paper hover:border-amber hover:text-amber"
+            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-paper hover:border-amber hover:text-amber transition-colors"
           >
             Contact
           </a>
           <a
             href={site.resumeHref}
             download
-            className="border border-line px-4 py-2 font-mono text-xs uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor"
+            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor transition-colors"
           >
-            Download resume
+            Resume PDF
+          </a>
+          <a
+            href={site.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-steel hover:border-amber hover:text-amber transition-colors"
+          >
+            LinkedIn ↗
           </a>
         </div>
       </motion.div>

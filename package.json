@@ -1,16 +1,18 @@
 {
   "name": "kaushal-portfolio",
   "private": true,
-  "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=20"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "pnpm --parallel --filter @portfolio/web --filter @portfolio/api dev",
-    "build": "pnpm --filter @portfolio/api build && pnpm --filter @portfolio/web build && node scripts/copy-build-output.cjs",
+    "dev": "npm run dev --workspace=@portfolio/web",
+    "build": "npm run build --workspace=@portfolio/web && node scripts/copy-build-output.cjs",
     "lint": "eslint .",
-    "typecheck": "pnpm -r --if-present typecheck",
-    "test": "pnpm -r --if-present test"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.11",

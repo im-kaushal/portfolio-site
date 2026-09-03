@@ -26,7 +26,7 @@ export function CaseStudyPage() {
       <p className="mt-2 font-mono text-xs text-steel">
         {study.role} · {study.period}
       </p>
-      <p className="mt-6 text-lg leading-relaxed text-paper/80">{study.blurb}</p>
+      <p className="mt-6 text-justify text-lg leading-relaxed text-paper/80">{study.blurb}</p>
       <section className="mt-10">
         <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Stack</h2>
         <ul className="mt-3 flex flex-wrap gap-2">
@@ -38,11 +38,11 @@ export function CaseStudyPage() {
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Project highlights</h2>
+        <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Project Highlights</h2>
         <HudFrame className="mt-3 p-5">
           <ul className="list-disc space-y-2 pl-5 text-paper/80">
             {study.highlights.map((h) => (
-              <li key={h}>{h}</li>
+              <li key={h} className="text-justify">{h}</li>
             ))}
           </ul>
         </HudFrame>
@@ -56,7 +56,7 @@ export function CaseStudyPage() {
         </ul>
       </section>
       <section className="mt-10">
-        <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Architecture notes</h2>
+        <h2 className="font-mono text-xs uppercase tracking-widest text-amber">Architecture Notes</h2>
         <ul className="mt-3 list-disc space-y-2 pl-5 text-paper/80">
           {study.architecture.map((o) => (
             <li key={o}>{o}</li>

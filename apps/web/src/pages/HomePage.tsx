@@ -1,6 +1,7 @@
 import { Awards } from "../sections/Awards";
 import { Builds } from "../sections/Builds";
 import { Contact } from "../sections/Contact";
+import { Education } from "../sections/Education";
 import { Experience } from "../sections/Experience";
 import { Hero } from "../sections/Hero";
 import { Impact } from "../sections/Impact";
@@ -21,6 +22,7 @@ export function HomePage() {
       <MtrustDeskDemo />
       <Experience />
       <Skills />
+      <Education />
       <Awards />
       <KindWords />
       <Contact />

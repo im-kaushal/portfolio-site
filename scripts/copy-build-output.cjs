@@ -5,6 +5,9 @@ const root = path.resolve(__dirname, "..");
 
 function copyNestDist(targetDir) {
   const source = path.join(root, "apps/api/dist");
+  if (!fs.existsSync(source)) {
+    return;
+  }
   fs.rmSync(targetDir, { recursive: true, force: true });
   fs.cpSync(source, targetDir, { recursive: true });
   fs.writeFileSync(
@@ -19,4 +22,6 @@ copyNestDist(path.join(root, "api/nest-dist"));
 const siteDist = path.join(root, "apps/web/dist");
 const outputDist = path.join(root, "dist");
 fs.rmSync(outputDist, { recursive: true, force: true });
-fs.cpSync(siteDist, outputDist, { recursive: true });
+if (fs.existsSync(siteDist)) {
+  fs.cpSync(siteDist, outputDist, { recursive: true });
+}

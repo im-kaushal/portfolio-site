@@ -13,10 +13,10 @@ function QuoteBlock({
   letterOpen?: boolean;
 }) {
   return (
-    <HudFrame label={item.channel} className="relative p-6 md:p-8">
+    <HudFrame label={item.channel} contentClassName="relative p-6 md:p-8">
       <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">{item.source}</p>
       <blockquote className="mt-4">
-        <p className="font-sans text-base leading-relaxed text-paper/90">“{item.quote}”</p>
+        <p className="font-sans text-justify text-base leading-relaxed text-paper/90">“{item.quote}”</p>
         <footer className="mt-4 font-mono text-[11px] uppercase tracking-widest text-steel md:mt-6">
           — {item.source}
         </footer>
@@ -25,11 +25,11 @@ function QuoteBlock({
         <button
           type="button"
           onClick={onOpenLetter}
-          className="absolute bottom-3 right-3 border border-amber bg-ink/90 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-amber transition hover:bg-amber hover:text-ink"
+          className="mt-6 inline-flex items-center gap-1.5 border border-amber bg-ink/90 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-amber transition hover:bg-amber hover:text-ink"
           aria-haspopup="dialog"
           aria-expanded={letterOpen}
         >
-          Open letter preview
+          View Spot Award Letter ↗
         </button>
       ) : null}
     </HudFrame>
@@ -64,8 +64,8 @@ export function KindWords() {
   return (
     <section id="kind-words" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Dispatch</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Kind words</h2>
-      <p className="mt-3 max-w-2xl text-steel">{kindWords.intro}</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">Kind Words</h2>
+      <p className="mt-3 max-w-2xl text-justify text-steel">{kindWords.intro}</p>
 
       <div className="mt-8 space-y-8">
         {featured.map((item) => (
@@ -99,17 +99,24 @@ export function KindWords() {
       {highlights.length > 0 ? (
         <div className="mt-10">
           <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-            Citi · RT highlights
+            Citi · RT Highlights
           </p>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {highlights.map((item) => (
-              <HudFrame key={item.id} label={item.channel} className="p-5">
-                <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-                  {item.source}
-                </p>
-                <blockquote className="mt-3">
-                  <p className="font-sans text-sm leading-relaxed text-paper/90">“{item.quote}”</p>
-                </blockquote>
+              <HudFrame
+                key={item.id}
+                label={item.channel}
+                className="h-full"
+                contentClassName="p-5 flex flex-col justify-between h-full"
+              >
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
+                    {item.source}
+                  </p>
+                  <blockquote className="mt-3">
+                    <p className="font-sans text-justify text-sm leading-relaxed text-paper/90">“{item.quote}”</p>
+                  </blockquote>
+                </div>
               </HudFrame>
             ))}
           </div>

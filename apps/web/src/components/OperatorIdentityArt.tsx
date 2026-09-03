@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { site } from "../content/site";
 
@@ -112,6 +113,7 @@ function WireframePortrait() {
 
 export function OperatorIdentityArt() {
   const reduce = useReducedMotion();
+  const [mode, setMode] = useState<"photo" | "wireframe">("photo");
 
   return (
     <div className="operator-art relative h-full w-full overflow-hidden bg-ink-2">
@@ -134,12 +136,21 @@ export function OperatorIdentityArt() {
         01
       </p>
 
-      <div className="absolute inset-x-4 top-6 z-20 flex justify-between font-mono text-[9px] uppercase tracking-[0.22em]">
-        <span className="text-phosphor/80">{site.callsign}</span>
-        <span className="text-amber/90">DIGITAL · OP</span>
+      {/* Header controls with toggle button */}
+      <div className="absolute inset-x-4 top-4 z-30 flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.2em]">
+        <span className="text-phosphor/90">{site.callsign}</span>
+        <button
+          type="button"
+          onClick={() => setMode((m) => (m === "photo" ? "wireframe" : "photo"))}
+          className="border border-line bg-ink/90 px-2 py-1 text-amber transition-colors hover:border-amber hover:bg-ink"
+          title="Toggle between real photograph and synthetic wireframe"
+        >
+          {mode === "photo" ? "MODE: PHOTO" : "MODE: SCAN"}
+        </button>
       </div>
 
-      <div className="absolute inset-x-5 top-[16%] bottom-[16%] z-[1] border border-amber/25 bg-ink/60 shadow-[inset_0_0_60px_rgba(143,232,180,0.06)]">
+      {/* Frame with Portrait */}
+      <div className="absolute inset-x-5 top-[16%] bottom-[16%] z-[1] overflow-hidden border border-amber/25 bg-ink/60 shadow-[inset_0_0_60px_rgba(143,232,180,0.06)]">
         <div
           className={`absolute inset-0 opacity-30 mix-blend-screen ${reduce ? "" : "operator-art-pulse"}`}
           style={{
@@ -148,9 +159,26 @@ export function OperatorIdentityArt() {
           }}
           aria-hidden
         />
-        <div className="absolute inset-3 md:inset-4">
-          <WireframePortrait />
-        </div>
+
+        {mode === "photo" ? (
+          <div className="relative h-full w-full">
+            <img
+              src={site.headshotSrc}
+              alt="Kaushal Kumar - Software Engineer"
+              className="h-full w-full object-cover object-top opacity-90 transition-all duration-300"
+            />
+            {/* Subtle tactical lighting and color grading */}
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/20 mix-blend-multiply"
+              aria-hidden
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-3 md:inset-4">
+            <WireframePortrait />
+          </div>
+        )}
+
         <div
           className={`pointer-events-none absolute left-0 right-0 top-0 h-px bg-phosphor/40 ${reduce ? "" : "operator-scan-line"}`}
           aria-hidden
@@ -185,12 +213,12 @@ export function OperatorIdentityArt() {
         className="pointer-events-none absolute bottom-10 left-5 right-5 z-20 flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.2em]"
         aria-hidden
       >
-        <span className="text-phosphor/90">SIG.LOCKED</span>
-        <span className="text-amber/80">FE · ENGINE</span>
+        <span className="text-phosphor/90">SIG.VERIFIED</span>
+        <span className="text-amber/80">HASHEDIN · DELOITTE</span>
       </div>
 
       <div className="pointer-events-none absolute bottom-3 left-5 right-5 z-20 flex gap-1" aria-hidden>
-        {["REACT", "TS", "RN"].map((tag) => (
+        {["REACT", "ANGULAR", "RN", "AWS"].map((tag) => (
           <span
             key={tag}
             className="border border-line/50 bg-ink/90 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-widest text-steel"

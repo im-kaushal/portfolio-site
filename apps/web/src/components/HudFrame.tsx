@@ -4,26 +4,33 @@ import { cn } from "../lib/cn";
 export function HudFrame({
   children,
   className,
+  contentClassName,
   label,
 }: {
   children: ReactNode;
   className?: string;
+  contentClassName?: string;
   label?: string;
 }) {
   return (
-    <div className={cn("relative", label ? "pt-3" : undefined, className)}>
+    <div className={cn("relative group", label ? "pt-2.5" : undefined, className)}>
       {label ? (
-        <p
-          className="absolute top-0 left-3 z-10 bg-ink px-1 font-mono text-[10px] uppercase leading-none tracking-[0.2em] text-amber"
+        <span
+          className="absolute top-0 left-3 z-10 border border-line bg-ink px-1.5 py-0.5 font-mono text-[9px] uppercase leading-none tracking-[0.22em] text-amber"
         >
           {label}
-        </p>
+        </span>
       ) : null}
-      <div className="relative border border-line bg-ink-2/80 shadow-hud">
-        <span className="pointer-events-none absolute left-0 top-0 h-2 w-2 border-l border-t border-amber" />
-        <span className="pointer-events-none absolute right-0 top-0 h-2 w-2 border-r border-t border-amber" />
-        <span className="pointer-events-none absolute bottom-0 left-0 h-2 w-2 border-b border-l border-amber" />
-        <span className="pointer-events-none absolute bottom-0 right-0 h-2 w-2 border-b border-r border-amber" />
+      <div
+        className={cn(
+          "relative border border-line bg-ink-2/80 shadow-hud transition-colors group-hover:border-line/90",
+          contentClassName,
+        )}
+      >
+        <span className="pointer-events-none absolute -left-[1px] -top-[1px] h-2 w-2 border-l border-t border-amber" />
+        <span className="pointer-events-none absolute -right-[1px] -top-[1px] h-2 w-2 border-r border-t border-amber" />
+        <span className="pointer-events-none absolute -bottom-[1px] -left-[1px] h-2 w-2 border-b border-l border-amber" />
+        <span className="pointer-events-none absolute -bottom-[1px] -right-[1px] h-2 w-2 border-b border-r border-amber" />
         {children}
       </div>
     </div>

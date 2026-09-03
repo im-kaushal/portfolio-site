@@ -16,13 +16,13 @@ export function QualityProof() {
   return (
     <section id="quality" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Clearance</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Quality & performance proof</h2>
-      <p className="mt-3 max-w-3xl text-steel">{qualityProof.intro}</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">Quality & Performance Proof</h2>
+      <p className="mt-3 max-w-3xl text-justify text-steel">{qualityProof.intro}</p>
 
       <div className="mt-8 grid gap-4 lg:grid-cols-2">
         <HudFrame label="LH.REPORT" className="p-5">
           <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-            Lighthouse · portfolio + operator patterns
+            Lighthouse · Portfolio + Operator Patterns
           </p>
           <ul className="mt-4 space-y-4">
             {qualityProof.lighthouse.map((item) => (
@@ -42,7 +42,7 @@ export function QualityProof() {
 
         <HudFrame label="ENG.DELTA" className="p-5">
           <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-            Before → after · production programs
+            Before → After · Production Programs
           </p>
           <ul className="mt-4 space-y-3">
             {qualityProof.engineering.map((row) => (
@@ -68,7 +68,7 @@ export function QualityProof() {
 
       <HudFrame label="TOOLCHAIN" className="mt-4 p-5">
         <p className="font-mono text-[10px] uppercase tracking-widest text-steel">
-          Quality toolchain in active use
+          Quality Toolchain in Active Use
         </p>
         <ul className="mt-3 flex flex-wrap gap-2">
           {qualityProof.stack.map((tool) => (

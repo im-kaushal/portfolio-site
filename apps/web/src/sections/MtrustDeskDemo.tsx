@@ -158,8 +158,8 @@ export function MtrustDeskDemo() {
   return (
     <section id="live-desk" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Simulator</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">mTrust coordinator desk</h2>
-      <p className="mt-3 max-w-3xl text-steel">
+      <h2 className="mt-2 font-serif text-4xl text-paper">mTrust Coordinator Desk</h2>
+      <p className="mt-3 max-w-3xl text-justify text-steel">
         Synthetic incident queue — same interaction patterns as the Marriott mTrust coordinator UI.
         All data is fictional. Try filters, row select, and keyboard shortcuts (
         <kbd className="border border-line px-1">/</kbd> search,

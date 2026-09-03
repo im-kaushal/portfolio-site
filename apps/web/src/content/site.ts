@@ -1,27 +1,28 @@
 export const site = {
   name: "Kaushal Kumar",
   callsign: "KK.FE",
-  title: "Frontend Software Engineer",
+  title: "Frontend & Mobile Software Engineer",
+  headline: "Software Engineer @HashedIn (Deloitte - USI) | Ex-Damcoite | Mobile App Developer | Frontend Developer | AWS Certified Developer",
   employer: "HashedIn by Deloitte",
-  location: "Bengaluru",
+  location: "Bengaluru, Karnataka, India",
   years: "3.5+",
   publicEmail: "work.kaushal@yahoo.com",
-  phoneDisplay: "+91 91420 43244",
-  phoneTel: "+919142043244",
-  whatsapp: "https://wa.me/919142043244",
-  linkedin: "https://linkedin.com/in/im-kaushal",
+  phoneDisplay: "+91 79705 13448",
+  phoneTel: "+917970513448",
+  whatsapp: "https://wa.me/917970513448",
+  linkedin: "https://www.linkedin.com/in/im-kaushal",
   github: "https://github.com/im-kaushal",
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "Frontend Software Engineer with 3.5+ years building scalable web and mobile applications in React, Angular, React Native, Next.js, and TypeScript — performance, architecture, and shipping enterprise-grade product at scale.",
+    "A B.Tech graduate in Computer Science from Lovely Professional University (Class of 2023), currently working as a Software Engineer at HashedIn by Deloitte. Contributed to enterprise projects for prominent clients in banking, finance, and hospitality sectors (including Citi Bank and Marriott), delivering scalable front-end, mobile, and full-stack solutions. Proficient in React, React Native, Angular, and TypeScript/JavaScript, with deep experience in optimizing processes, building internal tools, and collaborating with cross-functional teams. Recognized for ownership, problem-solving in critical projects, and mentoring engineers.",
   openToWork: {
-    headline: "Open to frontend & full-stack roles",
-    detail: "Bengaluru · remote-friendly · React, Angular, React Native",
+    headline: "Open to frontend, mobile & full-stack roles",
+    detail: "Bengaluru · Remote-friendly · React, React Native, Angular",
   },
   bookCall: {
     label: "Book a call",
-    href: "https://wa.me/919142043244?text=Hi%20Kaushal%2C%20I%27d%20like%20to%20schedule%20a%20short%20intro%20call%20about%20a%20role.",
+    href: "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%27d%20like%20to%20connect%20regarding%20an%20engineering%20role.",
     hint: "WhatsApp · 20 min intro",
   },
 } as const;
@@ -31,11 +32,12 @@ export const nav = [
   { id: "builds", label: "Builds", href: "/#builds" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "skills", label: "Skills", href: "/#skills" },
+  { id: "education", label: "Education", href: "/#education" },
   { id: "awards", label: "Awards", href: "/#awards" },
-  { id: "kind-words", label: "Kind words", href: "/#kind-words" },
+  { id: "kind-words", label: "Kind Words", href: "/#kind-words" },
   { id: "impact", label: "Impact", href: "/#impact" },
   { id: "quality", label: "Quality", href: "/#quality" },
-  { id: "live-desk", label: "Live desk", href: "/#live-desk" },
+  { id: "live-desk", label: "Live Desk", href: "/#live-desk" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
@@ -209,12 +211,45 @@ export const personalProjects: PersonalProject[] = [
     id: "huntai",
     code: "BUILD-01",
     name: "HuntAI",
-    title: "Job search command center",
+    title: "Job Search Command Center",
     blurb:
       "Explainable job matching, pipeline tracking, and application-prep drafts for software engineers — live on Vercel.",
     stack: ["TypeScript", "Node", "Vercel"],
     liveHref: "https://huntai-kappa.vercel.app",
     repoHref: "https://github.com/im-kaushal/HuntAI",
+  },
+  {
+    id: "code-review-agent",
+    code: "BUILD-02",
+    name: "code-review-agent",
+    title: "Autonomous PR Review & Analysis Agent",
+    blurb:
+      "Automated code analysis agent that inspects pull request diffs for security vulnerabilities, architectural anti-patterns, test coverage gaps, and styling regressions with contextual inline feedback.",
+    stack: ["TypeScript", "Node.js", "GitHub Actions", "LLM APIs"],
+    liveHref: "https://github.com/im-kaushal/code-review-agent",
+    repoHref: "https://github.com/im-kaushal/code-review-agent",
+  },
+  {
+    id: "pdf-bot-web",
+    code: "BUILD-03",
+    name: "pdf-bot-web",
+    title: "Conversational PDF Document Assistant",
+    blurb:
+      "Web-based interactive assistant for PDF documents featuring vector retrieval, contextual Q&A, multi-page summarization, citation tracing, and reactive client-side rendering.",
+    stack: ["React", "TypeScript", "Tailwind CSS", "RAG Pipeline"],
+    liveHref: "https://studio--pdf-chat-assistant-ld77i.us-central1.hosted.app/chat",
+    repoHref: "https://github.com/im-kaushal/pdf-bot-web",
+  },
+  {
+    id: "docubot",
+    code: "BUILD-04",
+    name: "DocuBot",
+    title: "Multi-Format Document Intelligence Engine",
+    blurb:
+      "Retrieval-augmented generation (RAG) platform that ingests technical documentation, API specifications, and enterprise manuals to deliver verified responses with citation validation.",
+    stack: ["TypeScript", "Python", "Vector DB", "FastAPI"],
+    liveHref: "https://github.com/im-kaushal/DocuBot",
+    repoHref: "https://github.com/im-kaushal/DocuBot",
   },
 ];
 
@@ -224,6 +259,7 @@ export type Role = {
   title: string;
   dates: string;
   location?: string;
+  clientBadge?: string;
   points: string[];
 };
 
@@ -231,14 +267,18 @@ export const timeline: Role[] = [
   {
     id: "hashedin",
     org: "HashedIn by Deloitte",
-    title: "Software Engineer I",
+    title: "Software Engineer",
     dates: "Jul 2024 — Present",
-    location: "Bengaluru",
+    location: "Bengaluru, Karnataka",
+    clientBadge: "Citi Bank & Marriott",
     points: [
-      "Marriott mTrust: React coordinator UI, TanStack, agentic AI — LCP −35%, bundle −28%.",
-      "Citi Bank: Angular settlements desk, Spring Boot/Kafka flows, BDD automation, production releases.",
+      "Developed scalable frontend and full-stack solutions for major enterprise clients, including Citi Bank and Marriott.",
+      "Resolved high-impact issues and architectural bottlenecks, optimizing processes to enhance product stability and delivery speed.",
+      "Collaborated seamlessly with cross-functional product, QA, and backend teams to ensure effective communication and timely delivery.",
+      "Marriott mTrust: Architected and built the React Coordinator persona UI with TanStack Query/Table and agentic-AI flows — Largest Contentful Paint down 35%, JavaScript bundle reduced by 28%.",
+      "Citi Bank: Engineered Angular trade settlement desk, Spring Boot/Kafka processing flows, Gherkin BDD test suites, and Lightspeed production releases.",
       "Elevated test coverage to 90%+ with React Testing Library, Jest, Cypress, and Jasmine.",
-      "Mentored 150+ interns in React/Angular; code reviews and cross-functional Agile delivery.",
+      "Mentored 150+ engineers and interns with thorough code reviews, technical guidance, and Agile delivery practices.",
     ],
   },
   {
@@ -246,11 +286,13 @@ export const timeline: Role[] = [
     org: "HuntsJob",
     title: "Software Consultant",
     dates: "Mar 2024 — Jun 2024",
+    location: "Remote",
+    clientBadge: "Mobile / React Native",
     points: [
-      "Pixel-perfect React Native UI refresh and improved mobile user experience.",
-      "Integrated Firebase Cloud Messaging for real-time notifications.",
-      "Deployed to Google Play Store with release compliance and client iteration cycles.",
-      "Mentored three junior developers on React Native fundamentals.",
+      "Enhanced the UI of a React Native mobile application, achieving a pixel-perfect design and improved user experience.",
+      "Integrated a real-time notification system using Firebase Cloud Messaging (FCM) to keep users continuously engaged.",
+      "Deployed the application to the Google Play Store, ensuring full compliance with Google publishing standards and security policies.",
+      "Mentored three junior developers in mobile application development, fostering their growth and code craftsmanship in React Native.",
     ],
   },
   {
@@ -258,12 +300,14 @@ export const timeline: Role[] = [
     org: "Damco Solutions",
     title: "Software Engineer",
     dates: "Jul 2023 — Feb 2024",
-    location: "Noida",
+    location: "Noida, Uttar Pradesh",
+    clientBadge: "Colina & Enterprise",
     points: [
-      "Delivered three production React Native apps to App Store and Google Play.",
-      "Built reusable RN UI library with Clean Architecture; Firebase, Realm, Redux Saga, OAuth/JWT.",
-      "Resolved 187+ critical UI/API defects for UAT readiness within a single sprint cycle.",
-      "Contributed across five projects (three production, two internal) on the mobile team.",
+      "Contributed to five diverse client and internal projects, with three successfully launched in production.",
+      "Supported the React Native development team, enhancing cross-platform mobile application capabilities and performance.",
+      "Demonstrated strong project management skills by handling multiple client projects simultaneously with high delivery velocity.",
+      "Built reusable RN UI library adopting Clean Architecture principles, Firebase, Realm offline-sync, and Redux Saga.",
+      "Resolved 187+ critical UI and API defects ahead of UAT, ensuring a zero-regression rollout on Apple App Store and Google Play.",
     ],
   },
   {
@@ -271,10 +315,11 @@ export const timeline: Role[] = [
     org: "Damco Solutions",
     title: "Software Engineer Trainee",
     dates: "Jan 2023 — Jun 2023",
-    location: "Noida",
+    location: "Noida, Uttar Pradesh",
     points: [
-      "Five-month intensive training on enterprise software delivery under senior engineers.",
-      "Offline-first sync logic and REST API integration for cross-platform mobile workflows.",
+      "Completed a rigorous five-month training program focusing on advanced JavaScript, modern React Native, and enterprise architectural patterns.",
+      "Gained hands-on experience in architecture, state management, and UI component libraries, enhancing technical proficiency.",
+      "Developed troubleshooting and debugging skills, enabling effective problem-solving in production software environments.",
     ],
   },
   {
@@ -282,18 +327,20 @@ export const timeline: Role[] = [
     org: "Chegg India",
     title: "Subject Matter Expert · Computer Science",
     dates: "Mar 2021 — Sep 2022",
+    location: "Remote",
     points: [
-      "Authored and reviewed computer science learning content and student assessments.",
+      "Authored and reviewed computer science learning content, technical problem solutions, and student assessments across algorithms and data structures.",
     ],
   },
   {
     id: "anteelo",
     org: "Anteelo",
-    title: "SEO Intern",
+    title: "Search Engine Optimization (SEO)",
     dates: "Aug 2021 — Sep 2021",
+    location: "Remote",
     points: [
-      "Keyword research and on-page SEO for client websites; led a team of three co-interns.",
-      "Client reporting on ranking and visibility improvements on search results.",
+      "Assisted in developing websites for both the company and its clients, enhancing user experience, search visibility, and functionality.",
+      "Created presentations and reports for clients, effectively communicating SEO insights, traffic audits, and recommendations.",
     ],
   },
 ];
@@ -567,9 +614,45 @@ export const kindWords = {
   ] satisfies KindWord[],
 } as const;
 
-export const education = {
-  school: "Lovely Professional University",
-  degree: "B.Tech, Computer Science & Engineering",
-  period: "2019 — 2023",
-  score: "CGPA 7.61",
+export type EducationEntry = {
+  id: string;
+  school: string;
+  degree: string;
+  period: string;
+  score?: string;
+  notes?: string;
 };
+
+export const educationHistory: EducationEntry[] = [
+  {
+    id: "lpu",
+    school: "Lovely Professional University",
+    degree: "Bachelor of Technology (B.Tech) · Computer Science & Engineering",
+    period: "2019 — 2023",
+    score: "CGPA 7.61",
+    notes: "Core disciplines: Algorithms, Data Structures, Mobile & Web Architecture, Operating Systems, Database Management Systems.",
+  },
+  {
+    id: "bseb",
+    school: "Bihar School Examination Board",
+    degree: "Higher Secondary (10+2) · Physics, Chemistry & Mathematics (PCM)",
+    period: "2017 — 2019",
+    score: "Class of 2019",
+    notes: "Foundation in science, advanced mathematics, and analytical problem-solving.",
+  },
+  {
+    id: "svm",
+    school: "Sarashwati Vidya Mandir",
+    degree: "Secondary School Certificate (Xth, CBSE)",
+    period: "2015 — 2016",
+    score: "Class of 2016",
+    notes: "Matriculation with academic excellence and foundational sciences.",
+  },
+];
+
+export const languages = [
+  { language: "Hindi", proficiency: "Native or Bilingual Proficiency" },
+  { language: "English", proficiency: "Full Professional Proficiency" },
+] as const;
+
+export const education = educationHistory[0];
