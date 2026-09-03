@@ -1,6 +1,6 @@
 {
   "name": "Kaushal Kumar — Frontend Software Engineer",
   "description": "Frontend engineer at HashedIn by Deloitte. React, Angular, React Native, and performance-minded enterprise work.",
-  "requestFramePermissions": [],
+  "requestFramePermissions": ["microphone"],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

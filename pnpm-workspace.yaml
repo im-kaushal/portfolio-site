@@ -2,3 +2,5 @@ packages:
   - 'apps/*'
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - '@google/genai@2.21.0'
