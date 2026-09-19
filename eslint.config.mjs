@@ -9,6 +9,7 @@ export default tseslint.config(
       "**/.vercel/**",
       "apps/web/dist/**",
       "apps/api/dist/**",
+      "**/nest-dist/**",
       "**/*.cjs",
     ],
   },

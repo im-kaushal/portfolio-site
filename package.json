@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "dev": "npm run dev --workspace=@portfolio/web",
-    "build": "npm run build --workspace=@portfolio/web && node scripts/copy-build-output.cjs",
+    "build": "npm run build --workspace=@portfolio/api --if-present && npm run build --workspace=@portfolio/web && node scripts/copy-build-output.cjs",
     "lint": "eslint .",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run test --workspaces --if-present"
