@@ -1,10 +1,29 @@
+import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { site } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
 import { OperatorIdentityArt } from "../components/OperatorIdentityArt";
+import { downloadResume } from "../lib/downloadResume";
 
 export function Hero() {
   const reduce = useReducedMotion();
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(site.publicEmail);
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2000);
+    } catch {
+      // Fallback
+    }
+  };
+
+  const openDossier = () => {
+    window.dispatchEvent(new Event("open-recruiter-dossier"));
+  };
+
   return (
     <section className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-[1.4fr_0.8fr] md:py-24">
       <motion.div
@@ -12,46 +31,116 @@ export function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-phosphor">
-          SYS.OK · {site.employer} · {site.location}
-        </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 border border-phosphor/50 bg-phosphor/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-phosphor">
+            <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
+            Resume Profile · {site.role}
+          </span>
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
+            {site.employer} · {site.location}
+          </span>
+        </div>
+
         <h1 className="mt-4 font-serif text-5xl leading-[0.95] text-paper md:text-7xl">
           {site.name}
         </h1>
+
         <p className="mt-3 font-mono text-sm text-amber font-medium">
           {site.headline}
         </p>
-        <p className="mt-3 font-mono text-xs uppercase tracking-widest text-phosphor">
+
+        {/* Recruiter Quick Verification Pills */}
+        <div className="mt-4 flex flex-wrap gap-2">
+          <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
+            <strong>3.5+</strong> Years Exp
+          </span>
+          <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
+            <strong>React · Angular · React Native</strong>
+          </span>
+          <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
+            <strong>Banking · Hospitality · Insurance</strong>
+          </span>
+          <span className="border border-phosphor/40 bg-phosphor/5 px-2.5 py-1 font-mono text-xs text-phosphor">
+            ✓ AWS Certified Developer
+          </span>
+          <span className="border border-amber/40 bg-amber/5 px-2.5 py-1 font-mono text-xs text-amber">
+            📍 Open to Shift Pan-India · Notice: 60d (30–45d max)
+          </span>
+        </div>
+
+        <p className="mt-4 font-mono text-xs uppercase tracking-widest text-phosphor">
           {site.openToWork.headline} · {site.openToWork.detail}
         </p>
-        <p className="mt-6 max-w-xl text-justify text-base leading-relaxed text-paper/85">{site.summary}</p>
+
+        <p className="mt-5 max-w-xl text-justify text-base leading-relaxed text-paper/85">
+          {site.summary}
+        </p>
+
+        {/* High-Friction vs Zero-Friction Recruiter Actions */}
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            href="#work"
-            className="border border-amber bg-amber px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-ink hover:bg-transparent hover:text-amber transition-colors"
+          <button
+            type="button"
+            onClick={openDossier}
+            className="inline-flex items-center gap-2 border border-amber bg-amber px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-ink hover:bg-transparent hover:text-amber transition-colors shadow-sm"
           >
-            View Work
-          </a>
-          <a
-            href="#contact"
-            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-paper hover:border-amber hover:text-amber transition-colors"
+            <span className="h-2 w-2 rounded-full bg-ink" />
+            Recruiter Quick-Scan
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setDownloading(true);
+              downloadResume("Kaushal_Kumar_Resume.pdf", (status) => {
+                if (status === "idle" || status === "success" || status === "error") {
+                  setDownloading(false);
+                }
+              });
+            }}
+            className="inline-flex items-center gap-1.5 border border-line bg-ink-2 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-paper hover:border-phosphor hover:text-phosphor transition-colors"
           >
-            Contact
-          </a>
-          <a
-            href={site.resumeHref}
-            download
-            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor transition-colors"
+            {downloading ? (
+              <>
+                <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-paper border-t-transparent" />
+                Downloading...
+              </>
+            ) : (
+              <>
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Download Resume (PDF)
+              </>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="border border-line px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-steel hover:border-amber hover:text-amber transition-colors"
+            title="Click to copy email to clipboard"
           >
-            Resume PDF
-          </a>
+            {copiedEmail ? (
+              <span className="text-phosphor">✓ Copied Email</span>
+            ) : (
+              "Copy Email"
+            )}
+          </button>
+
           <a
             href={site.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="border border-line px-4 py-2.5 font-mono text-xs uppercase tracking-widest text-steel hover:border-amber hover:text-amber transition-colors"
+            className="border border-line px-3.5 py-2.5 font-mono text-xs uppercase tracking-wider text-steel hover:border-amber hover:text-amber transition-colors"
           >
             LinkedIn ↗
+          </a>
+
+          <a
+            href="#work"
+            className="border border-transparent px-2 py-2.5 font-mono text-xs uppercase tracking-wider text-steel hover:text-paper transition-colors"
+          >
+            Case Files ↓
           </a>
         </div>
       </motion.div>
@@ -63,3 +152,4 @@ export function Hero() {
     </section>
   );
 }
+

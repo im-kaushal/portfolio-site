@@ -31,27 +31,30 @@ export function Awards() {
     <section id="awards" className="mx-auto max-w-6xl px-4 py-16">
       <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Clearance</p>
       <h2 className="mt-2 font-serif text-4xl text-paper">Awards & Certifications</h2>
-      <div className="mt-8 grid gap-4 md:grid-cols-3">
+      <div className="mt-8 grid gap-6 sm:grid-cols-2">
         {awards.map((a) => (
           <HudFrame
             key={a.id}
             className="h-full"
-            contentClassName="p-5 flex flex-col justify-between h-full"
+            contentClassName="p-6 flex flex-col justify-between h-full bg-ink-2/40"
           >
             <div>
               <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest">
                 <span className="text-phosphor">{a.date}</span>
-                <span className="border border-line/60 bg-ink px-1.5 py-0.5 text-amber">OFFICIAL</span>
+                <span className="border border-amber/40 bg-ink px-2 py-0.5 text-amber font-medium">
+                  OFFICIAL RECOGNITION
+                </span>
               </div>
-              <h3 className="mt-2 font-serif text-2xl text-paper">{a.title}</h3>
+              <h3 className="mt-3 font-serif text-2xl text-paper">{a.title}</h3>
               <p className="mt-1 font-mono text-xs text-amber">{a.org}</p>
-              <p className="mt-3 text-justify text-sm leading-relaxed text-paper/80">{a.note}</p>
+              <p className="mt-3 text-justify text-sm leading-relaxed text-paper/85">{a.note}</p>
             </div>
-            {a.id === "rising" ? (
-              <div className="mt-4 border-t border-line/50 pt-2 font-mono text-[10px] text-steel">
-                Spot Award backend utility · −60% manual test effort
+            {a.metric && (
+              <div className="mt-4 border-t border-line/50 pt-3 font-mono text-xs text-phosphor flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-phosphor" />
+                <span>Verified Impact: {a.metric}</span>
               </div>
-            ) : null}
+            )}
           </HudFrame>
         ))}
       </div>

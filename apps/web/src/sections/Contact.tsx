@@ -341,7 +341,8 @@ export function Contact() {
             </div>
           </div>
           <div className="mt-6 border-t border-line/60 pt-4 font-mono text-[11px] text-steel">
-            <p>Based in: Bengaluru, Karnataka · Open to Remote & Relocation</p>
+            <p>Based in: Bengaluru, Karnataka · Open to Shift Pan-India</p>
+            <p className="mt-1 text-amber">Notice Period: Official 60 days (joinable within 30–45 days max)</p>
             <p className="mt-1 text-phosphor">Timezone: IST (UTC+05:30)</p>
           </div>
         </HudFrame>

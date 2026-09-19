@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { nav, site } from "../content/site";
 import { useTheme } from "../lib/theme";
+import { downloadResume } from "../lib/downloadResume";
 
 type Item = { id: string; label: string; hint: string; run: () => void };
 
@@ -26,6 +27,15 @@ export function CommandPalette() {
       },
     }));
     return [
+      {
+        id: "recruiter-dossier",
+        label: "Open Recruiter Cheat Sheet / Dossier",
+        hint: "ATS Match · Fast Scan",
+        run: () => {
+          setOpen(false);
+          window.dispatchEvent(new Event("open-recruiter-dossier"));
+        },
+      },
       ...jumps,
       {
         id: "quick-live-desk",
@@ -79,10 +89,7 @@ export function CommandPalette() {
         label: "Download resume",
         hint: "PDF",
         run: () => {
-          const a = document.createElement("a");
-          a.href = site.resumeHref;
-          a.download = "Kaushal_Kumar_Resume.pdf";
-          a.click();
+          downloadResume("Kaushal_Kumar_Resume.pdf");
         },
       },
       {
