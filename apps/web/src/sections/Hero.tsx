@@ -20,11 +20,7 @@ export function Hero() {
     }
   };
 
-  const openDossier = () => {
-    window.dispatchEvent(new Event("open-recruiter-dossier"));
-  };
-
-  return (
+    return (
     <section className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-[1.4fr_0.8fr] md:py-24">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -34,7 +30,7 @@ export function Hero() {
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 border border-phosphor/50 bg-phosphor/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-phosphor">
             <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
-            Resume Profile · {site.role}
+            {site.role}
           </span>
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-steel">
             {site.employer} · {site.location}
@@ -49,10 +45,10 @@ export function Hero() {
           {site.headline}
         </p>
 
-        {/* Recruiter Quick Verification Pills */}
+        {/*  */}
         <div className="mt-4 flex flex-wrap gap-2">
           <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
-            <strong>3.5+</strong> Years Exp
+            <strong>3.5+</strong> years
           </span>
           <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
             <strong>React · Angular · React Native</strong>
@@ -64,29 +60,16 @@ export function Hero() {
             ✓ AWS Certified Developer
           </span>
           <span className="border border-amber/40 bg-amber/5 px-2.5 py-1 font-mono text-xs text-amber">
-            📍 Open to Shift Pan-India · Notice: 60d (30–45d max)
           </span>
         </div>
 
-        <p className="mt-4 font-mono text-xs uppercase tracking-widest text-phosphor">
-          {site.openToWork.headline} · {site.openToWork.detail}
-        </p>
 
         <p className="mt-5 max-w-xl text-justify text-base leading-relaxed text-paper/85">
           {site.summary}
         </p>
 
-        {/* High-Friction vs Zero-Friction Recruiter Actions */}
+        {/*  */}
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <button
-            type="button"
-            onClick={openDossier}
-            className="inline-flex items-center gap-2 border border-amber bg-amber px-4 py-2.5 font-mono text-xs font-semibold uppercase tracking-wider text-ink hover:bg-transparent hover:text-amber transition-colors shadow-sm"
-          >
-            <span className="h-2 w-2 rounded-full bg-ink" />
-            Recruiter Quick-Scan
-          </button>
-
           <button
             type="button"
             onClick={() => {
@@ -140,11 +123,11 @@ export function Hero() {
             href="#work"
             className="border border-transparent px-2 py-2.5 font-mono text-xs uppercase tracking-wider text-steel hover:text-paper transition-colors"
           >
-            Case Files ↓
+            View my work ↓
           </a>
         </div>
       </motion.div>
-      <HudFrame label="OP.01" className="relative">
+      <HudFrame label="About me" className="relative">
         <div className="relative aspect-[6/7] overflow-hidden scanlines">
           <OperatorIdentityArt />
         </div>

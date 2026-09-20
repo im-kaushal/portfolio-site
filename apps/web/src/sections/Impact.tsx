@@ -4,8 +4,8 @@ import { HudFrame } from "../components/HudFrame";
 export function Impact() {
   return (
     <section id="impact" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Telemetry</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Impact Strip</h2>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Highlights</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">Selected results</h2>
       <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {impact.map((item) => (
           <HudFrame key={item.id} className="h-full" contentClassName="p-5 h-full flex flex-col justify-between">

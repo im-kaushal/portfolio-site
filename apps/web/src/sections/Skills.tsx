@@ -37,10 +37,10 @@ export function Skills() {
     <section id="skills" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">
-          Technical Arsenal // Verified Proficiencies
+          Technical Skills
         </p>
         <span className="font-mono text-[11px] text-phosphor">
-          Structured 1:1 with Resume Categories
+          React, Angular, React Native, testing, and the rest of my stack
         </span>
       </div>
 
@@ -60,8 +60,8 @@ export function Skills() {
         </button>
       </div>
 
-      {/* Recruiter Quick Verification Strip */}
-      <HudFrame label="RESUME.CORE // KEY ATS MATCHES" className="mt-6" contentClassName="p-4">
+      {/*  */}
+      <HudFrame label="CORE STACK" className="mt-6" contentClassName="p-4">
         <div className="flex flex-wrap items-center gap-2">
           <span className="font-mono text-[10px] uppercase tracking-widest text-phosphor mr-2">
             Primary Stack:
@@ -80,7 +80,7 @@ export function Skills() {
         </div>
       </HudFrame>
 
-      {/* Search & Filter Controls for Recruiters */}
+      {/* Search and filter skills */}
       <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
         {/* Filter Tabs */}
         <div className="flex flex-wrap gap-2" role="tablist" aria-label="Skill groups">
@@ -102,7 +102,7 @@ export function Skills() {
           ))}
         </div>
 
-        {/* Real-time Recruiter Keyword Search */}
+        {/* Skill search */}
         <div className="w-full sm:w-72">
           <div className="relative">
             <input

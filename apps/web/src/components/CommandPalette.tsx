@@ -27,19 +27,11 @@ export function CommandPalette() {
       },
     }));
     return [
-      {
-        id: "recruiter-dossier",
-        label: "Open Recruiter Cheat Sheet / Dossier",
-        hint: "ATS Match · Fast Scan",
-        run: () => {
-          setOpen(false);
-          window.dispatchEvent(new Event("open-recruiter-dossier"));
-        },
       },
       ...jumps,
       {
         id: "quick-live-desk",
-        label: "Open synthetic desk",
+        label: "Open mTrust demo",
         hint: "mTrust demo",
         run: () => {
           navigate("/");

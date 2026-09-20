@@ -8,16 +8,16 @@ export function Work() {
     <section id="work" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">
-          Case Files // Enterprise Projects
+          Selected Work
         </p>
         <span className="font-mono text-[11px] text-phosphor">
-          Verified Enterprise Engagements (Citi Bank, Marriott, Colina)
+          Citi · Marriott · Colina
         </span>
       </div>
 
       <div className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <h2 className="font-serif text-4xl text-paper">Selected Production Work</h2>
+          <h2 className="font-serif text-4xl text-paper">Selected Work</h2>
           <p className="mt-1 font-mono text-xs text-steel">
             Large-scale web and mobile architectures delivered across banking, hospitality, and insurance
           </p>
@@ -49,7 +49,7 @@ export function Work() {
 
               <h3 className="mt-3 font-serif text-2xl text-paper">{study.title}</h3>
 
-              {/* Tech Stack Pills for Recruiter Fast-Scanning */}
+              {/*  */}
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {study.stack.slice(0, 4).map((tech) => (
                   <span
@@ -70,10 +70,10 @@ export function Work() {
                 {study.blurb}
               </p>
 
-              {/* Key Verified Outcome Metric */}
+              {/*  */}
               <div className="mt-4 border-t border-line/50 pt-3">
                 <span className="font-mono text-[9px] uppercase tracking-widest text-amber block mb-1">
-                  Primary Outcome:
+                  Outcome
                 </span>
                 <p className="text-xs text-paper/90 font-mono">
                   {study.outcomes[0]}

@@ -184,7 +184,7 @@ export function LiveVoiceUplink({
       ws.onopen = () => {
         setIsConnecting(false);
         setIsConnected(true);
-        setStatusMessage("Live API connected · Model: gemini-3.1-flash-live-preview");
+        setStatusMessage("Live API connected · Model: Gemini Live");
 
         // Set up audio input processor
         const source = inputCtx.createMediaStreamSource(stream);
@@ -311,7 +311,7 @@ export function LiveVoiceUplink({
     setIsConnecting(false);
     setAgentSpeaking(false);
     setUserSpeaking(false);
-    setStatusMessage("Uplink disconnected · Ready to connect");
+    setStatusMessage("Disconnected · Ready to connect");
   }
 
   function handleUseTranscript() {
@@ -341,10 +341,10 @@ export function LiveVoiceUplink({
           <div>
             <div className="flex items-center gap-2">
               <h4 className="font-mono text-xs uppercase tracking-widest text-paper">
-                Live Voice Uplink
+                AI voice assistant
               </h4>
               <span className="border border-amber/50 bg-amber/10 px-1.5 py-0.2 font-mono text-[9px] uppercase tracking-wider text-amber">
-                gemini-3.1-flash-live-preview
+                Gemini Live
               </span>
             </div>
             <p className="font-mono text-[10px] text-steel">{statusMessage}</p>
@@ -375,11 +375,11 @@ export function LiveVoiceUplink({
             />
             <div className="pointer-events-none absolute left-3 top-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
               <span className={agentSpeaking ? "text-phosphor font-bold" : "text-steel"}>
-                AI VOICE: {agentSpeaking ? "TRANSMITTING 24kHz" : "IDLE"}
+                AI: {agentSpeaking ? "speaking" : "IDLE"}
               </span>
               <span>·</span>
               <span className={userSpeaking ? "text-amber font-bold" : "text-steel"}>
-                MIC: {userSpeaking ? "INPUT DETECTED" : isMuted ? "MUTED" : "LISTENING 16kHz"}
+                Microphone: {userSpeaking ? "active" : isMuted ? "MUTED" : "listening"}
               </span>
             </div>
           </div>
@@ -388,14 +388,14 @@ export function LiveVoiceUplink({
           <div className="max-h-40 min-h-24 overflow-y-auto border border-line/60 bg-ink/60 p-3 font-mono text-xs space-y-2">
             {transcripts.length === 0 ? (
               <p className="text-steel/70 italic text-center py-4">
-                No active voice transmission yet. Click &quot;Initialize Live Uplink&quot; to speak directly with Kaushal&apos;s AI representative.
+                No active voice transmission yet. Click &quot;Start voice chat&quot; to speak directly with Kaushal&apos;s AI representative.
               </p>
             ) : (
               transcripts.map((t) => (
                 <div key={t.id} className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-2 text-[10px] text-steel">
                     <span className={t.sender === "agent" ? "text-phosphor uppercase" : "text-amber uppercase"}>
-                      [{t.sender === "agent" ? "KAUSHAL AI" : "YOU"}]
+                      [{t.sender === "agent" ? "AI" : "YOU"}]
                     </span>
                     <span>{t.timestamp}</span>
                   </div>
@@ -415,7 +415,7 @@ export function LiveVoiceUplink({
                   disabled={isConnecting}
                   className="border border-amber bg-amber px-4 py-2 font-mono text-xs uppercase tracking-widest text-ink hover:bg-transparent hover:text-amber transition-colors disabled:opacity-60"
                 >
-                  {isConnecting ? "Connecting…" : "Initialize Live Uplink"}
+                  {isConnecting ? "Connecting…" : "Start voice chat"}
                 </button>
               ) : (
                 <>
@@ -443,7 +443,7 @@ export function LiveVoiceUplink({
                 onClick={handleUseTranscript}
                 className="border border-phosphor bg-phosphor/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-phosphor hover:bg-phosphor hover:text-ink transition-colors"
               >
-                Copy Transcript into Message ↗
+                Use transcript in message
               </button>
             ) : null}
           </div>

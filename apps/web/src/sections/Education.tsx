@@ -4,10 +4,10 @@ import { HudFrame } from "../components/HudFrame";
 export function Education() {
   return (
     <section id="education" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Academic Record</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Education</p>
       <div className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
         <h2 className="font-serif text-4xl text-paper">Education & Languages</h2>
-        <span className="font-mono text-xs text-steel">Formal Foundations · Computer Science</span>
+        <span className="font-mono text-xs text-steel">Computer Science</span>
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
