@@ -18,7 +18,7 @@ export function Experience() {
         <div className="flex items-center gap-2 border border-line bg-ink-2 p-1">
           <button
             type="button"
-            onClick={() => setViewMode("ats")}
+            onClick={() => setViewMode("timeline")}
             className={cn(
               "px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors",
               viewMode === "timeline"
