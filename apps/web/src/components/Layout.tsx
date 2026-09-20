@@ -3,7 +3,6 @@ import { Link, Outlet } from "react-router-dom";
 import { nav, site } from "../content/site";
 import { CommandPalette } from "./CommandPalette";
 import { SkipLink } from "./SkipLink";
-import { ThemeToggle } from "./ThemeToggle";
 import { downloadResume } from "../lib/downloadResume";
 
 function Clock() {

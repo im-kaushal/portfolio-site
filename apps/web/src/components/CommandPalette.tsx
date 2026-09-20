@@ -26,8 +26,8 @@ export function CommandPalette() {
         });
       },
     }));
+
     return [
-      },
       ...jumps,
       {
         id: "quick-live-desk",
@@ -80,9 +80,7 @@ export function CommandPalette() {
         id: "resume",
         label: "Download resume",
         hint: "PDF",
-        run: () => {
-          downloadResume("Kaushal_Kumar_Resume.pdf");
-        },
+        run: () => downloadResume("Kaushal_Kumar_Resume.pdf"),
       },
       {
         id: "theme",
@@ -136,62 +134,29 @@ export function CommandPalette() {
   if (!open) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-[70] flex items-start justify-center bg-ink/70 px-4 pt-[12vh] backdrop-blur-sm"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Command palette"
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) setOpen(false);
-      }}
-    >
+    <div className="fixed inset-0 z-[70] flex items-start justify-center bg-ink/70 px-4 pt-[12vh] backdrop-blur-sm" role="dialog" aria-modal="true" aria-label="Command palette"
+      onMouseDown={(e) => { if (e.target === e.currentTarget) setOpen(false); }}>
       <div className="w-full max-w-lg border border-amber/40 bg-ink-2 shadow-hud">
-        <label className="sr-only" htmlFor="cmdk">
-          Command
-        </label>
-        <input
-          id="cmdk"
-          ref={inputRef}
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+        <label className="sr-only" htmlFor="cmdk">Command</label>
+        <input id="cmdk" ref={inputRef} value={query} onChange={(e) => setQuery(e.target.value)}
           onKeyDown={(e) => {
-            if (e.key === "ArrowDown") {
-              e.preventDefault();
-              setActive((i) => Math.min(i + 1, filtered.length - 1));
-            }
-            if (e.key === "ArrowUp") {
-              e.preventDefault();
-              setActive((i) => Math.max(i - 1, 0));
-            }
+            if (e.key === "ArrowDown") { e.preventDefault(); setActive((i) => Math.min(i + 1, filtered.length - 1)); }
+            if (e.key === "ArrowUp") { e.preventDefault(); setActive((i) => Math.max(i - 1, 0)); }
             if (e.key === "Enter" && filtered[active]) run(filtered[active]);
           }}
-          placeholder="Jump, copy, open…"
-          className="w-full border-b border-line bg-transparent px-4 py-3 font-mono text-sm text-paper outline-none placeholder:text-steel"
-        />
+          placeholder="Jump, copy, open…" className="w-full border-b border-line bg-transparent px-4 py-3 font-mono text-sm text-paper outline-none placeholder:text-steel" />
         <ul className="max-h-80 overflow-auto py-2" role="listbox">
-          {filtered.length === 0 ? (
-            <li className="px-4 py-3 font-mono text-xs text-steel">No matches</li>
-          ) : (
+          {filtered.length === 0 ? <li className="px-4 py-3 font-mono text-xs text-steel">No matches</li> :
             filtered.map((item, i) => (
               <li key={item.id} role="option" aria-selected={i === active}>
-                <button
-                  type="button"
-                  onMouseEnter={() => setActive(i)}
-                  onClick={() => run(item)}
-                  className={`flex w-full items-center justify-between px-4 py-2 text-left font-mono text-sm ${
-                    i === active ? "bg-ink-3 text-amber" : "text-paper"
-                  }`}
-                >
-                  <span>{item.label}</span>
-                  <span className="text-[11px] text-steel">{item.hint}</span>
+                <button type="button" onMouseEnter={() => setActive(i)} onClick={() => run(item)}
+                  className={`flex w-full items-center justify-between px-4 py-2 text-left font-mono text-sm ${i === active ? "bg-ink-3 text-amber" : "text-paper"}`}>
+                  <span>{item.label}</span><span className="text-[11px] text-steel">{item.hint}</span>
                 </button>
               </li>
-            ))
-          )}
+            ))}
         </ul>
-        <p className="border-t border-line px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-steel">
-          Esc to close · ↑↓ to move · enter to run
-        </p>
+        <p className="border-t border-line px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-steel">Esc to close · ↑↓ to move · enter to run</p>
       </div>
     </div>
   );
