@@ -29,7 +29,7 @@ function Seal({ code }: { code: string }) {
 export function Awards() {
   return (
     <section id="awards" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Clearance</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Recognition</p>
       <h2 className="mt-2 font-serif text-4xl text-paper">Awards & Certifications</h2>
       <div className="mt-8 grid gap-6 sm:grid-cols-2">
         {awards.map((a) => (
@@ -42,7 +42,7 @@ export function Awards() {
               <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-widest">
                 <span className="text-phosphor">{a.date}</span>
                 <span className="border border-amber/40 bg-ink px-2 py-0.5 text-amber font-medium">
-                  OFFICIAL RECOGNITION
+                  Recognition
                 </span>
               </div>
               <h3 className="mt-3 font-serif text-2xl text-paper">{a.title}</h3>
@@ -52,7 +52,7 @@ export function Awards() {
             {a.metric && (
               <div className="mt-4 border-t border-line/50 pt-3 font-mono text-xs text-phosphor flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-phosphor" />
-                <span>Verified Impact: {a.metric}</span>
+                <span>{a.metric}</span>
               </div>
             )}
           </HudFrame>
@@ -82,7 +82,7 @@ export function Awards() {
                   rel="noopener noreferrer"
                   className="mt-2 inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-phosphor hover:text-amber"
                 >
-                  Verify ↗
+                  View certificate ↗
                 </a>
               </div>
             </HudFrame>
