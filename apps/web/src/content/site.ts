@@ -1,8 +1,8 @@
 export const site = {
   name: "Kaushal Kumar",
   callsign: "KK.FE",
-  title: "Frontend Software Engineer",
-  headline: "Frontend Software Engineer building React, Angular, and React Native applications",
+  title: "Frontend Software Engineer (SDE II · 3.5+ YOE)",
+  headline: "Frontend Software Engineer & SDE II (3.5+ YOE) building React, Angular, and React Native applications",
   employer: "HashedIn by Deloitte",
   role: "Software Engineer I",
   location: "Bangalore, India",
@@ -21,13 +21,13 @@ export const site = {
   summary:
     "I build web and mobile applications with React, Angular, React Native, and TypeScript. Most of my work has involved enterprise products with complex workflows, large data sets, API integrations, performance constraints, and shared UI components.",
   recruiterOverview: {
-    experience: "3.5+ Years",
+    experience: "3.5+ Years (3–5 YOE)",
     currentRole: "Software Engineer I at HashedIn by Deloitte",
     location: "Bangalore, India",
     noticePeriod: "Official 60 Days (Negotiable to 30–45 Days Max)",
     primaryStack: ["React.js", "Angular", "React Native", "TypeScript", "Tailwind CSS"],
     domains: ["Banking (Citi Bank)", "Hospitality (Marriott)", "Insurance (Colina)"],
-    status: "Open to frontend, mobile, and full-stack roles across India",
+    status: "Open to Frontend SDE II, Mobile, and Full-Stack roles across India",
     education: "B.Tech Computer Science, Lovely Professional University (GPA: 7.61)",
     keyMetrics: [
       { value: "−35%", label: "LCP", detail: "Marriott mTrust" },

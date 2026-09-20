@@ -45,10 +45,13 @@ export function Hero() {
           {site.headline}
         </p>
 
-        {/*  */}
+        {/* Professional highlights */}
         <div className="mt-4 flex flex-wrap gap-2" aria-label="Professional highlights">
           <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
-            <strong>3.5+</strong> years
+            <strong>3.5+</strong> years experience (3–5 YOE)
+          </span>
+          <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
+            <strong>SDE II · Frontend</strong>
           </span>
           <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
             <strong>React · Angular · React Native</strong>
