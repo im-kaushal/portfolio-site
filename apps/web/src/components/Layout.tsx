@@ -4,9 +4,11 @@ import { nav, site } from "../content/site";
 import { CommandPalette } from "./CommandPalette";
 import { SkipLink } from "./SkipLink";
 import { downloadResume } from "../lib/downloadResume";
+import { useTheme } from "../lib/theme";
 
 export function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const { theme, toggle } = useTheme();
 
   return (
     <div className="grid-bg min-h-screen">
@@ -46,6 +48,15 @@ export function Layout() {
                 <span className="h-px w-4 bg-current" />
                 <span className="h-px w-4 bg-current" />
               </span>
+            </button>
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+              className="inline-flex h-9 w-9 items-center justify-center border border-line font-mono text-sm text-steel transition-colors hover:border-amber hover:text-amber"
+            >
+              <span aria-hidden>{theme === "dark" ? "☀" : "☾"}</span>
             </button>
             <button
               type="button"
