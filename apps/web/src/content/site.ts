@@ -2,10 +2,10 @@ export const site = {
   name: "Kaushal Kumar",
   callsign: "KK.FE",
   title: "Frontend Software Engineer",
-  headline: "Frontend Software Engineer @ HashedIn by Deloitte | React · Angular · React Native · TypeScript | AWS Certified Developer",
+  headline: "Frontend Software Engineer building React, Angular, and React Native applications",
   employer: "HashedIn by Deloitte",
   role: "Software Engineer I",
-  location: "Bangalore, India 560037",
+  location: "Bangalore, India",
   years: "3.5+",
   publicEmail: "work.kaushal@yahoo.com",
   phoneDisplay: "+91 7970513448",
@@ -19,30 +19,28 @@ export const site = {
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "Frontend Software Engineer with 3.5+ years of experience building responsive web and mobile applications using React, Angular, React Native, and TypeScript. Skilled in reusable component libraries, design systems, accessibility, performance optimization, automated testing, and API integration. Proven record of delivering enterprise-grade solutions across banking, hospitality, and insurance domains.",
+    "I build web and mobile applications with React, Angular, React Native, and TypeScript. Most of my work has involved enterprise products with complex workflows, large data sets, API integrations, performance constraints, and shared UI components.",
   recruiterOverview: {
     experience: "3.5+ Years",
     currentRole: "Software Engineer I at HashedIn by Deloitte",
-    location: "Bangalore, India (Open to Relocate Pan-India)",
-    mobility: "Open to Shift Pan-India",
+    location: "Bangalore, India",
     noticePeriod: "Official 60 Days (Negotiable to 30–45 Days Max)",
     primaryStack: ["React.js", "Angular", "React Native", "TypeScript", "Tailwind CSS"],
-    backendIntegration: ["Kafka", "REST APIs", "Spring Boot", "Firebase", "Realm DB"],
     domains: ["Banking (Citi Bank)", "Hospitality (Marriott)", "Insurance (Colina)"],
-    status: "Actively exploring high-impact Frontend, Mobile & Full-Stack roles across India",
+    status: "Open to frontend, mobile, and full-stack roles across India",
     education: "B.Tech Computer Science, Lovely Professional University (GPA: 7.61)",
     keyMetrics: [
-      { value: "−35%", label: "LCP improvement", detail: "Marriott mTrust incident coordinator UI" },
-      { value: "4.1s → 2.6s", label: "Page load cut", detail: "Citi Bank trade settlements desk" },
-      { value: "90%+", label: "Test coverage", detail: "Automated testing with Jasmine & RTL" },
-      { value: "−70%", label: "Manual QA reduced", detail: "Spot Award for Java + React utility" },
-      { value: "180+", label: "Critical defects fixed", detail: "Mobile releases ahead of UAT" },
-      { value: "50+", label: "Engineers mentored", detail: "Code reviews, onboarding & guild sessions" },
+      { value: "−35%", label: "LCP", detail: "Marriott mTrust" },
+      { value: "4.1s → 2.6s", label: "Page load", detail: "Citi settlements desk" },
+      { value: "90%+", label: "Test coverage", detail: "Jasmine & React Testing Library" },
+      { value: "−70%", label: "Manual QA", detail: "Java + React utility" },
+      { value: "180+", label: "Defects fixed", detail: "Mobile releases" },
+      { value: "50+", label: "Developers mentored", detail: "Reviews and onboarding" },
     ],
   },
   openToWork: {
-    headline: "Open to Frontend, Mobile & Full-Stack Roles",
-    detail: "Open to Relocate Pan-India · Official Notice: 60 Days (Joinable in 30–45 Days Max)",
+    headline: "Open to frontend, mobile, and full-stack roles",
+    detail: "Based in Bengaluru · Open to relocate in India · 60-day notice, typically joinable in 30–45 days",
   },
   bookCall: {
     label: "Book a call",
@@ -71,7 +69,7 @@ export const impact = [
 
 export const qualityProof = {
   intro:
-    "Measured on production operator surfaces and this portfolio — not vanity scores on marketing pages.",
+    "A few concrete examples of performance, testing, and frontend quality work.",
   lighthouse: [
     { id: "perf", label: "Performance", score: 94, note: "LCP-focused delivery" },
     { id: "a11y", label: "Accessibility", score: 100, note: "WCAG 2.1 AA patterns" },
@@ -108,7 +106,7 @@ export const caseStudies: CaseStudy[] = [
     client: "Marriott",
     title: "mTrust Incident Management",
     blurb:
-      "Coordinator workspace interface for hotel trust operations — incident workflows, breached SER monitoring, and high-performance tabular rendering without opening external ServiceNow interfaces.",
+      "Coordinator workspace for hotel trust operations, covering incident workflows, breached SER monitoring, and dense incident tables without sending operators back to ServiceNow.",
     stack: [
       "React.js",
       "TanStack Query",
@@ -119,7 +117,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     outcomes: [
       "Built the full Coordinator workspace interface in React.js integrating ServiceNow REST APIs.",
-      "Largest Contentful Paint down 35% on primary operator views.",
+      "Improved Largest Contentful Paint by 35% on primary coordinator views.",
       "JavaScript bundle reduced by 28% through code splitting, lazy loading, and Core Web Vitals optimizations.",
       "Implemented custom ticket filtering, automated email triggers, and high-performance tabular rendering.",
     ],
@@ -143,7 +141,7 @@ export const caseStudies: CaseStudy[] = [
     client: "Citi Bank",
     title: "Financial Applications & Trade Settlements",
     blurb:
-      "High-throughput Angular trade settlement desk plus Spring Boot & Kafka event streaming — multi-row grid management, bulk Excel data processing, BDD automation, and a contract-testing utility for QA.",
+      "Angular trade settlement screens backed by Spring Boot and Kafka, including multi-row editing, bulk Excel processing, automated tests, and a QA utility.",
     stack: [
       "Angular",
       "TypeScript",
@@ -163,13 +161,13 @@ export const caseStudies: CaseStudy[] = [
       "Automated Gherkin BDD test suites across 15+ services with Harness post-install hooks.",
     ],
     architecture: [
-      "High-throughput Angular interfaces for trade settlement visualization supporting multi-row grid management & bulk Excel processing.",
+      "Angular interfaces for trade settlement workflows with multi-row editing and bulk Excel processing.",
       "Settlement trade processing via Spring Boot, Kafka topics, and trade-routing by trade type.",
       "Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services.",
       "Internal Java + Angular visualization utility automating QA database mapping checks.",
     ],
     highlights: [
-      "Engineered high-throughput Angular interfaces for trade settlement visualization, supporting multi-row grid management, bulk Excel data processing, and an internal Java + Angular visualization utility that automated QA database mapping checks.",
+      "Built Angular interfaces for trade settlement workflows and a Java + Angular utility that automated QA database mapping checks.",
       "Designed Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services, validating consumed Kafka messages against locally stored expected outputs and integrating them with Harness post-install hooks to run automatically during deployments.",
       "Received Rising Star Award (May 2025) for cutting manual testing effort by 70% with an internal utility.",
     ],
@@ -182,7 +180,7 @@ export const caseStudies: CaseStudy[] = [
     client: "Colina Insurance",
     title: "Mobile Application (Colina Insurance)",
     blurb:
-      "Cross-platform React Native insurance application supporting offline synchronization with Realm DB, cloud authentication with Firebase, and pixel-perfect rendering across iOS and Android.",
+      "React Native insurance application with offline sync using Realm DB and authentication through Firebase.",
     stack: [
       "React Native",
       "TypeScript",
@@ -193,7 +191,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     outcomes: [
       "Built modular React Native component library and delivered 3 cross-platform mobile apps to iOS App Store & Google Play.",
-      "Resolved 180+ critical UI and API integration defects, stabilizing releases for production UAT.",
+      "Resolved 180+ UI and API integration defects across mobile releases before UAT.",
       "Offline-first synchronization with Realm DB and cloud authentication via Firebase.",
       "Optimized mobile layout structures for uniform rendering across a wide range of screen sizes.",
     ],
@@ -206,7 +204,7 @@ export const caseStudies: CaseStudy[] = [
     highlights: [
       "Developed a cross-platform mobile insurance application supporting offline sync with Realm DB and cloud authentication via Firebase.",
       "Optimized mobile layout structures to ensure uniform rendering across wide range of iOS and Android device screen sizes.",
-      "Resolved 180+ critical UI and API integration defects across mobile products, stabilizing releases and ensuring smooth UAT for production deployments.",
+      "Resolved 180+ UI and API integration defects across mobile products and helped stabilize releases for UAT.",
     ],
     role: "Software Engineer Trainee · Mobile Frontend",
     period: "Jul 2023 — Feb 2024",
@@ -231,7 +229,7 @@ export const personalProjects: PersonalProject[] = [
     name: "HuntAI",
     title: "Job Search Command Center",
     blurb:
-      "Explainable job matching, pipeline tracking, and application-prep drafts for software engineers — live on Vercel.",
+      "Job search app for matching roles, tracking applications, and preparing application notes.",
     stack: ["TypeScript", "Node", "Vercel"],
     liveHref: "https://huntai-kappa.vercel.app",
     repoHref: "https://github.com/im-kaushal/HuntAI",
@@ -240,9 +238,9 @@ export const personalProjects: PersonalProject[] = [
     id: "code-review-agent",
     code: "BUILD-02",
     name: "code-review-agent",
-    title: "Autonomous PR Review & Analysis Agent",
+    title: "Pull Request Review Tool",
     blurb:
-      "Automated code analysis agent that inspects pull request diffs for security vulnerabilities, architectural anti-patterns, test coverage gaps, and styling regressions with contextual inline feedback.",
+      "Reviews pull request diffs and surfaces security issues, test gaps, and common code-quality problems with inline feedback.",
     stack: ["TypeScript", "Node.js", "GitHub Actions", "LLM APIs"],
     liveHref: "https://github.com/im-kaushal/code-review-agent",
     repoHref: "https://github.com/im-kaushal/code-review-agent",
@@ -262,9 +260,9 @@ export const personalProjects: PersonalProject[] = [
     id: "docubot",
     code: "BUILD-04",
     name: "DocuBot",
-    title: "Multi-Format Document Intelligence Engine",
+    title: "Document Q&A Tool",
     blurb:
-      "Retrieval-augmented generation (RAG) platform that ingests technical documentation, API specifications, and enterprise manuals to deliver verified responses with citation validation.",
+      "A RAG-based tool for asking questions about technical documentation and API references with citations.",
     stack: ["TypeScript", "Python", "Vector DB", "FastAPI"],
     liveHref: "https://github.com/im-kaushal/DocuBot",
     repoHref: "https://github.com/im-kaushal/DocuBot",
@@ -290,11 +288,11 @@ export const timeline: Role[] = [
     location: "Bangalore, India",
     clientBadge: "Citi Bank & Marriott",
     points: [
-      "Design and implement reusable, responsive front-end features in React and Angular, owning the shared component library and design system standards used across teams while mentoring 50+ engineers through code reviews and onboarding sessions.",
-      "Improve application quality and performance by raising unit and integration test coverage to 90%+ with Jasmine and React Testing Library and cutting average page load time from 4.1s to 2.6s through code splitting, lazy loading, and Core Web Vitals optimizations.",
-      "Marriott mTrust: Architected the complete Coordinator workspace interface in React.js, integrating ServiceNow REST APIs to enable operational teams to process incident workflows without using external ServiceNow interfaces.",
-      "Citi Bank: Engineered high-throughput Angular interfaces for trade settlement visualization, supporting multi-row grid management, bulk Excel data processing, and an internal Java + Angular visualization utility that automated QA database mapping checks.",
-      "Automated Testing & BDD: Designed Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services, validating consumed Kafka messages against expected outputs via Harness post-install hooks.",
+      "Build reusable React and Angular features and help maintain shared UI components used across teams. I also mentor developers through code reviews and onboarding.",
+      "Improved frontend quality and performance, including 90%+ test coverage and reducing average page load time from 4.1s to 2.6s through code splitting and lazy loading.",
+      "Marriott mTrust: Built the Coordinator workspace in React and integrated ServiceNow REST APIs for incident workflows.",
+      "Citi Bank: Built Angular trade settlement interfaces with multi-row editing, bulk Excel processing, and a Java + Angular QA utility.",
+      "Testing: Built Gherkin-based BDD suites across 15+ services and wired them into deployment checks with Harness.",
     ],
   },
   {
@@ -383,7 +381,7 @@ export const skillGroups = [
   },
   {
     id: "cloud-devops",
-    label: "Cloud & DevOps Architecture",
+    label: "Cloud & DevOps",
     resumeCategory: false,
     items: [
       "AWS (Certified Developer)",
@@ -414,7 +412,7 @@ export const awards: Award[] = [
     title: "Excellence Award",
     org: "Deloitte",
     date: "Jun 2026",
-    note: "Awarded for technical leadership on high-impact production releases and writing Architecture Decision Records (ADRs).",
+    note: "Recognized for technical contributions to production releases and architecture documentation.",
     metric: "Technical Leadership & ADRs",
     official: true,
   },
