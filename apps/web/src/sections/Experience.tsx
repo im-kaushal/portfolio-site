@@ -30,10 +30,10 @@ export function Experience() {
           </button>
           <button
             type="button"
-            onClick={() => setViewMode("interactive")}
+            onClick={() => setViewMode("details")}
             className={cn(
               "px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors",
-              viewMode === "interactive"
+              viewMode === "details"
                 ? "bg-amber text-ink font-semibold"
                 : "text-steel hover:text-paper"
             )}
