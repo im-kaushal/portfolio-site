@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { site } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
 import { VoiceRecorder, type AudioRecording } from "../components/VoiceRecorder";
-import { LiveVoiceContact } from "../components/LiveVoiceContact";
+import { LiveVoiceUplink } from "../components/LiveVoiceUplink";
 
 const actions = [
   { href: `mailto:${site.publicEmail}`, label: "Email me", hint: site.publicEmail },
@@ -133,7 +133,7 @@ export function Contact() {
       {showLiveContact && (
         <div className="mt-6">
           <HudFrame label="AUDIO.SPARK · LIVE VOICE CONVERSATION">
-            <LiveVoiceContact
+            <LiveVoiceUplink
               isOpen={showLiveContact}
               onToggle={() => setShowLiveContact((prev) => !prev)}
               onInsertMessage={(text) => {
