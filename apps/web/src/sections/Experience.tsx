@@ -65,7 +65,7 @@ export function Experience() {
           {timeline.map((item) => (
             <div
               key={item.id}
-              className="border border-line/80 bg-ink-2/60 p-6 transition-colors hover:border-amber/50"
+              className="group border border-line/80 bg-ink-2/60 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber/50 hover:bg-ink-2/80"
             >
               <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line/60 pb-4">
                 <div>
@@ -211,7 +211,7 @@ export function Experience() {
             </div>
 
             <div className="mt-8 border-t border-line/60 pt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-steel">
-              <span>${role.org} · ${role.dates}</span>
+              <span>{role.org} · {role.dates}</span>
               <a
                 href="https://www.linkedin.com/in/im-kaushal/details/experience/"
                 target="_blank"

@@ -46,7 +46,7 @@ export function Hero() {
         </p>
 
         {/*  */}
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-4 flex flex-wrap gap-2" aria-label="Professional highlights">
           <span className="border border-line/80 bg-ink-2 px-2.5 py-1 font-mono text-xs text-paper">
             <strong>3.5+</strong> years
           </span>
@@ -58,8 +58,6 @@ export function Hero() {
           </span>
           <span className="border border-phosphor/40 bg-phosphor/5 px-2.5 py-1 font-mono text-xs text-phosphor">
             ✓ AWS Certified Developer
-          </span>
-          <span className="border border-amber/40 bg-amber/5 px-2.5 py-1 font-mono text-xs text-amber">
           </span>
         </div>
 
@@ -125,6 +123,12 @@ export function Hero() {
           >
             View my work ↓
           </a>
+        </div>
+
+        <div className="mt-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-steel">
+          <span className="h-px w-8 bg-line" />
+          <span>Scroll to explore</span>
+          <span className="animate-pulse text-phosphor">↓</span>
         </div>
       </motion.div>
       <HudFrame label="About me" className="relative">
