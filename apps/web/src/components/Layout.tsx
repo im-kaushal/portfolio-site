@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { nav, site } from "../content/site";
 import { CommandPalette } from "./CommandPalette";
@@ -5,6 +6,8 @@ import { SkipLink } from "./SkipLink";
 import { downloadResume } from "../lib/downloadResume";
 
 export function Layout() {
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
   return (
     <div className="grid-bg min-h-screen">
       <SkipLink />
@@ -28,7 +31,22 @@ export function Layout() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-navigation"
+              onClick={() => setMobileNavOpen((open) => !open)}
+              className="inline-flex h-9 w-9 items-center justify-center border border-line text-steel transition-colors hover:border-amber hover:text-amber lg:hidden"
+              aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}
+            >
+              <span className="sr-only">{mobileNavOpen ? "Close navigation" : "Open navigation"}</span>
+              <span className="flex flex-col gap-1.5">
+                <span className="h-px w-4 bg-current" />
+                <span className="h-px w-4 bg-current" />
+                <span className="h-px w-4 bg-current" />
+              </span>
+            </button>
             <button
               type="button"
               onClick={() => downloadResume("Kaushal_Kumar_Resume.pdf")}
@@ -42,12 +60,29 @@ export function Layout() {
             <a href={site.linkedin} className="hover:text-amber" target="_blank" rel="noopener noreferrer">
               LinkedIn
             </a>
-            <a href={site.portfolio} className="hover:text-amber" target="_blank" rel="noopener noreferrer">
+            <a href={site.portfolio} className="hidden hover:text-amber sm:inline" target="_blank" rel="noopener noreferrer">
               kausal.in
             </a>
           </div>
         </div>
       </header>
+
+      {mobileNavOpen ? (
+        <nav id="mobile-navigation" aria-label="Mobile navigation" className="border-b border-line bg-ink/95 px-4 py-3 backdrop-blur lg:hidden">
+          <div className="mx-auto flex max-w-6xl flex-col gap-1">
+            {nav.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                onClick={() => setMobileNavOpen(false)}
+                className="flex items-center justify-between border border-transparent px-3 py-2.5 font-mono text-xs uppercase tracking-widest text-steel transition-colors hover:border-line hover:bg-ink-2 hover:text-amber"
+              >
+                <span>{item.label}</span><span aria-hidden>↗</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      ) : null}
 
       <CommandPalette />
       <main id="main">
