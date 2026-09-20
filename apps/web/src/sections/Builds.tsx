@@ -4,8 +4,8 @@ import { personalProjects } from "../content/site";
 export function Builds() {
   return (
     <section id="builds" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Public Builds</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Live Projects</h2>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Side Projects</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">Projects</h2>
       <div className="mt-8 grid gap-4 md:grid-cols-2">
         {personalProjects.map((project) => (
           <HudFrame
