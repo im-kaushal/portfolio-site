@@ -15,19 +15,19 @@ function ScoreBar({ score }: { score: number }) {
 export function QualityProof() {
   return (
     <section id="quality" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Clearance</p>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Engineering</p>
       <h2 className="mt-2 font-serif text-4xl text-paper">Quality & Performance Proof</h2>
       <p className="mt-3 max-w-3xl text-justify text-steel">{qualityProof.intro}</p>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <HudFrame
-          label="LH.REPORT"
+          label="QUALITY"
           className="h-full"
           contentClassName="p-6 h-full flex flex-col justify-between"
         >
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-              Lighthouse · Portfolio + Operator Patterns
+              Lighthouse and frontend quality
             </p>
             <ul className="mt-5 space-y-4">
               {qualityProof.lighthouse.map((item) => (
@@ -47,13 +47,13 @@ export function QualityProof() {
         </HudFrame>
 
         <HudFrame
-          label="ENG.DELTA"
+          label="RESULTS"
           className="h-full"
           contentClassName="p-6 h-full flex flex-col justify-between"
         >
           <div>
             <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-              Before → After · Production Programs
+              Selected project results
             </p>
             <ul className="mt-5 space-y-3.5">
               {qualityProof.engineering.map((row) => (
