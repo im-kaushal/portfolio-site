@@ -46,6 +46,11 @@ html.light {
   --color-steel: 85 78 68;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
 html,
 body,
 #root {
@@ -54,8 +59,10 @@ body,
 
 body {
   margin: 0;
+  text-rendering: optimizeLegibility;
   background: var(--bg);
   color: var(--fg);
+  -webkit-font-smoothing: antialiased;
   font-family: "IBM Plex Sans", system-ui, sans-serif;
 }
 
@@ -95,6 +102,23 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--color-line));
+  border: 3px solid var(--bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--color-amber-dim));
 }
 
 ::selection {
