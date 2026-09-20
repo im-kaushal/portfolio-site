@@ -68,7 +68,12 @@ export function Layout() {
             </a>
           </div>
         </div>
-      </footer>
+      </header>
+
+      <CommandPalette />
+      <main id="main">
+        <Outlet />
+      </main>
     </div>
   );
 }
