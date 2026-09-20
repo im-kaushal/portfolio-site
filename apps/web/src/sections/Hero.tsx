@@ -21,7 +21,7 @@ export function Hero() {
   };
 
     return (
-    <section className="mx-auto grid max-w-6xl gap-8 px-4 py-16 md:grid-cols-[1.4fr_0.8fr] md:py-24">
+    <section className="mx-auto grid max-w-7xl gap-10 px-5 pb-20 pt-14 md:grid-cols-[1.15fr_0.85fr] md:gap-16 md:px-8 md:pb-28 md:pt-24">
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -37,12 +37,15 @@ export function Hero() {
           </span>
         </div>
 
-        <h1 className="mt-4 font-serif text-5xl leading-[0.95] text-paper md:text-7xl">
-          {site.name}
+        <p className="mt-12 max-w-3xl font-mono text-[10px] uppercase tracking-[0.3em] text-steel md:mt-20">
+          Selected work / 2023—present
+        </p>
+        <h1 className="mt-4 max-w-4xl font-serif text-[4.5rem] leading-[0.82] tracking-[-0.04em] text-paper md:text-[8.5rem]">
+          Kaushal<br /><span className="text-amber">Kumar</span>
         </h1>
 
-        <p className="mt-3 font-mono text-sm text-amber font-medium">
-          {site.headline}
+        <p className="mt-7 max-w-xl text-lg leading-snug text-paper/90 md:text-xl">
+          Frontend engineer crafting resilient interfaces for complex, high-stakes products.
         </p>
 
         {/*  */}
@@ -125,7 +128,7 @@ export function Hero() {
           </a>
         </div>
 
-        <div className="mt-6 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-steel">
+        <div className="mt-8 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-steel">
           <span className="h-px w-8 bg-line" />
           <span>Scroll to explore</span>
           <span className="animate-pulse text-phosphor">↓</span>
