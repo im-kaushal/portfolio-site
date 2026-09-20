@@ -36,8 +36,8 @@ export function Work() {
           <HudFrame
             key={study.slug}
             label={study.code}
-            className="h-full"
-            contentClassName="flex flex-col justify-between p-6 h-full bg-ink-2/40"
+            className="h-full group transition-transform duration-300 hover:-translate-y-1"
+            contentClassName="flex flex-col justify-between p-6 h-full bg-ink-2/40 transition-colors duration-300 group-hover:bg-ink-2/70"
           >
             <div>
               <div className="flex items-center justify-between">
@@ -47,7 +47,7 @@ export function Work() {
                 <span className="font-mono text-[10px] text-steel">{study.period}</span>
               </div>
 
-              <h3 className="mt-3 font-serif text-2xl text-paper">{study.title}</h3>
+              <h3 className="mt-3 font-serif text-2xl text-paper transition-colors group-hover:text-amber">{study.title}</h3>
 
               {/*  */}
               <div className="mt-3 flex flex-wrap gap-1.5">
