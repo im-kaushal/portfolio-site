@@ -63,8 +63,8 @@ export function KindWords() {
 
   return (
     <section id="kind-words" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Dispatch</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Kind Words</h2>
+      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Recommendations</p>
+      <h2 className="mt-2 font-serif text-4xl text-paper">What people I worked with say</h2>
       <p className="mt-3 max-w-2xl text-justify text-steel">{kindWords.intro}</p>
 
       <div className="mt-8 space-y-8">
