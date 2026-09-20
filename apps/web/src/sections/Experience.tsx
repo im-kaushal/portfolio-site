@@ -5,7 +5,7 @@ import { HudFrame } from "../components/HudFrame";
 import { downloadResume } from "../lib/downloadResume";
 
 export function Experience() {
-  const [viewMode, setViewMode] = useState<"ats" | "interactive">("ats");
+  const [viewMode, setViewMode] = useState<"timeline" | "details">("timeline");
   const [active, setActive] = useState(timeline[0].id);
   const role = timeline.find((r) => r.id === active) ?? timeline[0];
 
@@ -13,7 +13,7 @@ export function Experience() {
     <section id="experience" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">
-          Operational Log // Professional Experience
+          Experience
         </p>
         <div className="flex items-center gap-2 border border-line bg-ink-2 p-1">
           <button
@@ -21,12 +21,12 @@ export function Experience() {
             onClick={() => setViewMode("ats")}
             className={cn(
               "px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors",
-              viewMode === "ats"
+              viewMode === "timeline"
                 ? "bg-amber text-ink font-semibold"
                 : "text-steel hover:text-paper"
             )}
           >
-            Recruiter / ATS View
+            Timeline
           </button>
           <button
             type="button"
@@ -38,16 +38,16 @@ export function Experience() {
                 : "text-steel hover:text-paper"
             )}
           >
-            Interactive Dossier
+            Details
           </button>
         </div>
       </div>
 
       <div className="mt-3 flex flex-wrap items-baseline justify-between gap-4">
         <div>
-          <h2 className="font-serif text-4xl text-paper">Experience & Tenure</h2>
+          <h2 className="font-serif text-4xl text-paper">Experience</h2>
           <p className="mt-1 font-mono text-xs text-steel">
-            Chronological enterprise roles aligned 1:1 with resume
+            A few roles and the problems I worked on
           </p>
         </div>
         <button
@@ -59,8 +59,8 @@ export function Experience() {
         </button>
       </div>
 
-      {viewMode === "ats" ? (
-        /* Recruiter / ATS Linear View: All roles visible for rapid scanning */
+      {viewMode === "timeline" ? (
+        /*  */
         <div className="mt-8 space-y-6">
           {timeline.map((item) => (
             <div
@@ -162,7 +162,7 @@ export function Experience() {
 
           {/* Detailed Role Inspection */}
           <HudFrame
-            label={`ROLE.REC // ${role.id.toUpperCase()}`}
+            label={`${role.org}`}
             className="h-full"
             contentClassName="p-6 md:p-8 flex flex-col justify-between h-full"
           >
@@ -194,7 +194,7 @@ export function Experience() {
 
               <div className="mt-6">
                 <h4 className="font-mono text-[10px] uppercase tracking-widest text-steel">
-                  Key Contributions & Verified Impact
+                  What I worked on
                 </h4>
                 <ul className="mt-3 space-y-3">
                   {role.points.map((p, i) => (
@@ -211,7 +211,7 @@ export function Experience() {
             </div>
 
             <div className="mt-8 border-t border-line/60 pt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-steel">
-              <span>Verified through LinkedIn & Enterprise Service Records</span>
+              <span>${role.org} · ${role.dates}</span>
               <a
                 href="https://www.linkedin.com/in/im-kaushal/details/experience/"
                 target="_blank"
