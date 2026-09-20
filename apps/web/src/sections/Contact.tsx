@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { site } from "../content/site";
 import { HudFrame } from "../components/HudFrame";
 import { VoiceRecorder, type AudioRecording } from "../components/VoiceRecorder";
-import { LiveVoiceUplink } from "../components/LiveVoiceUplink";
+import { LiveVoiceContact } from "../components/LiveVoiceContact";
 
 const actions = [
   { href: `mailto:${site.publicEmail}`, label: "Email me", hint: site.publicEmail },
@@ -21,7 +21,7 @@ export function Contact() {
   const [messageText, setMessageText] = useState("");
   const [activeRecording, setActiveRecording] = useState<AudioRecording | null>(null);
   const [inputMode, setInputMode] = useState<"text" | "voice">("text");
-  const [showLiveUplink, setShowLiveUplink] = useState(false);
+  const [showLiveContact, setShowLiveContact] = useState(false);
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -92,18 +92,18 @@ export function Contact() {
     <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Uplink</p>
-          <h2 className="mt-2 font-serif text-4xl text-paper">Contact & Voice Uplink</h2>
+          <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Contact</p>
+          <h2 className="mt-2 font-serif text-4xl text-paper">Contact & Voice Contact</h2>
         </div>
 
-        {/* Live Voice Uplink Toggle Button */}
+        {/* Live Voice Contact Toggle Button */}
         <button
           type="button"
-          onClick={() => setShowLiveUplink((prev) => !prev)}
+          onClick={() => setShowLiveContact((prev) => !prev)}
           className="flex items-center gap-2 border border-phosphor/60 bg-phosphor/10 px-3.5 py-2 font-mono text-xs uppercase tracking-widest text-phosphor hover:bg-phosphor hover:text-ink transition-colors"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-phosphor animate-ping" />
-          <span>{showLiveUplink ? "Close Live Voice" : "🎙 Live Voice AI (Gemini 3.1 Flash)"}</span>
+          <span>{showLiveContact ? "Close Live Voice" : "🎙 Talk to the AI assistant"}</span>
         </button>
       </div>
 
@@ -130,12 +130,12 @@ export function Contact() {
       </HudFrame>
 
       {/* Real-time Voice Conversations Module (Gemini 3.1 Flash Live Preview) */}
-      {showLiveUplink && (
+      {showLiveContact && (
         <div className="mt-6">
           <HudFrame label="AUDIO.SPARK · LIVE VOICE CONVERSATION">
-            <LiveVoiceUplink
-              isOpen={showLiveUplink}
-              onToggle={() => setShowLiveUplink((prev) => !prev)}
+            <LiveVoiceContact
+              isOpen={showLiveContact}
+              onToggle={() => setShowLiveContact((prev) => !prev)}
               onInsertMessage={(text) => {
                 setMessageText((prev) => (prev ? `${prev}\n\n${text}` : text));
               }}
@@ -145,7 +145,7 @@ export function Contact() {
       )}
 
       <p className="mt-6 max-w-2xl text-justify text-base leading-relaxed text-steel">
-        Have a role, a product idea, or a challenging frontend or mobile problem? Send a transmission or record a voice note directly below. You can also reach me directly at{" "}
+        Have a role, a product idea, or a challenging frontend or mobile problem? Send me a message below. You can also reach me directly at{" "}
         <a href={`mailto:${site.publicEmail}`} className="text-phosphor hover:text-amber underline">
           {site.publicEmail}
         </a>
@@ -156,7 +156,7 @@ export function Contact() {
         <HudFrame label="MSG.TX" contentClassName="p-6">
           <div className="flex items-center justify-between border-b border-line/60 pb-3 mb-4">
             <span className="font-mono text-[10px] uppercase tracking-widest text-steel">
-              Transmission Method:
+              Message
             </span>
             <div className="flex items-center gap-2">
               <button
@@ -303,7 +303,7 @@ export function Contact() {
 
             {status === "ok" ? (
               <div role="status" className="border border-phosphor/50 bg-phosphor/10 p-3 font-mono text-sm text-phosphor space-y-1">
-                <p>✓ Transmission received successfully.</p>
+                <p>✓ Message sent.</p>
                 <p className="text-xs text-steel">
                   {activeRecording
                     ? "Voice memo & message logged. Kaushal will reply shortly."
@@ -323,7 +323,7 @@ export function Contact() {
         <HudFrame label="DIRECT.CHANNELS" contentClassName="p-6 flex flex-col justify-between">
           <div>
             <h3 className="font-mono text-[10px] uppercase tracking-widest text-phosphor mb-4">
-              Direct Uplink Directory
+              Direct Contact Directory
             </h3>
             <div className="space-y-2.5">
               {actions.map((a) => (
@@ -341,9 +341,9 @@ export function Contact() {
             </div>
           </div>
           <div className="mt-6 border-t border-line/60 pt-4 font-mono text-[11px] text-steel">
-            <p>Based in: Bengaluru, Karnataka · Open to Shift Pan-India</p>
-            <p className="mt-1 text-amber">Notice Period: Official 60 days (joinable within 30–45 days max)</p>
-            <p className="mt-1 text-phosphor">Timezone: IST (UTC+05:30)</p>
+            <p>Based in Bengaluru, Karnataka · Open to relocate in India</p>
+            <p className="mt-1 text-amber">Notice period: 60 days official, typically joinable in 30–45 days</p>
+            <p className="mt-1 text-phosphor">IST (UTC+05:30)</p>
           </div>
         </HudFrame>
       </div>
