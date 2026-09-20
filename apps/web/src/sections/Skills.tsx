@@ -104,6 +104,7 @@ export function Skills() {
 
         {/* Skill search */}
         <div className="w-full sm:w-72">
+          <label htmlFor="skill-search" className="sr-only">Search skills</label>
           <div className="relative">
             <input
               type="text"
@@ -126,7 +127,7 @@ export function Skills() {
       </div>
 
       {/* Skills Grid */}
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <div className="mt-8 grid gap-6 md:grid-cols-2" aria-live="polite">
         {filteredGroups.length === 0 ? (
           <div className="col-span-2 border border-line/60 bg-ink-2/40 p-8 text-center font-mono text-sm text-steel">
             No skill found matching &ldquo;{searchQuery}&rdquo;.{" "}
