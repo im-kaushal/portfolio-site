@@ -55,13 +55,8 @@ export const nav = [
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "work", label: "Work", href: "/#work" },
-  { id: "builds", label: "Builds", href: "/#builds" },
   { id: "awards", label: "Awards", href: "/#awards" },
   { id: "kind-words", label: "Kind Words", href: "/#kind-words" },
-  { id: "impact", label: "Impact", href: "/#impact" },
-  { id: "quality", label: "Quality", href: "/#quality" },
-  { id: "education", label: "Education", href: "/#education" },
-  { id: "live-desk", label: "Live Desk", href: "/#live-desk" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
