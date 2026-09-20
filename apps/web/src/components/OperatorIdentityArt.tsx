@@ -9,7 +9,7 @@ function WireframePortrait() {
       className="h-full w-full"
       aria-hidden
       role="img"
-      aria-label="Abstract digital operator portrait"
+      aria-label="Portrait of Kaushal"
     >
       <defs>
         <linearGradient id="op-glow" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -143,7 +143,7 @@ export function OperatorIdentityArt() {
           type="button"
           onClick={() => setMode((m) => (m === "photo" ? "wireframe" : "photo"))}
           className="border border-line bg-ink/90 px-2 py-1 text-amber transition-colors hover:border-amber hover:bg-ink"
-          title="Toggle between real photograph and synthetic wireframe"
+          title="Toggle portrait style"
         >
           {mode === "photo" ? "MODE: PHOTO" : "MODE: SCAN"}
         </button>
@@ -213,7 +213,7 @@ export function OperatorIdentityArt() {
         className="pointer-events-none absolute bottom-10 left-5 right-5 z-20 flex items-end justify-between font-mono text-[10px] uppercase tracking-[0.2em]"
         aria-hidden
       >
-        <span className="text-phosphor/90">SIG.VERIFIED</span>
+        <span className="text-phosphor/90">KAUSHAL KUMAR</span>
         <span className="text-amber/80">HASHEDIN · DELOITTE</span>
       </div>
 
