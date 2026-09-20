@@ -37,7 +37,7 @@ export function Contact() {
     // If audio is attached and message is brief or empty, provide descriptive text
     if (activeRecording && message.length < 20) {
       message = activeRecording.transcript
-        ? `[Voice memo, ${activeRecording.transcript}`
+        ? `[Voice memo: ${activeRecording.transcript}]`
         : `[Voice memo attached]`;
     }
 
