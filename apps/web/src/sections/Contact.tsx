@@ -1,4 +1,5 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { site } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
@@ -17,6 +18,16 @@ export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [copiedEmail, setCopiedEmail] = useState(false);
+
+  // Automatically hide the success message after 5 seconds
+  useEffect(() => {
+    if (status === "ok") {
+      const timer = setTimeout(() => {
+        setStatus("idle");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [status]);
 
   const handleCopyEmail = async () => {
     const success = await copyToClipboard(site.publicEmail);
@@ -216,15 +227,21 @@ export function Contact() {
               </button>
             </div>
 
-            {status === "ok" && (
-              <div
-                role="status"
-                className="rounded-xl border border-phosphor/40 bg-phosphor/10 p-3.5 text-xs text-phosphor space-y-1"
-              >
-                <p className="font-semibold">✓ Message delivered successfully.</p>
-                <p className="text-steel">Thank you for getting in touch. I will reply shortly.</p>
-              </div>
-            )}
+            <AnimatePresence>
+              {status === "ok" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.3 }}
+                  role="status"
+                  className="rounded-xl border border-phosphor/40 bg-phosphor/10 p-3.5 text-xs text-phosphor space-y-1"
+                >
+                  <p className="font-semibold">✓ Message delivered successfully.</p>
+                  <p className="text-steel">Thank you for getting in touch. I will reply shortly.</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
             {status === "error" && (
               <div

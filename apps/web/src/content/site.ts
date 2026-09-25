@@ -83,7 +83,7 @@ export const nav = [
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "work", label: "Work", href: "/#work" },
   { id: "awards", label: "Awards", href: "/#awards" },
-  { id: "kind-words", label: "Kind Words", href: "/#kind-words" },
+  { id: "kind-words", label: "Feedbacks", href: "/#kind-words" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 
@@ -555,7 +555,7 @@ export type KindWord = {
 
 export const kindWords = {
   intro:
-    "Sharing some kind words from my manager and leads that mean a lot to me:",
+    "Sharing feedback and recommendations from engineering managers, leads, and clients:",
   items: [
     {
       id: "mtrust-leads",
