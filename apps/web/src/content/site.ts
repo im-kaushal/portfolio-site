@@ -1,11 +1,12 @@
 export const site = {
   name: "Kaushal Kumar",
   callsign: "KK.FE",
-  title: "Frontend Software Engineer (SDE II · 3.5+ YOE)",
-  headline: "Frontend Software Engineer & SDE II (3.5+ YOE) building React, Angular, and React Native applications",
+  title: "Frontend Software Engineer · React, TypeScript & Mobile",
+  headline:
+    "Software Engineer @ HashedIn (Deloitte) — shipping React, Angular & React Native products for Citi Bank & Marriott",
   employer: "HashedIn by Deloitte",
-  role: "Software Engineer I",
-  location: "Bangalore, India",
+  role: "Software Engineer",
+  location: "Bengaluru, India",
   years: "3.5+",
   publicEmail: "work.kaushal@yahoo.com",
   phoneDisplay: "+91 7970513448",
@@ -19,33 +20,61 @@ export const site = {
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "I build web and mobile applications with React, Angular, React Native, and TypeScript. Most of my work has involved enterprise products with complex workflows, large data sets, API integrations, performance constraints, and shared UI components.",
+    "Software Engineer at HashedIn by Deloitte delivering scalable frontend, mobile, and full-stack solutions for Fortune 500 enterprises including Citi Bank and Marriott. AWS Certified Developer Associate proficient in React, Angular, React Native, and TypeScript with a passion for web performance, Core Web Vitals, and resilient user interfaces.",
   recruiterOverview: {
-    experience: "3.5+ Years (3–5 YOE)",
-    currentRole: "Software Engineer I at HashedIn by Deloitte",
-    location: "Bangalore, India",
-    noticePeriod: "Official 60 Days (Negotiable to 30–45 Days Max)",
-    primaryStack: ["React.js", "Angular", "React Native", "TypeScript", "Tailwind CSS"],
-    domains: ["Banking (Citi Bank)", "Hospitality (Marriott)", "Insurance (Colina)"],
-    status: "Open to Frontend SDE II, Mobile, and Full-Stack roles across India",
-    education: "B.Tech Computer Science, Lovely Professional University (GPA: 7.61)",
+    experience: "3.5+ Years",
+    currentRole: "Software Engineer at HashedIn by Deloitte",
+    targetRoles: ["Frontend Software Engineer", "Mobile Engineer (React Native)", "Full-Stack Engineer"],
+    location: "Bengaluru, Karnataka (Open to Remote / Relocation)",
+    noticePeriod: "Flexible / Negotiable",
+    primaryStack: [
+      "React",
+      "Angular",
+      "React Native",
+      "TypeScript",
+      "Next.js",
+      "Tailwind CSS",
+      "AWS",
+    ],
+    domains: ["Banking & Finance (Citi Bank)", "Hospitality Tech (Marriott)", "Mobile Platforms (HuntsJob)"],
+    certifications: [
+      "AWS Certified Developer – Associate",
+      "AWS Certified Cloud Practitioner (Deloitte ACE 3.0)",
+      "Claude Certified Architect – Foundations",
+      "Deloitte Certified Front End Developer",
+    ],
+    status: "Open to frontend, mobile, and full-stack engineering roles",
+    education: "B.Tech Computer Science, Lovely Professional University (Class of 2023)",
+    leadershipQuote: {
+      quote:
+        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.",
+      author: "Himanshu Mahajan & Amit Bhavikatti",
+      role: "Engineering Leads @ HashedIn by Deloitte",
+      context: "Marriott mTrust Coordinator Delivery · Deloitte High Five Award",
+    },
+    communityImpact: {
+      title: "200 Questions to Crack Any JavaScript Interview",
+      impressions: "15,500+ Impressions",
+      description:
+        "Curated real interview questions for top tech firms including Amazon, Google, Flipkart, CRED, and Deloitte.",
+    },
     keyMetrics: [
-      { value: "−35%", label: "LCP", detail: "Marriott mTrust" },
+      { value: "−35%", label: "LCP", detail: "Marriott mTrust coordinator interface" },
       { value: "4.1s → 2.6s", label: "Page load", detail: "Citi settlements desk" },
       { value: "90%+", label: "Test coverage", detail: "Jasmine & React Testing Library" },
-      { value: "−70%", label: "Manual QA", detail: "Java + React utility" },
-      { value: "180+", label: "Defects fixed", detail: "Mobile releases" },
-      { value: "50+", label: "Developers mentored", detail: "Reviews and onboarding" },
+      { value: "180+", label: "Defects fixed", detail: "Mobile releases & production UAT" },
+      { value: "3 Apps", label: "Production apps", detail: "Damco & Google Play Store release" },
+      { value: "15.5k+", label: "Impressions", detail: "JS interview community sheet" },
     ],
   },
   openToWork: {
     headline: "Open to frontend, mobile, and full-stack roles",
-    detail: "Based in Bengaluru · Open to relocate in India · 60-day notice, typically joinable in 30–45 days",
+    detail: "Based in Bengaluru · Open to remote and relocation across India",
   },
   bookCall: {
-    label: "Book a call",
-    href: "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%27d%20like%20to%20connect%20regarding%20an%20engineering%20role.",
-    hint: "WhatsApp · 20 min intro",
+    label: "Schedule Intro Call",
+    href: "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20engineering%20opportunity.",
+    hint: "WhatsApp · Instant connect",
   },
 } as const;
 
@@ -257,15 +286,15 @@ export const personalProjects: PersonalProject[] = [
     repoHref: "https://github.com/im-kaushal/pdf-bot-web",
   },
   {
-    id: "docubot",
+    id: "portfolio-site",
     code: "BUILD-04",
-    name: "DocuBot",
-    title: "Document Q&A Tool",
+    name: "Engineering Portfolio",
+    title: "High-Performance Portfolio & UI System",
     blurb:
-      "A RAG-based tool for asking questions about technical documentation and API references with citations.",
-    stack: ["TypeScript", "Python", "Vector DB", "FastAPI"],
-    liveHref: "https://github.com/im-kaushal/DocuBot",
-    repoHref: "https://github.com/im-kaushal/DocuBot",
+      "Modern, accessible frontend engineering portfolio featuring custom interactive UI primitives, Lenis smooth scrolling, sub-second Vite production builds, and full mobile-first responsiveness.",
+    stack: ["React 18", "TypeScript", "Tailwind CSS", "Lenis", "Vite", "Framer Motion"],
+    liveHref: "https://kausal.in",
+    repoHref: "https://github.com/im-kaushal/portfolio-site",
   },
 ];
 
@@ -296,19 +325,6 @@ export const timeline: Role[] = [
     ],
   },
   {
-    id: "damco",
-    org: "Damco Solutions",
-    title: "Software Engineer Trainee",
-    dates: "Jan 2023 — Feb 2024",
-    location: "Noida, India",
-    clientBadge: "Colina Insurance",
-    points: [
-      "Built a modular React Native component library and delivered 3 cross-platform mobile applications to the iOS App Store and Google Play Store, integrating Firebase, Realm DB, Redux, and JWT authentication.",
-      "Resolved 180+ critical UI and API integration defects across mobile products, stabilizing releases and ensuring smooth user acceptance testing (UAT) for production deployments.",
-      "Optimized mobile layout structures to ensure uniform rendering and responsive performance across a wide range of iOS and Android screen sizes.",
-    ],
-  },
-  {
     id: "huntsjob",
     org: "HuntsJob",
     title: "Software Consultant (Mobile)",
@@ -319,7 +335,21 @@ export const timeline: Role[] = [
       "Enhanced the UI of a React Native mobile application, achieving a pixel-perfect design and improved user experience.",
       "Integrated a real-time notification system using Firebase Cloud Messaging (FCM) to keep users continuously engaged.",
       "Deployed the application to the Google Play Store, ensuring full compliance with Google publishing standards and security policies.",
-      "Mentored junior developers in mobile application development, fostering their growth and code craftsmanship in React Native.",
+      "Mentored three junior developers in mobile application development, fostering their growth and code craftsmanship in React Native.",
+    ],
+  },
+  {
+    id: "damco",
+    org: "Damco Solutions",
+    title: "Software Engineer & Trainee",
+    dates: "Jan 2023 — Feb 2024",
+    location: "Noida, India",
+    clientBadge: "Enterprise Mobile & Web",
+    points: [
+      "Contributed to 5 diverse projects, with 3 successfully launched in production across iOS App Store and Google Play Store.",
+      "Built a modular React Native component library integrating Firebase, Realm DB, Redux, and JWT authentication.",
+      "Resolved 180+ critical UI and API integration defects across mobile products, stabilizing releases and ensuring smooth user acceptance testing (UAT).",
+      "Completed rigorous training in advanced JavaScript architecture, state management patterns, and responsive mobile UI systems.",
     ],
   },
 ];
@@ -478,7 +508,7 @@ export type LearningCert = {
 };
 
 const linkedInCertsUrl =
-  "https://www.linkedin.com/in/im-kaushal/details/certifications/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_certifications_details%3BKKhD3d47QYiECcOcaGgcnQ%3D%3D";
+  "https://www.linkedin.com/in/im-kaushal/details/certifications/";
 
 export const learningCerts: LearningCert[] = [
   {
@@ -496,9 +526,21 @@ export const learningCerts: LearningCert[] = [
     issuer: "Certification",
     href: "https://drive.google.com/file/d/1IYyMNcewy_oAE8xdrSD2rvweyCfJIkIm/view",
   },
-  { title: "Search Engine Optimization", issuer: "LinkedIn Learning" },
-  { title: "Git & GitHub", issuer: "LinkedIn Learning" },
-  { title: "SQL", issuer: "LinkedIn Learning" },
+  {
+    title: "Search Engine Optimization",
+    issuer: "LinkedIn Learning",
+    href: linkedInCertsUrl,
+  },
+  {
+    title: "Git & GitHub",
+    issuer: "LinkedIn Learning",
+    href: linkedInCertsUrl,
+  },
+  {
+    title: "SQL",
+    issuer: "LinkedIn Learning",
+    href: linkedInCertsUrl,
+  },
 ];
 
 export type KindWord = {
@@ -592,15 +634,15 @@ export const educationHistory: EducationEntry[] = [
     school: "Lovely Professional University",
     degree: "Bachelor of Technology (B.Tech) · Computer Science & Engineering",
     period: "2019 — 2023",
-    score: "CGPA 7.61",
+    score: "7.61 CGPA",
     notes: "Core disciplines: Algorithms, Data Structures, Mobile & Web Architecture, Operating Systems, Database Management Systems.",
   },
   {
     id: "bseb",
     school: "Bihar School Examination Board",
-    degree: "Higher Secondary (10+2) · Physics, Chemistry & Mathematics (PCM)",
-    period: "2017 — 2019",
-    score: "Class of 2019",
+    degree: "Higher Secondary (10+2) · Science (PCM)",
+    period: "2016 — 2018",
+    score: "73.8%",
     notes: "Foundation in science, advanced mathematics, and analytical problem-solving.",
   },
   {
@@ -608,8 +650,8 @@ export const educationHistory: EducationEntry[] = [
     school: "Sarashwati Vidya Mandir",
     degree: "Secondary School Certificate (Xth, CBSE)",
     period: "2015 — 2016",
-    score: "Class of 2016",
-    notes: "Matriculation with academic excellence and foundational sciences.",
+    score: "10 CGPA",
+    notes: "Matriculation with academic excellence in mathematics and foundational sciences.",
   },
 ];
 

@@ -5,4 +5,5 @@ module.exports = {
   rootDir: "src",
   testRegex: ".*\\.spec\\.ts$",
   moduleFileExtensions: ["ts", "js", "json"],
+  watchman: false,
 };

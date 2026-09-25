@@ -5,6 +5,7 @@ import { ThemeContext, type Theme } from "./lib/theme";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { SmoothScrollProvider } from "./components/ui/SmoothScrollProvider";
 
 function readTheme(): Theme {
   if (typeof window === "undefined") return "dark";
@@ -37,13 +38,15 @@ export function App() {
 
   return (
     <ThemeContext.Provider value={value}>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/work/:slug" element={<CaseStudyPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Route>
-      </Routes>
+      <SmoothScrollProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/work/:slug" element={<CaseStudyPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+        </Routes>
+      </SmoothScrollProvider>
     </ThemeContext.Provider>
   );
 }
