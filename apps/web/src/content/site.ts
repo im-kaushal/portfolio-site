@@ -59,12 +59,12 @@ export const site = {
         "Curated real interview questions for top tech firms including Amazon, Google, Flipkart, CRED, and Deloitte.",
     },
     keyMetrics: [
-      { value: "−35%", label: "LCP", detail: "Marriott mTrust coordinator interface" },
-      { value: "4.1s → 2.6s", label: "Page load", detail: "Citi settlements desk" },
-      { value: "90%+", label: "Test coverage", detail: "Jasmine & React Testing Library" },
-      { value: "180+", label: "Defects fixed", detail: "Mobile releases & production UAT" },
-      { value: "3 Apps", label: "Production apps", detail: "Damco & Google Play Store release" },
-      { value: "15.5k+", label: "Impressions", detail: "JS interview community sheet" },
+      { value: "−35%", label: "LCP Optimization", detail: "Marriott mTrust Coordinator UI" },
+      { value: "4.1s → 2.6s", label: "Page Load Time", detail: "Citi Bank Settlements Desk" },
+      { value: "90%+", label: "Test Coverage", detail: "Jasmine & React Testing Library" },
+      { value: "180+", label: "Critical Defects Fixed", detail: "Damco Mobile Production Releases" },
+      { value: "3 Apps", label: "Production Apps", detail: "App Store & Google Play Releases" },
+      { value: "15.5k+", label: "Community Reach", detail: "JavaScript Interview Preparation Guide" },
     ],
   },
   openToWork: {
@@ -88,28 +88,28 @@ export const nav = [
 ] as const;
 
 export const impact = [
-  { id: "lcp", readout: "−35%", label: "LCP", note: "Marriott mTrust coordinator UI" },
-  { id: "bundle", readout: "−28%", label: "JS bundle", note: "code splitting & Core Web Vitals" },
-  { id: "tti", readout: "4.1→2.6s", label: "Page load", note: "Citi settlements desk" },
-  { id: "tests", readout: "90%+", label: "Test coverage", note: "Jasmine & React Testing Library" },
-  { id: "qa", readout: "−70%", label: "Manual QA effort", note: "Spot Award Java/React utility" },
-  { id: "defects", readout: "180+", label: "Critical defects fixed", note: "Damco mobile releases" },
+  { id: "lcp", readout: "−35%", label: "LCP Optimization", note: "Marriott mTrust Coordinator UI" },
+  { id: "bundle", readout: "−28%", label: "JS Bundle Size", note: "Code Splitting & Core Web Vitals" },
+  { id: "tti", readout: "4.1s → 2.6s", label: "Page Load Time", note: "Citi Bank Settlements Desk" },
+  { id: "tests", readout: "90%+", label: "Test Coverage", note: "Jasmine & React Testing Library" },
+  { id: "qa", readout: "−70%", label: "Manual QA Effort", note: "Spot Award Java & React Utility" },
+  { id: "defects", readout: "180+", label: "Critical Defects Fixed", note: "Damco Mobile Production Releases" },
 ] as const;
 
 export const qualityProof = {
   intro:
     "A few concrete examples of performance, testing, and frontend quality work.",
   lighthouse: [
-    { id: "perf", label: "Performance", score: 94, note: "LCP-focused delivery" },
-    { id: "a11y", label: "Accessibility", score: 100, note: "WCAG 2.1 AA patterns" },
-    { id: "bp", label: "Best practices", score: 100, note: "Modern asset loading" },
-    { id: "seo", label: "SEO", score: 92, note: "Semantic structure" },
+    { id: "perf", label: "Performance", score: 94, note: "LCP-Focused Delivery" },
+    { id: "a11y", label: "Accessibility", score: 100, note: "WCAG 2.1 AA Standards" },
+    { id: "bp", label: "Best Practices", score: 100, note: "Modern Asset Loading" },
+    { id: "seo", label: "SEO", score: 92, note: "Semantic Document Structure" },
   ],
   engineering: [
-    { id: "lcp", label: "LCP", before: "3.2s", after: "2.1s", delta: "−35%", context: "mTrust queue" },
-    { id: "bundle", label: "JS bundle", before: "412 KB", after: "296 KB", delta: "−28%", context: "route split + cache" },
-    { id: "coverage", label: "Unit / E2E", before: "62%", after: "91%", delta: "+29pp", context: "critical paths" },
-    { id: "defects", label: "Defect burn", before: "—", after: "187+", delta: "1 sprint", context: "mobile UAT" },
+    { id: "lcp", label: "LCP", before: "3.2s", after: "2.1s", delta: "−35%", context: "mTrust Incident Queue" },
+    { id: "bundle", label: "JS Bundle", before: "412 KB", after: "296 KB", delta: "−28%", context: "Route Splitting & Cache" },
+    { id: "coverage", label: "Unit & E2E Coverage", before: "62%", after: "91%", delta: "+29pp", context: "Critical User Journeys" },
+    { id: "defects", label: "Defect Resolution", before: "—", after: "187+", delta: "1 Sprint", context: "Mobile Production UAT" },
   ],
   stack: ["Jest", "RTL", "Cypress", "Jasmine", "Lighthouse", "SonarQube", "WCAG 2.1 AA"],
 } as const;

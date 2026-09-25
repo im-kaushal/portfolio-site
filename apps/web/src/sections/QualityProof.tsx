@@ -21,7 +21,7 @@ export function QualityProof() {
           Rigorous Standards
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Quality & performance benchmarks
+          Quality & Performance Benchmarks
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           {qualityProof.intro}

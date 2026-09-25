@@ -21,7 +21,7 @@ export function Education() {
           Academic Foundations
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Education & languages
+          Education & Languages
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Bachelor of Technology in Computer Science & Engineering with strong foundations in algorithms, distributed systems, and computer science theory.

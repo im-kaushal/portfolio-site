@@ -230,7 +230,7 @@ export function Layout() {
                   }}
                   className="flex items-center justify-center gap-2 rounded-xl border border-line bg-ink-2 px-4 py-2.5 text-xs text-steel hover:text-paper"
                 >
-                  <span>Search commands & pages (⌘K)</span>
+                  <span>Search Commands & Pages (⌘K)</span>
                 </button>
               </div>
             </div>

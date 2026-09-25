@@ -52,8 +52,8 @@ export function CommandPalette() {
       {
         id: "action-theme",
         category: "Actions",
-        label: `Switch to ${theme === "dark" ? "Light" : "Dark"} mode`,
-        hint: "Toggle theme",
+        label: `Switch to ${theme === "dark" ? "Light" : "Dark"} Mode`,
+        hint: "Toggle Color Theme",
         icon: theme === "dark" ? "☀️" : "🌙",
         run: toggle,
       },

@@ -80,7 +80,7 @@ export function Contact() {
           Get In Touch
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Let&apos;s connect
+          Let&apos;s Connect
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Open to frontend, mobile, and full-stack engineering opportunities. If you have an open role, an engineering challenge, or just want to chat about web performance, feel free to reach out.

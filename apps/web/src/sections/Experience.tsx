@@ -17,7 +17,7 @@ export function Experience() {
             Career Progression
           </span>
           <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-            Professional experience
+            Professional Experience
           </h2>
           <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
             3.5+ years of delivering high-concurrency web and mobile architectures at HashedIn by Deloitte for enterprise financial, hospitality, and insurance clients.

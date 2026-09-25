@@ -10,7 +10,7 @@ export function Builds() {
           Open Source & Experimental
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Independent projects & builds
+          Independent Projects & Builds
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Open-source developer tools, AI-assisted agents, and web applications exploring emerging patterns in modern frontend engineering.

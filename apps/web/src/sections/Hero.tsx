@@ -221,7 +221,7 @@ export function Hero() {
 
           {/* Social Links & Location */}
           <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-steel">
-            <span>Open to relocate anywhere (Domestic & Global)</span>
+            <span>Open to Relocate Anywhere (Domestic & Global)</span>
             <span>·</span>
             <a
               href={site.linkedin}
@@ -276,7 +276,7 @@ export function Hero() {
                 <div className="text-2xl font-bold font-mono text-phosphor">−35%</div>
                 <div className="text-xs font-semibold text-paper mt-0.5">LCP Reduction</div>
                 <div className="text-[11px] text-steel mt-1 leading-snug">
-                  Marriott mTrust coordinator interface
+                  Marriott mTrust Coordinator UI
                 </div>
               </div>
 
@@ -284,7 +284,7 @@ export function Hero() {
                 <div className="text-2xl font-bold font-mono text-amber">4.1s → 2.6s</div>
                 <div className="text-xs font-semibold text-paper mt-0.5">Page Load Time</div>
                 <div className="text-[11px] text-steel mt-1 leading-snug">
-                  Citi Bank trade settlements desk
+                  Citi Bank Settlements Desk
                 </div>
               </div>
 
@@ -292,7 +292,7 @@ export function Hero() {
                 <div className="text-2xl font-bold font-mono text-paper">90%+</div>
                 <div className="text-xs font-semibold text-paper mt-0.5">Test Coverage</div>
                 <div className="text-[11px] text-steel mt-1 leading-snug">
-                  Automated BDD & unit suites (Jasmine, RTL)
+                  Automated BDD & Unit Suites (Jasmine, RTL)
                 </div>
               </div>
 
@@ -300,7 +300,7 @@ export function Hero() {
                 <div className="text-2xl font-bold font-mono text-paper">3 Apps</div>
                 <div className="text-xs font-semibold text-paper mt-0.5">Production Releases</div>
                 <div className="text-[11px] text-steel mt-1 leading-snug">
-                  Cross-platform iOS & Google Play Store
+                  Cross-Platform iOS & Google Play Store
                 </div>
               </div>
             </div>

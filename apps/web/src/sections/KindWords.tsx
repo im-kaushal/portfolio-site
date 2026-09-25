@@ -77,7 +77,7 @@ export function KindWords() {
           Peer Endorsements
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Kind words from colleagues & leads
+          Kind Words & Recommendations
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           {kindWords.intro}

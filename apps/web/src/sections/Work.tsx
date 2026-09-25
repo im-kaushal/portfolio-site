@@ -34,7 +34,7 @@ export function Work() {
               Enterprise Architecture
             </span>
             <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-              Featured case studies
+              Featured Case Studies
             </h2>
           </div>
 

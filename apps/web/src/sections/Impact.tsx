@@ -11,7 +11,7 @@ export function Impact() {
           Performance & Reliability
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Measurable engineering impact
+          Measurable Engineering Impact
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Concrete performance gains, Core Web Vitals optimizations, test coverage improvements, and defect resolution across enterprise production deployments.

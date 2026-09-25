@@ -128,7 +128,7 @@ export function CaseStudyPage() {
           }}
           className="rounded-xl bg-amber px-4 py-2.5 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
         >
-          Discuss this Project →
+          Discuss This Project →
         </a>
       </div>
     </article>

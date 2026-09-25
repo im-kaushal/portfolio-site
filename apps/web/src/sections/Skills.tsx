@@ -46,7 +46,7 @@ export function Skills() {
             Technical Repertoire
           </span>
           <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-            Engineering competencies
+            Engineering Competencies
           </h2>
           <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
             Core specializations in component-driven frontend architecture, mobile development, automated testing suites, state governance, and cloud infrastructure.

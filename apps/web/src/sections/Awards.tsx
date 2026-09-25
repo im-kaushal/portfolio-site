@@ -10,7 +10,7 @@ export function Awards() {
           Honors & Validation
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Awards & certifications
+          Awards & Certifications
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Industry-recognized certifications and corporate spot awards received for engineering excellence and automation tooling.
