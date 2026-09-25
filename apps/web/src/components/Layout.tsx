@@ -13,8 +13,8 @@ export function Layout() {
   return (
     <div className="grid-bg min-h-screen">
       <SkipLink />
-      <header className="sticky top-0 z-40 border-b border-line bg-ink/90 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5">
+      <header className="sticky top-0 z-40 border-b border-line/70 bg-ink/80 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-5 py-3 md:px-8">
           <div className="flex items-center gap-3">
             <Link to="/" className="font-mono text-xs uppercase tracking-[0.25em] text-amber">
               {site.callsign}

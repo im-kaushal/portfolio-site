@@ -4,46 +4,43 @@
 
 :root {
   color-scheme: dark;
-  --bg: #0b0d0c;
-  --fg: #e7e1d4;
-  --muted: #8a9a8e;
-  --accent: #e8b86d;
-  --live: #8fe8b4;
-  --line: rgba(232, 184, 109, 0.16);
+  --bg: #11100f;
+  --fg: #f3ede1;
+  --muted: #a59b8d;
+  --accent: #f08a72;
+  --live: #b8e38f;
+  --line: rgba(243, 237, 225, 0.16);
 
-  /* Dynamic color channels for Tailwind color system */
-  --color-ink: 11 13 12;
-  --color-ink-2: 18 22 20;
-  --color-ink-3: 26 32 28;
-  --color-line: 44 56 48;
-  --color-amber: 232 184 109;
-  --color-amber-dim: 154 117 64;
-  --color-phosphor: 143 232 180;
-  --color-paper: 231 225 212;
-  --color-steel: 138 154 142;
+  --color-ink: 17 16 15;
+  --color-ink-2: 29 27 24;
+  --color-ink-3: 46 41 35;
+  --color-line: 88 78 66;
+  --color-amber: 240 138 114;
+  --color-amber-dim: 173 88 72;
+  --color-phosphor: 184 227 143;
+  --color-paper: 243 237 225;
+  --color-steel: 165 155 141;
 }
 
 html.light {
   color-scheme: light;
-  --bg: #f4efe4;
-  --fg: #161410;
-  --fg-soft: rgba(22, 20, 16, 0.85);
-  --fg-muted: rgba(22, 20, 16, 0.72);
-  --muted: #5a5246;
-  --accent: #9a4b0e;
-  --live: #166534;
-  --line: rgba(22, 20, 16, 0.14);
-
-  /* Day (Light) mode dynamic color channels: high contrast and WCAG AA verified */
-  --color-ink: 244 239 228;
-  --color-ink-2: 250 246 239;
-  --color-ink-3: 232 224 210;
-  --color-line: 180 168 150;
-  --color-amber: 154 75 14;
-  --color-amber-dim: 180 83 9;
-  --color-phosphor: 22 101 52;
-  --color-paper: 22 20 16;
-  --color-steel: 85 78 68;
+  --bg: #f4f0e8;
+  --fg: #1c1916;
+  --fg-soft: rgba(28, 25, 22, 0.85);
+  --fg-muted: rgba(28, 25, 22, 0.72);
+  --muted: #655d52;
+  --accent: #b84f38;
+  --live: #397044;
+  --line: rgba(28, 25, 22, 0.14);
+  --color-ink: 244 240 232;
+  --color-ink-2: 250 247 241;
+  --color-ink-3: 232 224 213;
+  --color-line: 183 171 153;
+  --color-amber: 184 79 56;
+  --color-amber-dim: 143 57 40;
+  --color-phosphor: 57 112 68;
+  --color-paper: 28 25 22;
+  --color-steel: 101 93 82;
 }
 
 html {
@@ -70,7 +67,7 @@ body {
   background-image:
     linear-gradient(var(--line) 1px, transparent 1px),
     linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-size: 64px 64px;
   background-position: -1px -1px;
 }
 
