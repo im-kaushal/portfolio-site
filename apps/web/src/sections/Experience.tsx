@@ -1,227 +1,199 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { timeline } from "../content/site";
-import { cn } from "../lib/cn";
-import { HudFrame } from "../components/HudFrame";
-import { downloadResume } from "../lib/downloadResume";
+import { CardSpotlight } from "../components/ui/CardSpotlight";
 
 export function Experience() {
   const [viewMode, setViewMode] = useState<"timeline" | "details">("timeline");
-  const [active, setActive] = useState(timeline[0].id);
-  const role = timeline.find((r) => r.id === active) ?? timeline[0];
+  const [activeId, setActiveId] = useState(timeline[0].id);
+  const activeRole = timeline.find((r) => r.id === activeId) ?? timeline[0];
 
   return (
-    <section id="experience" className="mx-auto max-w-6xl px-4 py-16">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">
-          Experience
-        </p>
-        <div className="flex items-center gap-2 border border-line bg-ink-2 p-1">
+    <section id="experience" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+      {/* Section Header & Toggle */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="max-w-2xl">
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+            Career Progression
+          </span>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+            Professional Experience
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+            3.5+ years of delivering high-concurrency web and mobile architectures at HashedIn by Deloitte for enterprise financial, hospitality, and insurance clients.
+          </p>
+        </div>
+
+        {/* View Switcher Pill */}
+        <div className="flex items-center gap-2 self-start md:self-auto rounded-full border border-line/80 bg-ink-2/80 p-1 backdrop-blur-sm">
           <button
             type="button"
             onClick={() => setViewMode("timeline")}
-            className={cn(
-              "px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors",
-              viewMode === "timeline"
-                ? "bg-amber text-ink font-semibold"
-                : "text-steel hover:text-paper"
-            )}
+            className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === "timeline" ? "text-paper" : "text-steel hover:text-paper"
+            }`}
           >
-            Timeline
+            {viewMode === "timeline" && (
+              <motion.div
+                layoutId="expViewMode"
+                className="absolute inset-0 rounded-full bg-ink-3 border border-line/60"
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              />
+            )}
+            <span className="relative z-10">Timeline</span>
           </button>
+
           <button
             type="button"
             onClick={() => setViewMode("details")}
-            className={cn(
-              "px-3 py-1 font-mono text-[11px] uppercase tracking-wider transition-colors",
-              viewMode === "details"
-                ? "bg-amber text-ink font-semibold"
-                : "text-steel hover:text-paper"
-            )}
+            className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+              viewMode === "details" ? "text-paper" : "text-steel hover:text-paper"
+            }`}
           >
-            Details
+            {viewMode === "details" && (
+              <motion.div
+                layoutId="expViewMode"
+                className="absolute inset-0 rounded-full bg-ink-3 border border-line/60"
+                transition={{ type: "spring", stiffness: 350, damping: 28 }}
+              />
+            )}
+            <span className="relative z-10">Detailed View</span>
           </button>
         </div>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-baseline justify-between gap-4">
-        <div>
-          <h2 className="font-serif text-4xl text-paper">Experience</h2>
-          <p className="mt-1 font-mono text-xs text-steel">
-            A few roles and the problems I worked on
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => downloadResume("Kaushal_Kumar_Resume.pdf")}
-          className="inline-flex items-center gap-1.5 border border-line px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-paper hover:border-phosphor hover:text-phosphor transition-colors"
-        >
-          Resume PDF ↓
-        </button>
-      </div>
-
       {viewMode === "timeline" ? (
-        /*  */
-        <div className="mt-8 space-y-6">
+        /* Continuous Timeline Flow */
+        <div className="mt-10 space-y-6">
           {timeline.map((item) => (
-            <div
+            <CardSpotlight
               key={item.id}
-              className="group border border-line/80 bg-ink-2/60 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber/50 hover:bg-ink-2/80"
+              className="p-6 sm:p-8 hover:-translate-y-0.5 transition-transform duration-300"
             >
-              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line/60 pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-line/60 pb-5">
                 <div>
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3 className="font-serif text-2xl text-paper">{item.title}</h3>
+                  <div className="flex flex-wrap items-center gap-2.5">
+                    <h3 className="text-xl font-bold text-paper">{item.title}</h3>
                     {item.clientBadge && (
-                      <span className="border border-amber/50 bg-amber/10 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-amber">
+                      <span className="rounded-full bg-amber/10 border border-amber/30 px-2.5 py-0.5 text-xs font-medium text-amber">
                         {item.clientBadge}
                       </span>
                     )}
                   </div>
-                  <p className="mt-1 font-mono text-sm text-phosphor">
-                    {item.org}{" "}
+                  <p className="mt-1 font-mono text-xs text-phosphor">
+                    {item.org}
                     {item.location && (
-                      <span className="text-steel font-normal">· {item.location}</span>
+                      <span className="text-steel font-normal"> · {item.location}</span>
                     )}
                   </p>
                 </div>
-                <span className="border border-line bg-ink px-2.5 py-1 font-mono text-xs text-paper">
+
+                <span className="self-start sm:self-auto rounded-lg border border-line/80 bg-ink/70 px-3 py-1 font-mono text-xs text-steel">
                   {item.dates}
                 </span>
               </div>
 
-              <ul className="mt-4 space-y-2.5">
+              <ul className="mt-5 space-y-3">
                 {item.points.map((pt, i) => (
-                  <li
-                    key={i}
-                    className="flex items-start gap-3 text-sm leading-relaxed text-paper/85"
-                  >
-                    <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-phosphor" />
+                  <li key={i} className="flex items-start gap-3 text-sm text-steel leading-relaxed">
+                    <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-amber" />
                     <span>{pt}</span>
                   </li>
                 ))}
               </ul>
-            </div>
+            </CardSpotlight>
           ))}
         </div>
       ) : (
-        /* Interactive Tabbed HUD View */
-        <div className="mt-8 grid gap-8 lg:grid-cols-[280px_1fr]">
-          {/* Timeline Navigation */}
-          <div className="relative border-l-2 border-line pl-4">
-            <ol className="space-y-6">
-              {timeline.map((item) => {
-                const isSelected = active === item.id;
-                return (
-                  <li key={item.id} className="relative">
-                    <span
-                      className={cn(
-                        "absolute -left-[23px] top-1 h-3.5 w-3.5 rounded-full border-2 transition-all",
-                        isSelected
-                          ? "border-amber bg-amber shadow-[0_0_8px_rgba(232,184,109,0.6)]"
-                          : "border-line bg-ink hover:border-steel"
-                      )}
-                      aria-hidden
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setActive(item.id)}
-                      className={cn(
-                        "group block w-full rounded-sm p-2.5 text-left transition-all",
-                        isSelected
-                          ? "border border-amber/40 bg-ink-2/90 shadow-sm"
-                          : "border border-transparent hover:border-line hover:bg-ink-2/40"
-                      )}
-                      aria-current={isSelected ? "true" : undefined}
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span
-                          className={cn(
-                            "font-mono text-xs font-medium uppercase tracking-wider",
-                            isSelected ? "text-amber" : "text-paper group-hover:text-amber"
-                          )}
-                        >
-                          {item.org}
-                        </span>
-                        {item.clientBadge ? (
-                          <span className="border border-line/60 bg-ink px-1.5 py-0.2 font-mono text-[9px] uppercase tracking-wider text-phosphor">
-                            {item.clientBadge.split(" ")[0]}
-                          </span>
-                        ) : null}
-                      </div>
-                      <p className="mt-1 text-xs text-steel">{item.title}</p>
-                      <div className="mt-1.5 flex items-center justify-between font-mono text-[10px] text-steel/80">
-                        <span>{item.dates}</span>
-                        {item.location ? <span>{item.location.split(",")[0]}</span> : null}
-                      </div>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
+        /* Interactive Two-Column Detail View */
+        <div className="mt-10 grid gap-8 lg:grid-cols-[300px_1fr] items-start">
+          {/* Navigation Sidebar */}
+          <div className="space-y-3">
+            {timeline.map((item) => {
+              const isSelected = activeId === item.id;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setActiveId(item.id)}
+                  className={`w-full rounded-2xl border p-4 text-left transition-all ${
+                    isSelected
+                      ? "border-amber bg-ink-2/90 shadow-glow"
+                      : "border-line/60 bg-ink-2/40 hover:border-line hover:bg-ink-2/70"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm text-paper">{item.org}</span>
+                    {item.clientBadge && (
+                      <span className="text-[10px] font-mono text-amber">
+                        {item.clientBadge.split(" ")[0]}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-xs text-steel line-clamp-1">{item.title}</p>
+                  <div className="mt-2 flex items-center justify-between text-[11px] font-mono text-steel/70">
+                    <span>{item.dates}</span>
+                    {item.location && <span>{item.location.split(",")[0]}</span>}
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
-          {/* Detailed Role Inspection */}
-          <HudFrame
-            label={`${role.org}`}
-            className="h-full"
-            contentClassName="p-6 md:p-8 flex flex-col justify-between h-full"
-          >
-            <div>
-              <div className="flex flex-wrap items-start justify-between gap-3 border-b border-line pb-4">
-                <div>
-                  <span className="font-mono text-xs uppercase tracking-widest text-phosphor">
-                    {role.dates}
-                  </span>
-                  <h3 className="mt-1 font-serif text-3xl text-paper">{role.title}</h3>
-                  <p className="mt-1 font-mono text-sm text-amber">
-                    {role.org}
-                    {role.location ? (
-                      <span className="text-steel font-sans font-normal"> · {role.location}</span>
-                    ) : null}
-                  </p>
-                </div>
-                {role.clientBadge ? (
-                  <div className="border border-amber/40 bg-ink px-3 py-1 text-right">
-                    <span className="block font-mono text-[9px] uppercase tracking-widest text-steel">
-                      Client & Domain
-                    </span>
-                    <span className="font-mono text-xs font-medium text-amber">
-                      {role.clientBadge}
-                    </span>
-                  </div>
-                ) : null}
+          {/* Detailed Inspector Card */}
+          <CardSpotlight className="p-6 sm:p-8">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-line/60 pb-5">
+              <div>
+                <span className="font-mono text-xs uppercase tracking-wider text-phosphor">
+                  {activeRole.dates}
+                </span>
+                <h3 className="mt-1 text-2xl font-bold text-paper">{activeRole.title}</h3>
+                <p className="mt-1 text-sm font-medium text-amber">
+                  {activeRole.org}
+                  {activeRole.location && (
+                    <span className="text-steel font-normal"> · {activeRole.location}</span>
+                  )}
+                </p>
               </div>
 
-              <div className="mt-6">
-                <h4 className="font-mono text-[10px] uppercase tracking-widest text-steel">
-                  What I worked on
-                </h4>
-                <ul className="mt-3 space-y-3">
-                  {role.points.map((p, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3 text-justify text-sm leading-relaxed text-paper/85"
-                    >
-                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-phosphor" />
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {activeRole.clientBadge && (
+                <div className="self-start sm:self-auto rounded-xl border border-amber/30 bg-amber/5 px-3 py-2 text-right">
+                  <span className="block text-[10px] font-mono uppercase tracking-wider text-steel">
+                    Client Engagement
+                  </span>
+                  <span className="text-xs font-semibold text-amber">
+                    {activeRole.clientBadge}
+                  </span>
+                </div>
+              )}
             </div>
 
-            <div className="mt-8 border-t border-line/60 pt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-[11px] text-steel">
-              <span>{role.org} · {role.dates}</span>
+            <div className="mt-6">
+              <h4 className="text-xs font-semibold uppercase tracking-wider text-steel font-mono">
+                Key Contributions & Deliverables
+              </h4>
+              <ul className="mt-4 space-y-3.5">
+                {activeRole.points.map((p, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm text-steel leading-relaxed">
+                    <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-phosphor" />
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-8 pt-5 border-t border-line/60 flex items-center justify-between text-xs text-steel font-mono">
+              <span>{activeRole.org} · {activeRole.dates}</span>
               <a
                 href="https://www.linkedin.com/in/im-kaushal/details/experience/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-amber hover:underline"
               >
-                View on LinkedIn ↗
+                LinkedIn Verification ↗
               </a>
             </div>
-          </HudFrame>
+          </CardSpotlight>
         </div>
       )}
     </section>

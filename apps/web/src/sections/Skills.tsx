@@ -1,20 +1,24 @@
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { skillGroups } from "../content/site";
-import { HudFrame } from "../components/HudFrame";
+import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { downloadResume } from "../lib/downloadResume";
 
-const topLinkedInSkills = [
+const TOP_SKILLS = [
   "React.js",
   "Angular",
   "React Native",
   "TypeScript",
   "Tailwind CSS",
-  "Kafka",
+  "State Management",
   "Jasmine / Jest",
-  "AWS Cloud (Certified)",
+  "AWS Cloud",
 ];
 
-const filters = [{ id: "all", label: "All Skills" }, ...skillGroups.map((g) => ({ id: g.id, label: g.label }))];
+const FILTERS = [
+  { id: "all", label: "All Skills" },
+  ...skillGroups.map((g) => ({ id: g.id, label: g.label })),
+];
 
 export function Skills() {
   const [filter, setFilter] = useState("all");
@@ -34,90 +38,104 @@ export function Skills() {
   }, [filter, searchQuery]);
 
   return (
-    <section id="skills" className="mx-auto max-w-6xl px-4 py-16">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">
-          Technical Skills
-        </p>
-        <span className="font-mono text-[11px] text-phosphor">
-          React, Angular, React Native, testing, and the rest of my stack
-        </span>
-      </div>
-
-      <div className="mt-2 flex flex-wrap items-baseline justify-between gap-4">
-        <div>
-          <h2 className="font-serif text-4xl text-paper">Engineering Competencies</h2>
-          <p className="mt-1 font-mono text-xs text-steel">
-            Front-End, Mobile, Architecture, Automated Testing & Enterprise Cloud
+    <section id="skills" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div className="max-w-2xl">
+          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+            Technical Repertoire
+          </span>
+          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+            Engineering Competencies
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+            Core specializations in component-driven frontend architecture, mobile development, automated testing suites, state governance, and cloud infrastructure.
           </p>
         </div>
+
         <button
           type="button"
           onClick={() => downloadResume("Kaushal_Kumar_Resume.pdf")}
-          className="inline-flex items-center gap-1.5 border border-line px-3 py-1.5 font-mono text-xs uppercase tracking-wider text-paper hover:border-phosphor hover:text-phosphor transition-colors"
+          className="self-start md:self-auto inline-flex items-center gap-2 rounded-xl border border-line bg-ink-2/80 px-4 py-2.5 text-xs font-medium text-paper hover:border-amber hover:text-amber transition-colors"
         >
-          Download Resume ↓
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span>Download Resume (PDF)</span>
         </button>
       </div>
 
-      {/*  */}
-      <HudFrame label="CORE STACK" className="mt-6" contentClassName="p-4">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-[10px] uppercase tracking-widest text-phosphor mr-2">
-            Primary Stack:
-          </span>
-          {topLinkedInSkills.map((skill) => (
-            <button
-              key={skill}
-              type="button"
-              onClick={() => setSearchQuery(skill.split(" ")[0])}
-              className="border border-amber/60 bg-ink px-2.5 py-1 font-mono text-xs text-amber font-medium shadow-sm hover:bg-amber hover:text-ink transition-colors"
-              title={`Click to filter by ${skill}`}
-            >
-              ★ {skill}
-            </button>
-          ))}
-        </div>
-      </HudFrame>
+      {/* Primary Stack Highlight Bar */}
+      <CardSpotlight className="mt-8 p-5 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-amber" />
+            <span className="text-xs font-semibold uppercase tracking-wider text-paper font-mono">
+              Core Technologies:
+            </span>
+          </div>
 
-      {/* Search and filter skills */}
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap gap-2" role="tablist" aria-label="Skill groups">
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              type="button"
-              role="tab"
-              aria-selected={filter === f.id}
-              onClick={() => setFilter(f.id)}
-              className={`border px-3 py-1.5 font-mono text-[11px] uppercase tracking-widest transition-colors ${
-                filter === f.id
-                  ? "border-amber bg-amber/10 text-amber font-medium"
-                  : "border-line text-steel hover:border-phosphor hover:text-phosphor"
-              }`}
-            >
-              {f.label}
-            </button>
-          ))}
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            {TOP_SKILLS.map((skill) => (
+              <button
+                key={skill}
+                type="button"
+                onClick={() => setSearchQuery(skill.split(" ")[0])}
+                className="rounded-lg border border-line bg-ink-3/80 px-2.5 py-1 text-xs font-medium text-amber hover:border-amber hover:bg-amber/10 transition-colors"
+                title={`Filter by ${skill}`}
+              >
+                ★ {skill}
+              </button>
+            ))}
+          </div>
+        </div>
+      </CardSpotlight>
+
+      {/* Filter Tabs & Search */}
+      <div className="mt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Category Pills */}
+        <div className="flex flex-wrap gap-1.5">
+          {FILTERS.map((f) => {
+            const isActive = filter === f.id;
+            return (
+              <button
+                key={f.id}
+                type="button"
+                onClick={() => setFilter(f.id)}
+                className={`relative rounded-full px-3.5 py-1.5 text-xs font-medium transition-colors ${
+                  isActive ? "text-paper" : "text-steel hover:text-paper"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="skillFilterPill"
+                    className="absolute inset-0 rounded-full bg-ink-3 border border-line/80 shadow-sm"
+                    transition={{ type: "spring", stiffness: 350, damping: 28 }}
+                  />
+                )}
+                <span className="relative z-10">{f.label}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {/* Skill search */}
+        {/* Search Bar */}
         <div className="w-full sm:w-72">
           <label htmlFor="skill-search" className="sr-only">Search skills</label>
           <div className="relative">
             <input
+              id="skill-search"
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search skill (e.g., Angular, Kafka, Jest)..."
-              className="w-full border border-line bg-ink-2 px-3 py-1.5 font-mono text-xs text-paper placeholder-steel focus:border-amber focus:outline-none"
+              placeholder="Search skill (e.g., Angular, Kafka)..."
+              className="w-full rounded-xl border border-line/80 bg-ink-2 px-3.5 py-2 text-xs text-paper placeholder-steel outline-none focus:border-amber transition-colors"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 font-mono text-xs text-steel hover:text-amber"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-steel hover:text-paper"
               >
                 ✕
               </button>
@@ -126,62 +144,69 @@ export function Skills() {
         </div>
       </div>
 
-      {/* Skills Grid */}
-      <div className="mt-8 grid gap-6 md:grid-cols-2" aria-live="polite">
-        {filteredGroups.length === 0 ? (
-          <div className="col-span-2 border border-line/60 bg-ink-2/40 p-8 text-center font-mono text-sm text-steel">
-            No skill found matching &ldquo;{searchQuery}&rdquo;.{" "}
-            <button
-              type="button"
-              onClick={() => setSearchQuery("")}
-              className="text-amber underline ml-2"
-            >
-              Clear search
-            </button>
-          </div>
-        ) : (
-          filteredGroups.map((group) => (
-            <HudFrame
-              key={group.id}
-              label={group.id.toUpperCase()}
-              className="h-full"
-              contentClassName="p-5 flex flex-col justify-between h-full"
-            >
-              <div>
-                <div className="flex items-center justify-between gap-2 border-b border-line/60 pb-3">
-                  <h3 className="font-mono text-xs uppercase tracking-widest text-phosphor">
-                    {group.label}
-                  </h3>
-                  {"resumeCategory" in group && group.resumeCategory && (
-                    <span className="border border-phosphor/40 bg-phosphor/10 px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-phosphor">
-                      Resume Section
-                    </span>
-                  )}
-                </div>
-                <ul className="mt-4 flex flex-wrap gap-2">
-                  {group.items.map((item) => {
-                    const isHighlighted =
-                      searchQuery.trim() !== "" &&
-                      item.toLowerCase().includes(searchQuery.toLowerCase());
-                    return (
-                      <li
-                        key={item}
-                        className={`border px-2.5 py-1 font-mono text-xs transition-colors ${
-                          isHighlighted
-                            ? "border-amber bg-amber/20 text-amber font-bold shadow-sm"
-                            : "border-line bg-ink/70 text-paper hover:border-amber/50 hover:text-amber"
-                        }`}
-                      >
-                        {item}
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </HudFrame>
-          ))
-        )}
-      </div>
+      {/* Skills Group Grid */}
+      <motion.div layout className="mt-8 grid gap-6 md:grid-cols-2">
+        <AnimatePresence>
+          {filteredGroups.length === 0 ? (
+            <div className="col-span-2 rounded-2xl border border-line/60 bg-ink-2/40 p-10 text-center text-xs text-steel">
+              No skills found matching &ldquo;{searchQuery}&rdquo;.{" "}
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="text-amber underline ml-1"
+              >
+                Clear search
+              </button>
+            </div>
+          ) : (
+            filteredGroups.map((group) => (
+              <motion.div
+                key={group.id}
+                layout
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.25 }}
+              >
+                <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between border-b border-line/60 pb-3">
+                      <h3 className="text-sm font-bold text-paper uppercase tracking-wider font-mono">
+                        {group.label}
+                      </h3>
+                      {"resumeCategory" in group && group.resumeCategory && (
+                        <span className="rounded-full bg-amber/10 px-2 py-0.5 text-[10px] font-mono text-amber">
+                          Core
+                        </span>
+                      )}
+                    </div>
+
+                    <ul className="mt-4 flex flex-wrap gap-2">
+                      {group.items.map((item) => {
+                        const isMatch =
+                          searchQuery.trim() !== "" &&
+                          item.toLowerCase().includes(searchQuery.toLowerCase());
+                        return (
+                          <li
+                            key={item}
+                            className={`rounded-lg border px-2.5 py-1 text-xs font-mono transition-colors ${
+                              isMatch
+                                ? "border-amber bg-amber/20 text-amber font-semibold shadow-sm"
+                                : "border-line/70 bg-ink/60 text-steel hover:border-steel hover:text-paper"
+                            }`}
+                          >
+                            {item}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </CardSpotlight>
+              </motion.div>
+            ))
+          )}
+        </AnimatePresence>
+      </motion.div>
     </section>
   );
 }

@@ -1,51 +1,55 @@
+@import "lenis/dist/lenis.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   color-scheme: dark;
-  --bg: #11100f;
-  --fg: #f3ede1;
-  --muted: #a59b8d;
+  --bg: #09090b;
+  --bg-subtle: #121215;
+  --fg: #f4f4f5;
+  --muted: #a1a1aa;
   --accent: #f08a72;
-  --live: #b8e38f;
-  --line: rgba(243, 237, 225, 0.16);
+  --accent-dim: #c85a42;
+  --live: #34d399;
+  --line: rgba(255, 255, 255, 0.08);
 
-  --color-ink: 17 16 15;
-  --color-ink-2: 29 27 24;
-  --color-ink-3: 46 41 35;
-  --color-line: 88 78 66;
+  --color-ink: 9 9 11;
+  --color-ink-2: 18 18 21;
+  --color-ink-3: 27 27 31;
+  --color-line: 39 39 42;
   --color-amber: 240 138 114;
-  --color-amber-dim: 173 88 72;
-  --color-phosphor: 184 227 143;
-  --color-paper: 243 237 225;
-  --color-steel: 165 155 141;
+  --color-amber-dim: 200 90 66;
+  --color-phosphor: 52 211 153;
+  --color-paper: 244 244 245;
+  --color-steel: 161 161 170;
 }
 
 html.light {
   color-scheme: light;
-  --bg: #f4f0e8;
-  --fg: #1c1916;
-  --fg-soft: rgba(28, 25, 22, 0.85);
-  --fg-muted: rgba(28, 25, 22, 0.72);
-  --muted: #655d52;
-  --accent: #b84f38;
-  --live: #397044;
-  --line: rgba(28, 25, 22, 0.14);
-  --color-ink: 244 240 232;
-  --color-ink-2: 250 247 241;
-  --color-ink-3: 232 224 213;
-  --color-line: 183 171 153;
-  --color-amber: 184 79 56;
-  --color-amber-dim: 143 57 40;
-  --color-phosphor: 57 112 68;
-  --color-paper: 28 25 22;
-  --color-steel: 101 93 82;
+  --bg: #fafafa;
+  --bg-subtle: #f4f4f5;
+  --fg: #09090b;
+  --muted: #71717a;
+  --accent: #d95338;
+  --accent-dim: #b33922;
+  --live: #10b981;
+  --line: rgba(0, 0, 0, 0.08);
+
+  --color-ink: 250 250 250;
+  --color-ink-2: 255 255 255;
+  --color-ink-3: 244 244 245;
+  --color-line: 228 228 231;
+  --color-amber: 217 83 56;
+  --color-amber-dim: 179 57 34;
+  --color-phosphor: 16 185 129;
+  --color-paper: 9 9 11;
+  --color-steel: 113 113 122;
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 76px;
+  scroll-behavior: auto; /* Let Lenis manage smooth scrolling */
 }
 
 html,
@@ -60,29 +64,35 @@ body {
   background: var(--bg);
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
-  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
 }
 
+/* Subtle architectural dot grid */
 .grid-bg {
-  background-image:
-    linear-gradient(var(--line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
   background-position: -1px -1px;
 }
 
-.scanlines::after {
-  content: "";
-  pointer-events: none;
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 2px,
-    rgba(0, 0, 0, 0.08) 3px
+/* Ambient glow background */
+.ambient-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(240, 138, 114, 0.08) 0%,
+    rgba(52, 211, 153, 0.03) 40%,
+    transparent 70%
   );
-  opacity: 0.35;
+}
+
+html.light .ambient-glow {
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(217, 83, 56, 0.06) 0%,
+    rgba(16, 185, 129, 0.02) 40%,
+    transparent 70%
+  );
 }
 
 :focus-visible {
@@ -97,122 +107,49 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 }
 
+/* Subtle clean scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(var(--color-line));
-  border: 3px solid var(--bg);
+  background: rgba(161, 161, 170, 0.25);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(var(--color-amber-dim));
+  background: rgba(161, 161, 170, 0.45);
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--bg);
+  color: #ffffff;
 }
 
-.operator-art-bg {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(143, 232, 180, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(232, 184, 109, 0.14) 0%, transparent 40%),
-    linear-gradient(160deg, #121614 0%, #0b0d0c 55%, #1a201c 100%);
+/* Lenis smooth scrolling rules */
+html.lenis,
+html.lenis body {
+  height: auto;
 }
 
-.operator-art-pulse {
-  animation: operator-art-pulse 4s ease-in-out infinite;
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
 }
 
-.operator-scan-line {
-  animation: operator-scan 5s linear infinite;
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch] {
+  overscroll-behavior: contain;
 }
 
-.operator-reticle {
-  animation: operator-reticle 6s ease-in-out infinite;
-}
-
-@keyframes operator-art-pulse {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 0.45;
-  }
-}
-
-@keyframes operator-scan {
-  0% {
-    transform: translateY(0);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.9;
-  }
-  90% {
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(260px);
-    opacity: 0;
-  }
-}
-
-@keyframes operator-reticle {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-  50% {
-    opacity: 0.55;
-  }
-}
-
-html.light .operator-art-bg {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(22, 101, 52, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 75%, rgba(154, 75, 14, 0.1) 0%, transparent 40%),
-    linear-gradient(160deg, #faf6ee 0%, #f4efe4 55%, #faf6ee 100%);
-}
-
-html.light .text-ink {
-  color: #faf6ef !important;
-}
-
-html.light .shadow-hud {
-  box-shadow: 0 0 0 1px rgba(154, 75, 14, 0.22), 0 20px 60px rgba(22, 20, 16, 0.08);
-}
-
-html.light .operator-art {
-  background-color: #f0e9dc;
-}
-
-html.light .operator-art .border-amber\/25 {
-  border-color: rgba(154, 75, 14, 0.4);
-}
-
-html.light .scanlines::after {
-  opacity: 0.12;
-}
-
-html.light input,
-html.light textarea {
-  color: var(--fg);
-  background-color: #faf6ef;
-}
-
-html.light input::placeholder,
-html.light textarea::placeholder {
-  color: rgba(90, 82, 70, 0.65);
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
 }

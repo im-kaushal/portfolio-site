@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { HudFrame } from "../components/HudFrame";
-import { cn } from "../lib/cn";
+import { CardSpotlight } from "../components/ui/CardSpotlight";
+import { BorderBeam } from "../components/ui/BorderBeam";
 
 type Severity = "critical" | "high" | "medium";
 type IncidentStatus = "open" | "breached" | "closed";
@@ -86,10 +86,10 @@ const INCIDENTS: Incident[] = [
   },
 ];
 
-const severityClass: Record<Severity, string> = {
-  critical: "text-amber border-amber/50",
-  high: "text-phosphor border-phosphor/40",
-  medium: "text-steel border-line",
+const severityBadge: Record<Severity, string> = {
+  critical: "bg-amber/15 text-amber border-amber/30",
+  high: "bg-phosphor/15 text-phosphor border-phosphor/30",
+  medium: "bg-ink-3 text-steel border-line",
 };
 
 export function MtrustDeskDemo() {
@@ -152,166 +152,207 @@ export function MtrustDeskDemo() {
 
   function runAction(action: string) {
     setFlash(action);
-    window.setTimeout(() => setFlash(null), 2200);
+    window.setTimeout(() => setFlash(null), 2500);
   }
 
   return (
-    <section id="live-desk" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Simulator</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">mTrust Coordinator Desk</h2>
-      <p className="mt-3 max-w-3xl text-justify text-steel">
-        Synthetic incident queue — same interaction patterns as the Marriott mTrust coordinator UI.
-        All data is fictional. Try filters, row select, and keyboard shortcuts (
-        <kbd className="border border-line px-1">/</kbd> search,
-        <kbd className="border border-line px-1">j</kbd>/
-        <kbd className="border border-line px-1">k</kbd> move).
-      </p>
+    <section id="live-desk" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+      {/* Header */}
+      <div className="flex flex-col max-w-2xl">
+        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+          Interactive Architecture Simulation
+        </span>
+        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          mTrust Incident Coordinator Desk
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          Synthetic coordinator incident queue demonstrating state normalization, optimistic updates, and keyboard shortcuts (<kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">/</kbd> search, <kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">j</kbd>/<kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">k</kbd> navigate).
+        </p>
+      </div>
 
-      <HudFrame label="DESK.LIVE" className="mt-8">
-        <div ref={rootRef} className="outline-none" tabIndex={-1}>
-          <div className="flex flex-wrap items-center gap-3 border-b border-line bg-ink-2/80 p-3">
-            <input
-              data-desk-search
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Filter SER, property, city…"
-              className="min-w-[200px] flex-1 border border-line bg-ink px-3 py-2 font-mono text-xs text-paper outline-none focus:border-amber"
-              aria-label="Search incidents"
-            />
-            <div className="flex flex-wrap gap-2">
-              {(["all", "critical", "high", "medium"] as const).map((s) => (
+      {/* Simulator Desk Container */}
+      <div className="mt-8">
+        <CardSpotlight className="overflow-hidden p-0 shadow-2xl border-line/80">
+          <BorderBeam size={220} duration={12} colorFrom="#f08a72" colorTo="#34d399" />
+
+          <div ref={rootRef} className="outline-none" tabIndex={-1}>
+            {/* Filter & Search Bar */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/60 bg-ink-3/40 p-4">
+              <div className="relative flex-1 min-w-[220px]">
+                <input
+                  data-desk-search
+                  type="search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Filter by SER, property, or city..."
+                  className="w-full rounded-xl border border-line/80 bg-ink-2 px-3.5 py-2 text-xs text-paper placeholder-steel outline-none focus:border-amber transition-colors"
+                  aria-label="Search incidents"
+                />
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5">
+                {(["all", "critical", "high", "medium"] as const).map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => setSeverity(s)}
+                    className={`rounded-lg border px-2.5 py-1 text-xs font-medium uppercase tracking-wider transition-colors ${
+                      severity === s
+                        ? "border-amber bg-amber/15 text-amber"
+                        : "border-line bg-ink-2/60 text-steel hover:text-paper"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+
                 <button
-                  key={s}
                   type="button"
-                  onClick={() => setSeverity(s)}
-                  className={cn(
-                    "border px-2 py-1 font-mono text-[10px] uppercase tracking-widest",
-                    severity === s
-                      ? "border-amber text-amber"
-                      : "border-line text-steel hover:border-phosphor hover:text-phosphor",
-                  )}
+                  onClick={() => setBreachedOnly((v) => !v)}
+                  className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors ${
+                    breachedOnly
+                      ? "border-amber bg-amber text-white"
+                      : "border-line bg-ink-2/60 text-steel hover:text-paper"
+                  }`}
                 >
-                  {s}
+                  Breached Only
                 </button>
-              ))}
+              </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setBreachedOnly((v) => !v)}
-              className={cn(
-                "border px-2 py-1 font-mono text-[10px] uppercase tracking-widest",
-                breachedOnly
-                  ? "border-amber bg-amber/10 text-amber"
-                  : "border-line text-steel hover:border-amber hover:text-amber",
-              )}
-            >
-              Breached SERs
-            </button>
-          </div>
 
-          <div className="grid lg:grid-cols-[1.2fr_0.8fr]">
-            <div className="max-h-[320px] overflow-auto border-b border-line lg:border-b-0 lg:border-r">
-              <table className="w-full text-left font-mono text-xs">
-                <thead className="sticky top-0 bg-ink-2 text-[10px] uppercase tracking-widest text-steel">
-                  <tr>
-                    <th className="px-3 py-2">SER</th>
-                    <th className="px-3 py-2">Property</th>
-                    <th className="px-3 py-2">Severity</th>
-                    <th className="px-3 py-2">SLA</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((row) => (
-                    <tr
-                      key={row.id}
-                      onClick={() => setSelectedId(row.id)}
-                      className={cn(
-                        "cursor-pointer border-t border-line/60 transition-colors",
-                        selected?.id === row.id
-                          ? "bg-amber/10 text-paper"
-                          : "text-paper/80 hover:bg-ink-3/80",
-                      )}
-                    >
-                      <td className="px-3 py-2 tabular-nums">
-                        {row.ser}
-                        {row.status === "breached" ? (
-                          <span className="ml-2 text-[9px] uppercase text-amber">breach</span>
-                        ) : null}
-                      </td>
-                      <td className="px-3 py-2">
-                        <span className="block">{row.property}</span>
-                        <span className="text-[10px] text-steel">{row.city}</span>
-                      </td>
-                      <td className="px-3 py-2">
-                        <span
-                          className={cn(
-                            "border px-1.5 py-0.5 text-[10px] uppercase",
-                            severityClass[row.severity],
-                          )}
-                        >
-                          {row.severity}
-                        </span>
-                      </td>
-                      <td className="px-3 py-2 tabular-nums text-steel">{row.sla}</td>
-                    </tr>
-                  ))}
-                  {filtered.length === 0 ? (
+            {/* Split Screen Grid */}
+            <div className="grid lg:grid-cols-[1.3fr_0.7fr]">
+              {/* Incident Table */}
+              <div
+                data-lenis-prevent
+                className="max-h-[360px] overflow-y-auto border-b border-line/60 lg:border-b-0 lg:border-r"
+              >
+                <table className="w-full text-left text-xs">
+                  <thead className="sticky top-0 z-10 bg-ink-3/95 backdrop-blur text-[11px] font-mono uppercase tracking-wider text-steel border-b border-line/60">
                     <tr>
-                      <td colSpan={4} className="px-3 py-8 text-center text-steel">
-                        No incidents match filters.
-                      </td>
+                      <th className="px-4 py-3">Incident / SER</th>
+                      <th className="px-4 py-3">Property</th>
+                      <th className="px-4 py-3">Severity</th>
+                      <th className="px-4 py-3">SLA Status</th>
                     </tr>
-                  ) : null}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody className="divide-y divide-line/40">
+                    {filtered.map((row) => {
+                      const isSelected = selected?.id === row.id;
+                      return (
+                        <tr
+                          key={row.id}
+                          onClick={() => setSelectedId(row.id)}
+                          className={`cursor-pointer transition-colors ${
+                            isSelected
+                              ? "bg-amber/10 text-paper font-medium"
+                              : "text-steel hover:bg-ink-3/40 hover:text-paper"
+                          }`}
+                        >
+                          <td className="px-4 py-3 font-mono">
+                            <span className="text-paper font-semibold">{row.ser}</span>
+                            {row.status === "breached" && (
+                              <span className="ml-2 rounded bg-amber/20 px-1.5 py-0.5 text-[9px] uppercase font-bold text-amber">
+                                Breached
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3">
+                            <span className="block text-paper font-medium">{row.property}</span>
+                            <span className="text-[11px] text-steel">{row.city}</span>
+                          </td>
+                          <td className="px-4 py-3">
+                            <span
+                              className={`rounded border px-2 py-0.5 text-[10px] uppercase font-mono font-medium ${
+                                severityBadge[row.severity]
+                              }`}
+                            >
+                              {row.severity}
+                            </span>
+                          </td>
+                          <td className="px-4 py-3 font-mono text-[11px] text-steel">
+                            {row.sla}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {filtered.length === 0 && (
+                      <tr>
+                        <td colSpan={4} className="px-4 py-12 text-center text-xs text-steel">
+                          No incidents match your current filter query.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
 
-            <div className="p-4">
-              {selected ? (
-                <>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-                    {selected.id} · {selected.status}
-                  </p>
-                  <h3 className="mt-2 font-serif text-xl text-paper">{selected.property}</h3>
-                  <p className="mt-1 font-mono text-[10px] text-steel">
-                    {selected.ser} · {selected.city} · {selected.owner}
-                  </p>
-                  <p className="mt-4 text-sm leading-relaxed text-paper/85">{selected.summary}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => runAction("Email notification queued (synthetic).")}
-                      className="border border-amber px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-amber hover:bg-amber hover:text-ink"
-                    >
-                      Notify property
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => runAction("Incident marked for coordinator review.")}
-                      className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor"
-                    >
-                      Reopen workflow
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => runAction("Incident closed in synthetic desk.")}
-                      className="border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-paper hover:border-phosphor hover:text-phosphor"
-                    >
-                      Close incident
-                    </button>
+              {/* Detail Panel */}
+              <div className="p-6 bg-ink-2/30 flex flex-col justify-between">
+                {selected ? (
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-mono font-semibold text-phosphor">
+                        {selected.id} · {selected.status.toUpperCase()}
+                      </span>
+                      <span className="text-xs font-mono text-steel">
+                        Owner: {selected.owner}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-3 text-xl font-bold text-paper">
+                      {selected.property}
+                    </h3>
+                    <p className="mt-1 font-mono text-xs text-steel">
+                      {selected.ser} · {selected.city}
+                    </p>
+
+                    <p className="mt-4 text-xs sm:text-sm text-steel leading-relaxed rounded-xl border border-line/60 bg-ink/50 p-4">
+                      {selected.summary}
+                    </p>
+
+                    {/* Action Triggers */}
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={() => runAction("✓ Synthetic notification transmitted to property GM.")}
+                        className="rounded-lg bg-amber px-3.5 py-2 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+                      >
+                        Notify Property
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => runAction("✓ Incident reassigned to high-priority coordinator queue.")}
+                        className="rounded-lg border border-line bg-ink-3 px-3 py-2 text-xs font-medium text-paper hover:border-steel transition-colors"
+                      >
+                        Escalate
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => runAction("✓ Incident resolved & audit trail stored.")}
+                        className="rounded-lg border border-line bg-ink-3 px-3 py-2 text-xs font-medium text-paper hover:border-phosphor hover:text-phosphor transition-colors"
+                      >
+                        Resolve
+                      </button>
+                    </div>
                   </div>
-                </>
-              ) : (
-                <p className="text-sm text-steel">Select a row to inspect the incident panel.</p>
-              )}
-              {flash ? (
-                <p role="status" className="mt-4 font-mono text-[11px] text-phosphor">{flash}</p>
-              ) : null}
+                ) : (
+                  <p className="text-xs text-steel">Select an incident to view live coordinator panel.</p>
+                )}
+
+                {flash && (
+                  <div
+                    role="status"
+                    className="mt-4 rounded-xl border border-phosphor/30 bg-phosphor/10 p-3 text-xs font-mono text-phosphor transition-all"
+                  >
+                    {flash}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </HudFrame>
+        </CardSpotlight>
+      </div>
     </section>
   );
 }

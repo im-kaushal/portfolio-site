@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { HudFrame } from "../components/HudFrame";
 import { kindWords, type KindWord } from "../content/site";
+import { CardSpotlight } from "../components/ui/CardSpotlight";
 
 function QuoteBlock({
   item,
@@ -13,26 +13,34 @@ function QuoteBlock({
   letterOpen?: boolean;
 }) {
   return (
-    <HudFrame label={item.channel} contentClassName="relative p-6 md:p-8">
-      <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">{item.source}</p>
+    <CardSpotlight className="p-6 sm:p-8">
+      <div className="flex items-center justify-between text-xs font-mono text-steel">
+        <span className="text-phosphor uppercase tracking-wider font-semibold">{item.source}</span>
+        <span className="rounded bg-ink-3 px-2 py-0.5 text-[10px] text-steel">{item.channel}</span>
+      </div>
+
       <blockquote className="mt-4">
-        <p className="font-sans text-justify text-base leading-relaxed text-paper/90">“{item.quote}”</p>
-        <footer className="mt-4 font-mono text-[11px] uppercase tracking-widest text-steel md:mt-6">
+        <p className="text-base sm:text-lg leading-relaxed text-paper/95 italic">
+          &ldquo;{item.quote}&rdquo;
+        </p>
+        <footer className="mt-4 text-xs font-mono text-steel">
           — {item.source}
         </footer>
       </blockquote>
+
       {item.letterSrc && onOpenLetter ? (
         <button
           type="button"
           onClick={onOpenLetter}
-          className="mt-6 inline-flex items-center gap-1.5 border border-amber bg-ink/90 px-3 py-1.5 font-mono text-[10px] uppercase tracking-widest text-amber transition hover:bg-amber hover:text-ink"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-medium text-amber hover:bg-amber hover:text-white transition-all"
           aria-haspopup="dialog"
           aria-expanded={letterOpen}
         >
-          View Spot Award Letter ↗
+          <span>View Spot Award Letter</span>
+          <span aria-hidden="true">↗</span>
         </button>
       ) : null}
-    </HudFrame>
+    </CardSpotlight>
   );
 }
 
@@ -62,19 +70,28 @@ export function KindWords() {
   }, [letterOpen]);
 
   return (
-    <section id="kind-words" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Recommendations</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">What people I worked with say</h2>
-      <p className="mt-3 max-w-2xl text-justify text-steel">{kindWords.intro}</p>
+    <section id="kind-words" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+      {/* Header */}
+      <div className="flex flex-col max-w-2xl">
+        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+          Peer Endorsements
+        </span>
+        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          Kind Words
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          {kindWords.intro}
+        </p>
+      </div>
 
-      <div className="mt-8 space-y-8">
+      <div className="mt-10 space-y-6">
         {featured.map((item) => (
           <motion.div
             key={item.id}
-            initial={reduce ? false : { opacity: 0, y: 10 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.45 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.4 }}
           >
             <QuoteBlock item={item} />
           </motion.div>
@@ -82,10 +99,10 @@ export function KindWords() {
 
         {spot ? (
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 10 }}
+            initial={reduce ? false : { opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.45 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.4 }}
           >
             <QuoteBlock
               item={spot}
@@ -96,51 +113,62 @@ export function KindWords() {
         ) : null}
       </div>
 
-      {highlights.length > 0 ? (
-        <div className="mt-10">
-          <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-            Citi · RT Highlights
-          </p>
+      {highlights.length > 0 && (
+        <div className="mt-12">
+          <h3 className="text-xs font-bold font-mono text-phosphor uppercase tracking-wider">
+            Citi Client & Team Feedback
+          </h3>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {highlights.map((item) => (
-              <HudFrame
+              <CardSpotlight
                 key={item.id}
-                label={item.channel}
-                className="h-full"
-                contentClassName="p-5 flex flex-col justify-between h-full"
+                className="p-5 flex flex-col justify-between"
               >
                 <div>
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-                    {item.source}
-                  </p>
+                  <div className="flex items-center justify-between text-[11px] font-mono text-steel">
+                    <span className="text-phosphor font-medium">{item.source}</span>
+                    <span>{item.channel}</span>
+                  </div>
                   <blockquote className="mt-3">
-                    <p className="font-sans text-justify text-sm leading-relaxed text-paper/90">“{item.quote}”</p>
+                    <p className="text-xs sm:text-sm text-steel leading-relaxed">
+                      &ldquo;{item.quote}&rdquo;
+                    </p>
                   </blockquote>
                 </div>
-              </HudFrame>
+              </CardSpotlight>
             ))}
           </div>
         </div>
-      ) : null}
+      )}
 
-      {letterOpen && spot?.letterSrc ? (
+      {letterOpen && spot?.letterSrc && (
         <div
           ref={dialogRef}
           tabIndex={-1}
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-ink/94 p-4 outline-none"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 p-4 backdrop-blur-md outline-none"
           role="dialog"
           aria-modal="true"
           aria-label={spot.letterAlt}
           onClick={() => setLetterOpen(false)}
         >
-          <img
-            src={spot.letterSrc}
-            alt={spot.letterAlt}
-            className="max-h-[92vh] max-w-[min(92vw,48rem)] object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative max-h-[90vh] max-w-2xl overflow-hidden rounded-2xl bg-ink-2 shadow-2xl p-2 border border-line">
+            <button
+              type="button"
+              onClick={() => setLetterOpen(false)}
+              className="absolute top-4 right-4 z-10 rounded-full bg-black/60 p-2 text-white hover:bg-black"
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+            <img
+              src={spot.letterSrc}
+              alt={spot.letterAlt}
+              className="max-h-[85vh] w-full object-contain rounded-xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
         </div>
-      ) : null}
+      )}
     </section>
   );
 }

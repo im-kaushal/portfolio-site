@@ -1,11 +1,11 @@
 import { qualityProof } from "../content/site";
-import { HudFrame } from "../components/HudFrame";
+import { CardSpotlight } from "../components/ui/CardSpotlight";
 
 function ScoreBar({ score }: { score: number }) {
   return (
-    <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-ink-3">
+    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink-3/80">
       <div
-        className="h-full bg-gradient-to-r from-phosphor to-amber/90 transition-all"
+        className="h-full rounded-full bg-gradient-to-r from-amber to-phosphor transition-all duration-1000"
         style={{ width: `${score}%` }}
       />
     </div>
@@ -14,85 +14,118 @@ function ScoreBar({ score }: { score: number }) {
 
 export function QualityProof() {
   return (
-    <section id="quality" className="mx-auto max-w-6xl px-4 py-16">
-      <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-amber">Engineering</p>
-      <h2 className="mt-2 font-serif text-4xl text-paper">Quality & Performance Proof</h2>
-      <p className="mt-3 max-w-3xl text-justify text-steel">{qualityProof.intro}</p>
+    <section id="quality" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+      {/* Header */}
+      <div className="flex flex-col max-w-2xl">
+        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+          Rigorous Standards
+        </span>
+        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          Quality & Performance Benchmarks
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          {qualityProof.intro}
+        </p>
+      </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <HudFrame
-          label="QUALITY"
-          className="h-full"
-          contentClassName="p-6 h-full flex flex-col justify-between"
-        >
+      <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        {/* Lighthouse Scores Card */}
+        <CardSpotlight className="p-6 sm:p-7 flex flex-col justify-between">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-              Lighthouse and frontend quality
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-bold text-paper">Lighthouse Performance Audits</h3>
+              <span className="rounded-full bg-phosphor/10 px-2.5 py-0.5 text-xs font-mono font-medium text-phosphor">
+                Production Audited
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-steel">
+              Core Web Vitals compliance & accessibility standards
             </p>
-            <ul className="mt-5 space-y-4">
+
+            <ul className="mt-6 space-y-4">
               {qualityProof.lighthouse.map((item) => (
-                <li key={item.id}>
-                  <div className="flex items-end justify-between gap-4">
-                    <span className="font-mono text-[10px] uppercase tracking-widest text-steel">
+                <li key={item.id} className="rounded-xl border border-line/40 bg-ink/40 p-3.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-semibold text-paper uppercase tracking-wider">
                       {item.label}
                     </span>
-                    <span className="font-mono text-2xl font-semibold tabular-nums text-phosphor">{item.score}</span>
+                    <span className="font-mono text-xl font-bold text-phosphor">
+                      {item.score}
+                      <span className="text-xs text-steel font-normal">/100</span>
+                    </span>
                   </div>
                   <ScoreBar score={item.score} />
-                  <p className="mt-1.5 font-mono text-[11px] text-paper/80">{item.note}</p>
+                  <p className="mt-2 text-xs text-steel">{item.note}</p>
                 </li>
               ))}
             </ul>
           </div>
-        </HudFrame>
+        </CardSpotlight>
 
-        <HudFrame
-          label="RESULTS"
-          className="h-full"
-          contentClassName="p-6 h-full flex flex-col justify-between"
-        >
+        {/* Real Production Results Card */}
+        <CardSpotlight className="p-6 sm:p-7 flex flex-col justify-between">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-widest text-phosphor">
-              Selected project results
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-bold text-paper">Before & After Optimization</h3>
+              <span className="rounded-full bg-amber/10 px-2.5 py-0.5 text-xs font-mono font-medium text-amber">
+                Measured Impact
+              </span>
+            </div>
+            <p className="mt-1 text-xs text-steel">
+              Real-world improvements tracked across user sessions
             </p>
-            <ul className="mt-5 space-y-3.5">
+
+            <ul className="mt-6 space-y-3.5">
               {qualityProof.engineering.map((row) => (
                 <li
                   key={row.id}
-                  className="flex flex-wrap items-baseline justify-between gap-2 border-b border-line/50 pb-3.5 last:border-0 last:pb-0"
+                  className="rounded-xl border border-line/40 bg-ink/40 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-steel">
+                    <span className="text-xs font-semibold text-paper uppercase tracking-wider">
                       {row.label}
-                    </p>
-                    <p className="mt-1 font-mono text-xs text-paper/90">
-                      {row.before} → {row.after}
-                      <span className="text-steel"> · {row.context}</span>
+                    </span>
+                    <p className="mt-1 font-mono text-xs text-steel">
+                      <span className="text-steel/70">{row.before}</span>
+                      <span className="mx-1.5 text-paper">→</span>
+                      <strong className="text-paper">{row.after}</strong>
+                      <span className="text-steel/70 ml-2">({row.context})</span>
                     </p>
                   </div>
-                  <span className="font-mono text-lg font-semibold tabular-nums text-amber">{row.delta}</span>
+                  <span className="self-start sm:self-auto rounded-lg bg-amber/10 border border-amber/30 px-2.5 py-1 font-mono text-sm font-bold text-amber">
+                    {row.delta}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
-        </HudFrame>
+        </CardSpotlight>
       </div>
 
-      <HudFrame label="TOOLCHAIN" className="mt-6" contentClassName="p-6">
-        <p className="font-mono text-[10px] uppercase tracking-widest text-steel">
-          Quality Toolchain in Active Use
-        </p>
-        <ul className="mt-3.5 flex flex-wrap gap-2.5">
+      {/* Quality Toolchain Card */}
+      <CardSpotlight className="mt-6 p-6 sm:p-7">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 className="text-sm font-bold text-paper uppercase tracking-wider">
+              Toolchain & Testing Stack
+            </h3>
+            <p className="text-xs text-steel mt-0.5">
+              Frameworks and testing harnesses integrated into daily CI/CD pipelines
+            </p>
+          </div>
+        </div>
+
+        <ul className="mt-4 flex flex-wrap gap-2">
           {qualityProof.stack.map((tool) => (
             <li
               key={tool}
-              className="border border-line bg-ink/40 px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-paper hover:border-amber/60 transition-colors"
+              className="rounded-lg border border-line/80 bg-ink/60 px-3 py-1.5 text-xs font-mono font-medium text-paper transition-all hover:border-amber hover:text-amber"
             >
               {tool}
             </li>
           ))}
         </ul>
-      </HudFrame>
+      </CardSpotlight>
     </section>
   );
 }
