@@ -555,7 +555,7 @@ export type KindWord = {
 
 export const kindWords = {
   intro:
-    "Sharing feedback and recommendations from engineering managers, leads, and clients:",
+    "Sharing some kind words from my manager and leads that mean a lot to me:",
   items: [
     {
       id: "mtrust-leads",
