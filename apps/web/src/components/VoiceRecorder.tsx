@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { blobToBase64, formatTime } from "../lib/audio";
 
 export type AudioRecording = {
@@ -65,6 +66,7 @@ export function VoiceRecorder({
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animFrameRef = useRef<number | null>(null);
+  const playbackAnimFrameRef = useRef<number | null>(null);
   const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
   // Set up initial recording if passed
@@ -98,6 +100,10 @@ export function VoiceRecorder({
     if (animFrameRef.current) {
       cancelAnimationFrame(animFrameRef.current);
       animFrameRef.current = null;
+    }
+    if (playbackAnimFrameRef.current) {
+      cancelAnimationFrame(playbackAnimFrameRef.current);
+      playbackAnimFrameRef.current = null;
     }
     if (recognitionRef.current) {
       try {
@@ -137,10 +143,13 @@ export function VoiceRecorder({
 
       const bufferLength = analyser.frequencyBinCount;
       const dataArray = new Uint8Array(bufferLength);
+      const peaks = new Float32Array(bufferLength);
+      let phase = 0;
 
       const draw = () => {
         animFrameRef.current = requestAnimationFrame(draw);
         analyser.getByteFrequencyData(dataArray);
+        phase += 0.05;
 
         ctx.fillStyle = "rgba(10, 14, 18, 0.4)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -149,23 +158,42 @@ export function VoiceRecorder({
         let x = 0;
 
         for (let i = 0; i < bufferLength; i++) {
-          const barHeight = (dataArray[i] / 255) * (canvas.height - 4);
+          const val = dataArray[i];
+          const barHeight = (val / 255) * (canvas.height - 6);
+          peaks[i] = Math.max(barHeight, peaks[i] * 0.94);
 
-          // Phosphor cyan-green or amber accent depending on frequency amplitude
-          if (dataArray[i] > 180) {
-            ctx.fillStyle = "#ffb000"; // amber
-          } else {
-            ctx.fillStyle = "#00ff66"; // phosphor green
-          }
+          // Luminous gradient: Phosphor green -> Cyan -> Amber
+          const grad = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
+          grad.addColorStop(0, "#34d399");
+          grad.addColorStop(0.65, "#38bdf8");
+          grad.addColorStop(1, val > 170 ? "#f08a72" : "#34d399");
 
+          ctx.fillStyle = grad;
           ctx.fillRect(
             x,
             canvas.height - barHeight,
             Math.max(barWidth - 2, 2),
             barHeight
           );
+
+          // Glowing peak hold tick
+          ctx.fillStyle = peaks[i] > (canvas.height * 0.65) ? "#f08a72" : "#34d399";
+          ctx.fillRect(x, Math.max(canvas.height - peaks[i] - 2, 0), Math.max(barWidth - 2, 2), 2);
+
           x += barWidth;
         }
+
+        // Oscilloscope ribbon line overlay across mid-band
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.65)";
+        ctx.lineWidth = 1.5;
+        const centerY = canvas.height * 0.45;
+        for (let ox = 0; ox < canvas.width; ox += 4) {
+          const oy = centerY + Math.sin(ox * 0.05 + phase) * 8 * Math.sin((ox / canvas.width) * Math.PI);
+          if (ox === 0) ctx.moveTo(ox, oy);
+          else ctx.lineTo(ox, oy);
+        }
+        ctx.stroke();
       };
 
       draw();
@@ -348,6 +376,66 @@ export function VoiceRecorder({
     }
   }
 
+  // Real-time canvas visualizer during playback
+  useEffect(() => {
+    if (!isPlaying) {
+      if (playbackAnimFrameRef.current) {
+        cancelAnimationFrame(playbackAnimFrameRef.current);
+        playbackAnimFrameRef.current = null;
+      }
+      return;
+    }
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let phase = 0;
+    const render = () => {
+      playbackAnimFrameRef.current = requestAnimationFrame(render);
+      phase += 0.08;
+
+      ctx.fillStyle = "rgba(10, 14, 18, 0.4)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const numBars = 32;
+      const barWidth = canvas.width / numBars;
+
+      for (let i = 0; i < numBars; i++) {
+        const norm = i / numBars;
+        const wave = Math.sin(phase + i * 0.45) * 0.5 + 0.5;
+        const barHeight = Math.max(4, (Math.sin(norm * Math.PI) * 0.55 + wave * 0.45) * (canvas.height - 8));
+
+        const grad = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
+        grad.addColorStop(0, "#34d399");
+        grad.addColorStop(0.6, "#38bdf8");
+        grad.addColorStop(1, "#f08a72");
+
+        ctx.fillStyle = grad;
+        ctx.fillRect(i * barWidth + 1, canvas.height - barHeight, Math.max(barWidth - 2, 2), barHeight);
+      }
+
+      // Playhead vertical scrubber line
+      const playheadX = (playProgress / 100) * canvas.width;
+      ctx.strokeStyle = "#f08a72";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(playheadX, 0);
+      ctx.lineTo(playheadX, canvas.height);
+      ctx.stroke();
+    };
+
+    render();
+
+    return () => {
+      if (playbackAnimFrameRef.current) {
+        cancelAnimationFrame(playbackAnimFrameRef.current);
+        playbackAnimFrameRef.current = null;
+      }
+    };
+  }, [isPlaying, playProgress]);
+
   function handleDiscard() {
     cleanupAudio();
     if (audioUrl) {
@@ -405,20 +493,32 @@ export function VoiceRecorder({
         </div>
       ) : null}
 
-      {/* Recording Visualizer Waveform Canvas */}
-      {isRecording ? (
-        <div className="mt-3 relative h-16 w-full overflow-hidden border border-line bg-ink-2">
+      {/* Dynamic Real-Time Audio VU Meter Canvas */}
+      {(isRecording || isPlaying) && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: 64 }}
+          exit={{ opacity: 0, height: 0 }}
+          className="mt-3 relative h-16 w-full overflow-hidden border border-line bg-ink-2"
+        >
           <canvas
             ref={canvasRef}
             width={400}
             height={64}
             className="h-full w-full object-cover"
           />
-          <div className="pointer-events-none absolute right-2 top-2 font-mono text-[9px] uppercase tracking-widest text-phosphor">
-            LIVE VU · {isPaused ? "PAUSED" : "ACTIVE"}
+          <div className="pointer-events-none absolute right-2 top-2 flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-widest text-phosphor">
+            <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
+            <span>
+              {isRecording
+                ? isPaused
+                  ? "LIVE VU · PAUSED"
+                  : "LIVE VU · 96kHz STREAM"
+                : "PLAYBACK VU · SYNCHRONIZED"}
+            </span>
           </div>
-        </div>
-      ) : null}
+        </motion.div>
+      )}
 
       {/* Recorded Audio Playback Bar */}
       {audioUrl && !isRecording ? (
@@ -471,22 +571,34 @@ export function VoiceRecorder({
         </div>
       ) : null}
 
-      {/* Live Transcript / Speech Preview */}
-      {(liveTranscript || transcribing) && (
-        <div className="mt-3 border border-line/50 bg-ink/40 p-2.5 font-mono text-xs text-steel">
-          <div className="flex items-center justify-between pb-1 border-b border-line/30 mb-1.5">
-            <span className="text-[10px] uppercase tracking-wider text-amber">
-              {transcribing ? "Transcribing with Gemini..." : "Live Transcript"}
-            </span>
-            {liveTranscript && (
-              <span className="text-[9px] text-phosphor">✓ Synchronized</span>
-            )}
-          </div>
-          <p className="text-paper italic font-sans text-xs">
-            {liveTranscript || "Listening and processing speech..."}
-          </p>
-        </div>
-      )}
+      {/* Live Transcript / Speech Preview with Synchronization */}
+      <AnimatePresence>
+        {(liveTranscript || transcribing) && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.2 }}
+            className="mt-3 border border-line/50 bg-ink/40 p-2.5 font-mono text-xs text-steel"
+          >
+            <div className="flex items-center justify-between pb-1 border-b border-line/30 mb-1.5">
+              <span className="text-[10px] uppercase tracking-wider text-amber flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber animate-pulse" />
+                <span>{transcribing ? "Transcribing speech..." : "Live Audio Transcript"}</span>
+              </span>
+              {liveTranscript && (
+                <span className="text-[9px] text-phosphor font-mono flex items-center gap-1">
+                  <span>✓</span>
+                  <span>SYNCED TO AUDIO</span>
+                </span>
+              )}
+            </div>
+            <p className="text-paper italic font-sans text-xs leading-relaxed">
+              &ldquo;{liveTranscript || "Listening and synchronizing speech..."}&rdquo;
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Action Buttons */}
       <div className="mt-4 flex flex-wrap items-center gap-2.5">

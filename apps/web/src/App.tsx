@@ -5,6 +5,8 @@ import { ThemeContext, type Theme } from "./lib/theme";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import { BlogListPage } from "./pages/BlogListPage";
+import { BlogPostPage } from "./pages/BlogPostPage";
 import { SmoothScrollProvider } from "./components/ui/SmoothScrollProvider";
 
 function readTheme(): Theme {
@@ -42,6 +44,8 @@ export function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/blog" element={<BlogListPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
             <Route path="/work/:slug" element={<CaseStudyPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>

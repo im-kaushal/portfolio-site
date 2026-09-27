@@ -2,13 +2,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { nav, site } from "../content/site";
+import { blogPosts } from "../content/blogs";
 import { useTheme } from "../lib/theme";
 import { downloadResume } from "../lib/downloadResume";
 import { copyToClipboard } from "../lib/clipboard";
 
 type Item = {
   id: string;
-  category: "Navigation" | "Actions" | "Connect";
+  category: "Navigation" | "Tech Articles" | "Actions" | "Connect";
   label: string;
   hint: string;
   icon?: string;
@@ -25,22 +26,41 @@ export function CommandPalette() {
   const { toggle, theme } = useTheme();
 
   const items = useMemo<Item[]>(() => {
-    const jumps: Item[] = nav.map((n) => ({
-      id: `jump-${n.id}`,
-      category: "Navigation",
-      label: `Jump to ${n.label}`,
-      hint: n.href,
-      icon: "↗",
+    const jumps: Item[] = nav.map((n) => {
+      const isPageLink = n.href.startsWith("/") && !n.href.startsWith("/#");
+      return {
+        id: `jump-${n.id}`,
+        category: "Navigation",
+        label: `Jump to ${n.label}`,
+        hint: n.href,
+        icon: isPageLink ? "📰" : "↗",
+        run: () => {
+          if (isPageLink) {
+            navigate(n.href);
+          } else {
+            navigate(n.href);
+            requestAnimationFrame(() => {
+              document.getElementById(n.id)?.scrollIntoView({ behavior: "smooth" });
+            });
+          }
+        },
+      };
+    });
+
+    const articles: Item[] = blogPosts.map((post) => ({
+      id: `article-${post.slug}`,
+      category: "Tech Articles",
+      label: post.title,
+      hint: `${post.category} · ${post.readTime}`,
+      icon: "📝",
       run: () => {
-        navigate("/");
-        requestAnimationFrame(() => {
-          document.getElementById(n.id)?.scrollIntoView({ behavior: "smooth" });
-        });
+        navigate(`/blog/${post.slug}`);
       },
     }));
 
     return [
       ...jumps,
+      ...articles,
       {
         id: "action-resume",
         category: "Actions",
