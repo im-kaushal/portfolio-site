@@ -1,12 +1,25 @@
+import { motion } from "framer-motion";
 import { qualityProof } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
+import { SlidingNumber } from "../components/ui/SlidingNumber";
+import { ScrollReveal } from "../components/ui/ScrollReveal";
 
-function ScoreBar({ score }: { score: number }) {
+function ScoreBar({ score, label }: { score: number; label: string }) {
   return (
-    <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink-3/80">
-      <div
-        className="h-full rounded-full bg-gradient-to-r from-amber to-phosphor transition-all duration-1000"
-        style={{ width: `${score}%` }}
+    <div
+      role="progressbar"
+      aria-valuenow={score}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-label={`${label} score: ${score} out of 100`}
+      className="mt-2 h-2 w-full overflow-hidden rounded-full bg-ink-3/80"
+    >
+      <motion.div
+        className="h-full rounded-full bg-gradient-to-r from-amber to-phosphor"
+        initial={{ width: 0 }}
+        whileInView={{ width: `${score}%` }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
       />
     </div>
   );
@@ -16,7 +29,7 @@ export function QualityProof() {
   return (
     <section id="quality" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
       {/* Header */}
-      <div className="flex flex-col max-w-2xl">
+      <ScrollReveal className="flex flex-col max-w-2xl">
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
           Rigorous Standards
         </span>
@@ -26,7 +39,7 @@ export function QualityProof() {
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           {qualityProof.intro}
         </p>
-      </div>
+      </ScrollReveal>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
         {/* Lighthouse Scores Card */}
@@ -50,11 +63,11 @@ export function QualityProof() {
                       {item.label}
                     </span>
                     <span className="font-mono text-xl font-bold text-phosphor">
-                      {item.score}
+                      <SlidingNumber value={item.score} />
                       <span className="text-xs text-steel font-normal">/100</span>
                     </span>
                   </div>
-                  <ScoreBar score={item.score} />
+                  <ScoreBar score={item.score} label={item.label} />
                   <p className="mt-2 text-xs text-steel">{item.note}</p>
                 </li>
               ))}
@@ -93,7 +106,7 @@ export function QualityProof() {
                     </p>
                   </div>
                   <span className="self-start sm:self-auto rounded-lg bg-amber/10 border border-amber/30 px-2.5 py-1 font-mono text-sm font-bold text-amber">
-                    {row.delta}
+                    <SlidingNumber value={row.delta} />
                   </span>
                 </li>
               ))}

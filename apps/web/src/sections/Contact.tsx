@@ -4,13 +4,15 @@ import { site } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
 import { VoiceRecorder, type AudioRecording } from "../components/VoiceRecorder";
+import { Magnetic } from "../components/ui/Magnetic";
+import { ScrollReveal } from "../components/ui/ScrollReveal";
 
 const channels = [
-  { href: `mailto:${site.publicEmail}`, label: "Email", hint: site.publicEmail, icon: "✉️" },
-  { href: site.bookCall.href, label: "WhatsApp", hint: "+91 7970513448", icon: "💬" },
-  { href: site.linkedin, label: "LinkedIn", hint: "in/im-kaushal", icon: "💼" },
-  { href: site.github, label: "GitHub", hint: "im-kaushal", icon: "🐙" },
-  { href: `tel:${site.phoneTel}`, label: "Phone", hint: site.phoneDisplay, icon: "📞" },
+  { key: "email", href: `mailto:${site.publicEmail}`, label: "Email", value: site.publicEmail, copyable: true, icon: "✉️" },
+  { key: "whatsapp", href: site.bookCall.href, label: "WhatsApp", value: "+91 7970513448", copyable: false, icon: "💬" },
+  { key: "linkedin", href: site.linkedin, label: "LinkedIn", value: "in/im-kaushal", copyable: false, icon: "💼" },
+  { key: "github", href: site.github, label: "GitHub", value: "im-kaushal", copyable: false, icon: "🐙" },
+  { key: "phone", href: `tel:${site.phoneTel}`, label: "Phone", value: site.phoneDisplay, copyable: true, icon: "📞" },
 ];
 
 type Status = "idle" | "sending" | "ok" | "error";
@@ -18,7 +20,7 @@ type Status = "idle" | "sending" | "ok" | "error";
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [messageText, setMessageText] = useState("");
   const [activeRecording, setActiveRecording] = useState<AudioRecording | null>(null);
   const [inputMode, setInputMode] = useState<"text" | "voice">("text");
@@ -33,11 +35,11 @@ export function Contact() {
     }
   }, [status]);
 
-  const handleCopyEmail = async () => {
-    const success = await copyToClipboard(site.publicEmail);
+  const handleCopy = async (value: string, key: string) => {
+    const success = await copyToClipboard(value);
     if (success) {
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2500);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 2500);
     }
   };
 
@@ -109,7 +111,7 @@ export function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
       {/* Header */}
-      <div className="max-w-2xl">
+      <ScrollReveal className="max-w-2xl">
         <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
           Get In Touch
         </span>
@@ -117,44 +119,50 @@ export function Contact() {
           Let&apos;s Connect
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-          Open to frontend, mobile, and full-stack engineering opportunities. If you have an open role, an engineering challenge, or just want to chat about web performance, feel free to reach out.
+          Always open to discussing frontend architecture, high-performance web systems, tech writing, or ambitious engineering challenges. Feel free to drop a note.
         </p>
-      </div>
+      </ScrollReveal>
 
       {/* Contact Grid */}
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Direct Channels */}
         <div className="space-y-4">
-          <CardSpotlight className="p-6 sm:p-7">
+          <CardSpotlight className="p-6 sm:p-7 border-line/70">
             <h3 className="text-base font-semibold text-paper">Direct Channels</h3>
             <p className="mt-1 text-xs text-steel">Instant ways to reach me directly</p>
 
             <div className="mt-5 space-y-2.5">
               {channels.map((c) => (
-                <a
+                <div
                   key={c.label}
-                  href={c.href}
-                  onClick={
-                    c.label === "Email"
-                      ? () => {
-                          void handleCopyEmail();
-                        }
-                      : undefined
-                  }
-                  target={c.href.startsWith("http") ? "_blank" : undefined}
-                  rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="flex items-center justify-between rounded-xl border border-line/60 bg-ink-2/60 px-4 py-3 text-xs text-paper hover:border-line hover:bg-ink-3/80 transition-all group"
                 >
-                  <div className="flex items-center gap-3">
+                  <a
+                    href={c.href}
+                    target={c.href.startsWith("http") ? "_blank" : undefined}
+                    rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="flex items-center gap-3 flex-1 min-w-0"
+                  >
                     <span className="text-base" aria-hidden="true">{c.icon}</span>
                     <span className="font-medium text-paper group-hover:text-amber transition-colors">
                       {c.label}
                     </span>
-                  </div>
-                  <span className="font-mono text-steel group-hover:text-paper text-[11px] truncate max-w-[180px]">
-                    {c.hint}
-                  </span>
-                </a>
+                    <span className="font-mono text-steel group-hover:text-paper text-[11px] truncate">
+                      {c.value}
+                    </span>
+                  </a>
+
+                  {c.copyable && (
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(c.value, c.key)}
+                      className="ml-2 rounded-lg border border-line/70 bg-ink-3/80 px-2 py-1 font-mono text-[10px] text-steel hover:border-amber hover:text-amber transition-colors shrink-0"
+                      title={`Copy ${c.label}`}
+                    >
+                      {copiedKey === c.key ? "✓ Copied" : "Copy"}
+                    </button>
+                  )}
+                </div>
               ))}
             </div>
 
@@ -162,38 +170,44 @@ export function Contact() {
               <span className="text-steel">Quick Email Copy:</span>
               <button
                 type="button"
-                onClick={handleCopyEmail}
+                onClick={() => handleCopy(site.publicEmail, "email-quick")}
                 className="rounded-lg border border-line bg-ink-3 px-3 py-1.5 font-mono text-[11px] text-paper hover:border-amber transition-colors"
               >
-                {copiedEmail ? "✓ Copied to clipboard" : site.publicEmail}
+                {copiedKey === "email-quick" ? "✓ Copied to clipboard" : site.publicEmail}
               </button>
             </div>
           </CardSpotlight>
 
-          {/* Quick Context Card */}
+          {/* Engineering Inquiries Card */}
           <div className="rounded-2xl border border-line/60 bg-ink-2/40 p-5 text-xs text-steel space-y-2">
             <div className="flex items-center gap-2 text-paper font-medium">
               <span className="h-2 w-2 rounded-full bg-phosphor" />
-              <span>Location: Open to relocate anywhere</span>
+              <span>Engineering Conversations</span>
             </div>
             <p>
-              Available for on-site, hybrid, or remote roles worldwide. Open to domestic & international relocation.
+              Based in Bengaluru, India. Open to technical advisory, frontend discussions, and senior engineering opportunities.
             </p>
           </div>
         </div>
 
-        {/* Message Form Card */}
-        <CardSpotlight className="p-6 sm:p-7">
+        {/* Message Form Card with Dual Transmission */}
+        <CardSpotlight className="p-6 sm:p-7 border-line/70">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/60 pb-3 mb-5">
             <div>
               <h3 className="text-base font-semibold text-paper">Send a Note</h3>
               <p className="mt-0.5 text-xs text-steel">Directly delivers to my inbox</p>
             </div>
 
-            {/* Transmission Mode Switcher */}
-            <div className="flex items-center gap-1 rounded-xl border border-line/80 bg-ink-2/80 p-1">
+            {/* Transmission Mode Switcher: Text vs Voice Memo */}
+            <div
+              role="tablist"
+              aria-label="Contact transmission mode"
+              className="flex items-center gap-1 rounded-xl border border-line/80 bg-ink-2/80 p-1"
+            >
               <button
                 type="button"
+                role="tab"
+                aria-selected={inputMode === "text"}
                 onClick={() => setInputMode("text")}
                 className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
                   inputMode === "text"
@@ -205,6 +219,8 @@ export function Contact() {
               </button>
               <button
                 type="button"
+                role="tab"
+                aria-selected={inputMode === "voice"}
                 onClick={() => setInputMode("voice")}
                 className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
                   inputMode === "voice"
@@ -218,7 +234,7 @@ export function Contact() {
             </div>
           </div>
 
-          {/* Voice Memo Recorder Box */}
+          {/* Voice Memo Recorder with Waveform Visualizer */}
           {inputMode === "voice" && (
             <div className="mb-5 overflow-hidden rounded-xl border border-line/80 bg-ink-2/90">
               <VoiceRecorder
@@ -318,17 +334,19 @@ export function Contact() {
             </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-3">
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="w-full sm:w-auto rounded-xl bg-amber px-6 py-3 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all disabled:opacity-50"
-              >
-                {status === "sending"
-                  ? "Transmitting…"
-                  : activeRecording
-                  ? "Transmit Voice Note & Message"
-                  : "Send Message"}
-              </button>
+              <Magnetic strength={0.2} className="w-full sm:w-auto">
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="w-full sm:w-auto rounded-xl bg-amber px-6 py-3 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all disabled:opacity-50"
+                >
+                  {status === "sending"
+                    ? "Transmitting…"
+                    : activeRecording
+                    ? "Transmit Voice Note & Message"
+                    : "Send Message"}
+                </button>
+              </Magnetic>
 
               <button
                 type="button"

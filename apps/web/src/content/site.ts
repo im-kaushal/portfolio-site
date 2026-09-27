@@ -24,9 +24,9 @@ export const site = {
   recruiterOverview: {
     experience: "3.5+ Years",
     currentRole: "Software Engineer at HashedIn by Deloitte",
-    targetRoles: ["Frontend Software Engineer", "Mobile Engineer (React Native)", "Full-Stack Engineer"],
-    location: "Bengaluru, Karnataka (Open to Remote / Relocation)",
-    noticePeriod: "Flexible / Negotiable",
+    targetRoles: ["Senior Frontend Engineer", "Frontend Software Engineer", "Mobile Engineer (React Native)"],
+    location: "Bengaluru, Karnataka, India",
+    noticePeriod: "Standard Notice (60 Days)",
     primaryStack: [
       "React",
       "Angular",
@@ -43,7 +43,7 @@ export const site = {
       "Claude Certified Architect – Foundations",
       "Deloitte Certified Front End Developer",
     ],
-    status: "Open to frontend, mobile, and full-stack engineering roles",
+    status: "Software Engineer at HashedIn by Deloitte · Shipping for Citi & Marriott",
     education: "B.Tech Computer Science, Lovely Professional University (Class of 2023)",
     leadershipQuote: {
       quote:
@@ -68,12 +68,12 @@ export const site = {
     ],
   },
   openToWork: {
-    headline: "Open to frontend, mobile, and full-stack roles",
-    detail: "Based in Bengaluru · Open to remote and relocation across India",
+    headline: "Frontend & Mobile Engineering",
+    detail: "Based in Bengaluru, India · Open for technical discussions & collaborations",
   },
   bookCall: {
-    label: "Schedule Intro Call",
-    href: "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%20came%20across%20your%20portfolio%20and%20would%20like%20to%20discuss%20an%20engineering%20opportunity.",
+    label: "Connect on WhatsApp",
+    href: "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%20came%20across%20your%20portfolio%20and%20wanted%20to%20connect.",
     hint: "WhatsApp · Instant connect",
   },
 } as const;
@@ -82,6 +82,7 @@ export const nav = [
   { id: "skills", label: "Skills", href: "/#skills" },
   { id: "experience", label: "Timeline", href: "/#experience" },
   { id: "work", label: "Work", href: "/#work" },
+  { id: "blog", label: "Blog", href: "/blog" },
   { id: "awards", label: "Awards", href: "/#awards" },
   { id: "kind-words", label: "Feedbacks", href: "/#kind-words" },
   { id: "contact", label: "Contact", href: "/#contact" },

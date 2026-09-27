@@ -1,4 +1,4 @@
-import { personalProjects } from "../content/site";
+import { personalProjects, type PersonalProject } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 
 export function Builds() {
@@ -13,81 +13,89 @@ export function Builds() {
           Independent Projects & Builds
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-          Open-source developer tools, AI-assisted agents, and web applications exploring emerging patterns in modern frontend engineering.
+          Open-source developer tools, AI-assisted agents, and web applications exploring emerging patterns in modern frontend engineering, LLM orchestration, and high-performance client architectures.
         </p>
       </div>
 
       {/* Grid */}
       <div className="mt-10 grid gap-6 md:grid-cols-2">
-        {personalProjects.map((project) => (
-          <CardSpotlight
-            key={project.id}
-            className="p-6 sm:p-8 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300"
-          >
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="rounded-lg bg-amber/10 border border-amber/30 px-2.5 py-0.5 text-xs font-semibold text-amber">
-                  {project.name}
-                </span>
-                <span className="text-xs font-mono text-steel">{project.code}</span>
+        {personalProjects.map((project: PersonalProject) => {
+          const hasLiveApp = project.liveHref && project.liveHref !== project.repoHref;
+
+          return (
+            <CardSpotlight
+              key={project.id}
+              className="p-6 sm:p-8 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 border-line/70"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="rounded-lg bg-amber/10 border border-amber/30 px-2.5 py-0.5 text-xs font-semibold text-amber font-mono">
+                      {project.name}
+                    </span>
+
+                    {/* Live Preview Indicator Beacon */}
+                    {hasLiveApp && (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-phosphor/10 border border-phosphor/30 px-2 py-0.5 text-[10px] font-mono text-phosphor">
+                        <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
+                        LIVE APP
+                      </span>
+                    )}
+                  </div>
+
+                  <span className="text-xs font-mono text-steel">{project.code}</span>
+                </div>
+
+                <h3 className="mt-4 text-xl font-bold text-paper transition-colors group-hover:text-amber">
+                  {project.title}
+                </h3>
+
+                <p className="mt-3 text-xs sm:text-sm text-steel leading-relaxed">
+                  {project.blurb}
+                </p>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {project.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-md border border-line/70 bg-ink/60 px-2 py-0.5 text-[11px] font-mono text-steel"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <h3 className="mt-4 text-xl font-bold text-paper transition-colors group-hover:text-amber">
-                {project.title}
-              </h3>
-
-              <p className="mt-3 text-xs sm:text-sm text-steel leading-relaxed">
-                {project.blurb}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {project.stack.map((tech) => (
-                  <span
-                    key={tech}
-                    className="rounded-md border border-line/70 bg-ink/60 px-2 py-0.5 text-[11px] font-mono text-steel"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-line/60 flex flex-wrap items-center gap-4 text-xs font-medium">
-              {project.liveHref && project.liveHref !== project.repoHref ? (
-                <>
+              {/* Action Links */}
+              <div className="mt-6 pt-5 border-t border-line/60 flex flex-wrap items-center gap-4 text-xs font-medium">
+                {hasLiveApp && (
                   <a
                     href={project.liveHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-amber hover:underline"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber/10 border border-amber/30 px-3 py-1.5 text-amber hover:bg-amber hover:text-white transition-all font-mono"
                   >
-                    <span>Live Preview</span>
-                    <span>↗</span>
+                    <span>Launch Live App</span>
+                    <span aria-hidden="true">↗</span>
                   </a>
-                  <a
-                    href={project.repoHref}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 text-steel hover:text-paper"
-                  >
-                    <span>Source Code</span>
-                    <span>↗</span>
-                  </a>
-                </>
-              ) : (
+                )}
+
                 <a
                   href={project.repoHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-amber hover:underline"
+                  className="inline-flex items-center gap-1.5 text-steel hover:text-paper transition-colors font-mono"
                 >
-                  <span>View Repository</span>
-                  <span>↗</span>
+                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                  </svg>
+                  <span>GitHub Repository</span>
+                  <span aria-hidden="true">↗</span>
                 </a>
-              )}
-            </div>
-          </CardSpotlight>
-        ))}
+              </div>
+            </CardSpotlight>
+          );
+        })}
       </div>
     </section>
   );

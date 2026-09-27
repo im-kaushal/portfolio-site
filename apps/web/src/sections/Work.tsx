@@ -1,17 +1,37 @@
 import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { caseStudies } from "../content/site";
+import { caseStudies, type CaseStudy } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { BorderBeam } from "../components/ui/BorderBeam";
 import { downloadResume } from "../lib/downloadResume";
 
 const CATEGORIES = [
   { id: "all", label: "All Engagements" },
-  { id: "banking", label: "Banking & Finance" },
   { id: "hospitality", label: "Hospitality & Travel" },
+  { id: "banking", label: "Banking & Finance" },
   { id: "insurance", label: "Insurance & Health" },
 ] as const;
+
+interface StudyMetrics {
+  primary: { label: string; value: string };
+  secondary: { label: string; value: string };
+}
+
+const CASE_METRICS: Record<string, StudyMetrics> = {
+  marriott: {
+    primary: { label: "LCP Optimization", value: "−35%" },
+    secondary: { label: "JS Bundle Reduction", value: "−28%" },
+  },
+  citi: {
+    primary: { label: "Settlement Desk Load", value: "4.1s → 2.6s" },
+    secondary: { label: "Test Coverage", value: "90%+" },
+  },
+  colina: {
+    primary: { label: "Critical Defects Fixed", value: "180+" },
+    secondary: { label: "Production Releases", value: "3 Apps" },
+  },
+};
 
 export function Work() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
@@ -50,18 +70,24 @@ export function Work() {
           </button>
         </div>
 
-        <p className="mt-4 text-sm sm:text-base text-steel leading-relaxed w-full">
+        <p className="mt-4 text-sm sm:text-base text-steel leading-relaxed max-w-3xl">
           High-scale frontend systems delivered for global enterprises—featuring real-time settlements, coordinator workflows, Core Web Vitals optimization, and design system governance.
         </p>
       </div>
 
-      {/* Interactive Category Filter Tabs */}
-      <div className="mt-8 flex flex-wrap gap-2 border-b border-line/60 pb-4">
+      {/* Interactive Category Filter Pills */}
+      <div
+        role="tablist"
+        aria-label="Case study categories"
+        className="mt-8 flex flex-wrap gap-2 border-b border-line/60 pb-4"
+      >
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.id;
           return (
             <button
               key={cat.id}
+              role="tab"
+              aria-selected={isActive}
               type="button"
               onClick={() => setActiveCategory(cat.id)}
               className={`relative rounded-full px-4 py-2 text-xs font-medium transition-colors ${
@@ -83,9 +109,13 @@ export function Work() {
 
       {/* Case Studies Grid */}
       <motion.div layout className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence>
-          {filteredStudies.map((study) => {
+        <AnimatePresence mode="popLayout">
+          {filteredStudies.map((study: CaseStudy) => {
             const isFeatured = study.slug === "marriott";
+            const metrics = CASE_METRICS[study.slug] ?? {
+              primary: { label: "Performance", value: "Optimized" },
+              secondary: { label: "Coverage", value: "90%+" },
+            };
 
             return (
               <motion.div
@@ -97,17 +127,30 @@ export function Work() {
                 transition={{ duration: 0.3 }}
                 className="h-full"
               >
-                <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300">
+                <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative">
+                  {/* Animated Border Beam on Featured Marriott mTrust */}
                   {isFeatured && (
-                    <BorderBeam size={200} duration={8} colorFrom="#f08a72" colorTo="#34d399" />
+                    <BorderBeam
+                      size={220}
+                      duration={8}
+                      colorFrom="#f08a72"
+                      colorTo="#34d399"
+                    />
                   )}
 
                   <div>
                     {/* Header: Client & Period */}
                     <div className="flex items-center justify-between">
-                      <span className="rounded-lg bg-phosphor/10 border border-phosphor/30 px-2.5 py-1 text-xs font-semibold text-phosphor">
-                        {study.client}
-                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-lg bg-phosphor/10 border border-phosphor/30 px-2.5 py-1 text-xs font-semibold text-phosphor font-mono">
+                          {study.client}
+                        </span>
+                        {isFeatured && (
+                          <span className="rounded-full bg-amber/10 border border-amber/30 px-2 py-0.5 text-[10px] font-mono text-amber font-semibold">
+                            ★ Featured
+                          </span>
+                        )}
+                      </div>
                       <span className="text-xs font-mono text-steel">{study.period}</span>
                     </div>
 
@@ -133,15 +176,36 @@ export function Work() {
                       )}
                     </div>
 
+                    {/* High-Impact Metrics Callouts */}
+                    <div className="mt-5 grid grid-cols-2 gap-2">
+                      <div className="rounded-xl border border-line/70 bg-ink-3/80 p-2.5">
+                        <div className="text-base sm:text-lg font-bold text-amber font-mono">
+                          {metrics.primary.value}
+                        </div>
+                        <div className="text-[10px] font-mono text-steel mt-0.5 line-clamp-1">
+                          {metrics.primary.label}
+                        </div>
+                      </div>
+
+                      <div className="rounded-xl border border-line/70 bg-ink-3/80 p-2.5">
+                        <div className="text-base sm:text-lg font-bold text-phosphor font-mono">
+                          {metrics.secondary.value}
+                        </div>
+                        <div className="text-[10px] font-mono text-steel mt-0.5 line-clamp-1">
+                          {metrics.secondary.label}
+                        </div>
+                      </div>
+                    </div>
+
                     {/* Blurb */}
                     <p className="mt-4 text-xs sm:text-sm text-steel leading-relaxed">
                       {study.blurb}
                     </p>
 
-                    {/* Key Outcome Badge */}
-                    <div className="mt-5 rounded-xl border border-line/40 bg-ink/40 p-3">
+                    {/* Key Outcome Highlight */}
+                    <div className="mt-4 rounded-xl border border-line/40 bg-ink/40 p-3">
                       <span className="text-[10px] font-mono uppercase tracking-wider text-amber font-semibold block">
-                        Key Result
+                        Core Outcome
                       </span>
                       <p className="text-xs font-mono text-paper font-medium mt-1">
                         {study.outcomes[0]}
@@ -155,9 +219,13 @@ export function Work() {
                       to={`/work/${study.slug}`}
                       className="font-semibold text-amber hover:text-amber-dim flex items-center gap-1 group/link"
                     >
-                      <span>Read Case Study</span>
+                      <span>Read Deep Dive</span>
                       <span className="transition-transform group-hover/link:translate-x-1">→</span>
                     </Link>
+
+                    <span className="font-mono text-[11px] text-steel">
+                      {study.code}
+                    </span>
                   </div>
                 </CardSpotlight>
               </motion.div>
