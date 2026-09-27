@@ -364,89 +364,75 @@ export function Layout() {
         <Outlet />
       </main>
 
-      {/* Enhanced Developer Terminal Status Footer */}
-      <footer className="border-t border-line/70 bg-ink-2/70 backdrop-blur-md py-12 px-4 sm:px-6 md:px-8 mt-20">
-        <div className="mx-auto max-w-7xl">
-          {/* Top Status Bar in Footer */}
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/60 pb-6 mb-8 text-xs font-mono">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1.5 text-phosphor font-medium">
-                <span className="h-2 w-2 rounded-full bg-phosphor animate-pulse" />
-                <span>ALL SYSTEMS OPERATIONAL</span>
-              </span>
-              <span className="text-line">•</span>
-              <span className="text-steel">BENGALURU, INDIA · UTC+5:30</span>
-            </div>
-
-            <div className="flex items-center gap-3 text-steel">
-              {currentTime && (
-                <div className="flex items-center gap-1.5 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-paper">
-                  <span className="text-[10px] text-amber">🕒</span>
-                  <span className="tabular-nums font-mono text-[11px]">{currentTime}</span>
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={scrollToTop}
-                className="flex items-center gap-1 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-[11px] text-steel hover:text-paper hover:border-amber transition-colors"
-                title="Scroll back to top"
-              >
-                <span>↑ Top</span>
-              </button>
-            </div>
+      {/* Clean Unified Developer Footer */}
+      <footer className="border-t border-line/70 bg-ink-2/70 backdrop-blur-md py-8 px-4 sm:px-6 md:px-8 mt-16">
+        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-5 text-xs text-steel">
+          {/* Left: Copyright, Role & Bengaluru Location Tag */}
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 text-center md:text-left">
+            <span className="font-semibold text-paper">
+              © {new Date().getFullYear()} {site.name}
+            </span>
+            <span className="hidden sm:inline text-steel/60">·</span>
+            <span>Software Engineer @ HashedIn by Deloitte</span>
+            <span className="text-line">•</span>
+            <span className="font-mono text-[11px] text-steel">
+              BENGALURU, INDIA · UTC+5:30
+            </span>
           </div>
 
-          {/* Main Footer Row */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-steel">
-            <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
-              <span className="font-semibold text-paper">
-                © {new Date().getFullYear()} {site.name}
-              </span>
-              <span className="hidden sm:inline text-steel/60">·</span>
-              <span>Software Engineer @ HashedIn by Deloitte</span>
-              <span className="hidden sm:inline text-steel/60">·</span>
-              <span className="text-steel/80">React · TypeScript · Angular · React Native</span>
-            </div>
+          {/* Right: Live Clock, Socials, Blogs & Scroll-to-Top Button */}
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3.5 text-xs font-medium">
+            {currentTime && (
+              <div
+                className="inline-flex items-center gap-1.5 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-paper font-mono text-[11px]"
+                title="Live Bengaluru Local Time"
+              >
+                <span className="text-[10px] text-amber">🕒</span>
+                <span className="tabular-nums">{currentTime}</span>
+              </div>
+            )}
 
-            <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-medium">
-              <Link
-                to="/blog"
-                className="text-amber hover:underline font-semibold flex items-center gap-1.5"
-              >
-                <span>Tech Blogs</span>
-                <span className="rounded bg-amber/20 px-1 py-0.2 text-[9px] font-mono font-bold">NEW</span>
-              </Link>
-              <a
-                href={site.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-steel hover:text-amber transition-colors"
-              >
-                GitHub ↗
-              </a>
-              <a
-                href={site.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-steel hover:text-amber transition-colors"
-              >
-                LinkedIn ↗
-              </a>
-              <a
-                href={site.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-steel hover:text-amber transition-colors"
-              >
-                WhatsApp ↗
-              </a>
-              <a
-                href={`mailto:${site.publicEmail}`}
-                className="text-steel hover:text-amber transition-colors"
-              >
-                {site.publicEmail}
-              </a>
-            </div>
+            <Link
+              to="/blog"
+              className="text-amber hover:underline font-semibold flex items-center gap-1"
+            >
+              <span>Tech Blogs</span>
+              <span className="rounded bg-amber/20 px-1 py-0.2 text-[9px] font-mono font-bold">NEW</span>
+            </Link>
+
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-steel hover:text-amber transition-colors"
+            >
+              GitHub ↗
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-steel hover:text-amber transition-colors"
+            >
+              LinkedIn ↗
+            </a>
+            <a
+              href={site.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-steel hover:text-amber transition-colors"
+            >
+              WhatsApp ↗
+            </a>
+
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="inline-flex items-center gap-1 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-[11px] font-mono text-steel hover:text-paper hover:border-amber transition-colors shrink-0 shadow-sm"
+              title="Scroll back to top"
+            >
+              <span>↑ Top</span>
+            </button>
           </div>
         </div>
       </footer>
