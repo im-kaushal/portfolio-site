@@ -46,9 +46,24 @@ describe("ContactDto", () => {
       dto({
         name: "Ada Lovelace",
         email: "ada@example.com",
-        message: "Hi there",
+        message: "Hi",
       }),
     );
     expect(errors.some((e) => e.property === "message")).toBe(true);
+  });
+
+  it("accepts a valid payload with voice recording", async () => {
+    const errors = await validate(
+      dto({
+        name: "Ada Lovelace",
+        email: "ada@example.com",
+        message: "Audio note attached.",
+        source: "/#contact",
+        audioData: "dGVzdC1hdWRpby1kYXRh",
+        audioDuration: 14.5,
+        transcript: "Hi Kaushal, loved your portfolio.",
+      }),
+    );
+    expect(errors).toHaveLength(0);
   });
 });

@@ -53,4 +53,31 @@ describe("ContactService", () => {
       }),
     );
   });
+
+  it("attaches audio and logs transcript when voice note is provided", async () => {
+    process.env.RESEND_API_KEY = "re_test";
+    process.env.CONTACT_TO_EMAIL = "you@gmail.com";
+    process.env.CONTACT_FROM_EMAIL = "Portfolio <onboarding@resend.dev>";
+    const send = jest.fn().mockResolvedValue(undefined);
+    const service = new ContactService({ send });
+    const result = await service.submit(
+      makeDto({
+        audioData: "base64audio==",
+        audioDuration: 12.3,
+        transcript: "Hello Kaushal",
+      }),
+    );
+    expect(result).toEqual({ ok: true, delivered: true });
+    expect(send).toHaveBeenCalledWith(
+      expect.objectContaining({
+        attachments: [
+          {
+            filename: "voice-memo.webm",
+            content: "base64audio==",
+          },
+        ],
+        text: expect.stringContaining("Voice Transcript: Hello Kaushal"),
+      }),
+    );
+  });
 });

@@ -12,6 +12,10 @@ export type MailPayload = {
   replyTo: string;
   subject: string;
   text: string;
+  attachments?: Array<{
+    filename: string;
+    content: string;
+  }>;
 };
 
 export type Mailer = {
@@ -30,6 +34,7 @@ export const defaultMailer: Mailer = {
       replyTo: payload.replyTo,
       subject: payload.subject,
       text: payload.text,
+      attachments: payload.attachments,
     });
     if (error) {
       if (process.env.NODE_ENV !== "production") {
@@ -64,13 +69,29 @@ export class ContactService {
       );
     }
 
-    const text = [
+    const textLines = [
       `Name: ${dto.name}`,
       `Email: ${dto.email}`,
       `Source: ${dto.source ?? "portfolio"}`,
-      "",
-      dto.message,
-    ].join("\n");
+    ];
+    if (dto.audioDuration) {
+      textLines.push(`Voice Recording: ~${Math.round(dto.audioDuration)}s duration`);
+    }
+    if (dto.transcript) {
+      textLines.push(`Voice Transcript: ${dto.transcript}`);
+    }
+    textLines.push("", dto.message);
+
+    const text = textLines.join("\n");
+
+    const attachments = dto.audioData
+      ? [
+          {
+            filename: "voice-memo.webm",
+            content: dto.audioData,
+          },
+        ]
+      : undefined;
 
     await this.mailer.send({
       apiKey,
@@ -80,6 +101,7 @@ export class ContactService {
       replyTo: dto.email,
       subject: `Portfolio contact: ${dto.name}`,
       text,
+      attachments,
     });
 
     return { ok: true, delivered: true };
