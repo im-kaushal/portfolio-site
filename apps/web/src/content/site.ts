@@ -12,6 +12,21 @@ export const site = {
   phoneDisplay: "+91 7970513448",
   phoneTel: "+917970513448",
   whatsapp: "https://wa.me/917970513448",
+  whatsappLinks: {
+    general:
+      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20saw%20your%20portfolio%20and%20wanted%20to%20say%20hello!",
+    recruiter:
+      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%20reviewed%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20Senior%20Engineering%20role%20at%20%5BCompany%5D.",
+    techChat:
+      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20saw%20your%20work%20on%20Citi%20Bank%20virtualized%20grids%20and%20wanted%20to%20connect%20regarding%20architecture.",
+    coffee:
+      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20loved%20your%20work%20and%20JavaScript%20guide!%20Would%20love%20to%20connect%20for%20a%20virtual%20coffee.",
+  },
+  nowStatus: {
+    headline: "Engineering coordinator workflows @ Deloitte",
+    exploring: "React 19 Server Actions & Micro-Frontend isolation",
+    location: "Bengaluru, India (IST)",
+  },
   instagram: "https://www.instagram.com/kausal.in",
   instagramHandle: "@kausal.in",
   linkedin: "https://www.linkedin.com/in/im-kaushal",
@@ -439,6 +454,15 @@ export type Award = {
 
 export const awards: Award[] = [
   {
+    id: "high-five-deloitte",
+    title: "High Five Award",
+    org: "HashedIn by Deloitte",
+    date: "Jun 2026",
+    note: "Awarded for exceptional ownership and instrumental impact on the frontend track, building the coordinator flow for Marriott mTrust end-to-end.",
+    metric: "Marriott mTrust Delivery",
+    official: true,
+  },
+  {
     id: "excellence-deloitte",
     title: "Excellence Award",
     org: "Deloitte",
@@ -561,7 +585,7 @@ export const kindWords = {
     {
       id: "mtrust-leads",
       channel: "CH.01",
-      source: "Manager and leads · mTrust coordinator flow",
+      source: "Himanshu Mahajan & Amit Bhavikatti · Engineering Leads @ HashedIn by Deloitte",
       variant: "featured",
       quote:
         "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track. His proactive communication, accountability, and ability to translate requirements into a solid, user-focused implementation were critical to the success of this effort.",

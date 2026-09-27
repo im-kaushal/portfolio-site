@@ -22,6 +22,7 @@ export default {
       fontFamily: {
         serif: ['"Instrument Serif"', "Georgia", "serif"],
         sans: [
+          '"IBM Plex Sans"',
           '"Inter"',
           "-apple-system",
           "BlinkMacSystemFont",
@@ -30,8 +31,8 @@ export default {
           "sans-serif",
         ],
         mono: [
-          '"JetBrains Mono"',
           '"IBM Plex Mono"',
+          '"JetBrains Mono"',
           "ui-monospace",
           "SFMono-Regular",
           "monospace",
