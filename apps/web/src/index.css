@@ -13,7 +13,7 @@
   --accent: #f08a72;
   --accent-dim: #c85a42;
   --live: #34d399;
-  --line: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.12);
 
   --color-ink: 9 9 11;
   --color-ink-2: 18 18 21;
@@ -69,29 +69,35 @@ body {
   overflow-x: hidden;
 }
 
-/* Subtle architectural dot grid */
+/* Subtle architectural dot grid (responsive tile sizing) */
 .grid-bg {
   background-image: radial-gradient(var(--line) 1px, transparent 1px);
-  background-size: 32px 32px;
+  background-size: 24px 24px;
   background-position: -1px -1px;
 }
 
-/* Ambient glow background */
+@media (min-width: 640px) {
+  .grid-bg {
+    background-size: 32px 32px;
+  }
+}
+
+/* Ambient glow lighting - responsive ellipse anchored to viewport */
 .ambient-glow {
   background: radial-gradient(
-    circle at 50% 0%,
-    rgba(240, 138, 114, 0.08) 0%,
-    rgba(52, 211, 153, 0.03) 40%,
-    transparent 70%
+    ellipse 100% 60% at 50% -10%,
+    rgba(240, 138, 114, 0.16) 0%,
+    rgba(52, 211, 153, 0.05) 45%,
+    transparent 75%
   );
 }
 
 html.light .ambient-glow {
   background: radial-gradient(
-    circle at 50% 0%,
-    rgba(217, 83, 56, 0.06) 0%,
-    rgba(16, 185, 129, 0.02) 40%,
-    transparent 70%
+    ellipse 100% 60% at 50% -10%,
+    rgba(217, 83, 56, 0.12) 0%,
+    rgba(16, 185, 129, 0.04) 45%,
+    transparent 75%
   );
 }
 

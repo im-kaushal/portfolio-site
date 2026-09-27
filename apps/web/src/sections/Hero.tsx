@@ -36,31 +36,32 @@ export function Hero() {
   }, [showEmailOptions]);
 
   return (
-    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 pt-8 pb-14 md:pt-14 md:pb-20">
-      <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 items-start">
+    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 pt-6 pb-12 sm:pt-8 sm:pb-14 md:pt-14 md:pb-20 w-full overflow-hidden">
+      <div className="grid min-w-0 gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12 items-start w-full">
         {/* Left Column: Who I Am, What I Build, Tech Stack & CTAs */}
         <motion.div
           initial={reduce ? false : { opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: "easeOut" }}
-          className="flex flex-col"
+          className="flex flex-col min-w-0 w-full"
         >
           {/* Availability Status Badge */}
-          <div className="inline-flex items-center gap-2 self-start rounded-full border border-phosphor/30 bg-phosphor/10 px-3 py-1 text-xs text-phosphor backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
+          <div className="inline-flex max-w-full items-center gap-2 self-start rounded-full border border-phosphor/30 bg-phosphor/10 px-3 py-1.5 text-xs text-phosphor backdrop-blur-sm">
+            <span className="relative flex h-2 w-2 shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
             </span>
-            <span className="font-medium tracking-wide">
-              Available for frontend & full-stack roles · Open to relocate anywhere
+            <span className="font-medium tracking-wide leading-tight">
+              <span className="sm:hidden">Available for roles · Open to relocate</span>
+              <span className="hidden sm:inline">Available for frontend & full-stack roles · Open to relocate anywhere</span>
             </span>
           </div>
 
           {/* Heading */}
-          <h1 className="mt-5 font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-paper leading-[1.08]">
+          <h1 className="mt-4 sm:mt-5 font-sans text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-paper leading-[1.1] break-words">
             Kaushal Kumar
           </h1>
-          <p className="mt-1 text-lg sm:text-xl font-medium text-amber">
+          <p className="mt-1 text-base sm:text-xl font-medium text-amber break-words">
             Frontend Software Engineer · React, TypeScript & Mobile
           </p>
 
@@ -90,8 +91,8 @@ export function Hero() {
           </div>
 
           {/* Action CTAs: Frictionless access to Resume & Direct Contact */}
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Magnetic strength={0.25}>
+          <div className="mt-8 flex flex-wrap items-center gap-2.5 sm:gap-3 w-full">
+            <Magnetic strength={0.25} className="w-full sm:w-auto">
               <button
                 type="button"
                 onClick={() => {
@@ -102,7 +103,7 @@ export function Hero() {
                     }
                   });
                 }}
-                className="inline-flex items-center gap-2 rounded-xl bg-amber px-5 py-3 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-amber px-5 py-3 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
               >
                 {downloading ? (
                   <>
@@ -126,11 +127,11 @@ export function Hero() {
             </Magnetic>
 
             {/* Unified, Bulletproof Copy Email Button with Instant Feedback & Webmail Options */}
-            <div className="relative" ref={popoverRef}>
+            <div className="relative flex-1 sm:flex-initial" ref={popoverRef}>
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className={`inline-flex items-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all active:scale-[0.98] cursor-pointer ${
+                className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-medium transition-all active:scale-[0.98] cursor-pointer ${
                   copiedEmail
                     ? "border-phosphor/70 bg-phosphor/10 text-phosphor shadow-sm"
                     : "border-line bg-ink-2/90 text-paper hover:border-steel hover:bg-ink-3"
@@ -167,7 +168,7 @@ export function Hero() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: 4, scale: 0.95 }}
                     transition={{ duration: 0.18 }}
-                    className="absolute left-0 top-full mt-2 z-40 w-72 rounded-xl border border-line bg-ink-2/95 p-3 shadow-2xl backdrop-blur-md"
+                    className="absolute left-0 top-full mt-2 z-40 w-72 max-w-[calc(100vw-32px)] rounded-xl border border-line bg-ink-2/95 p-3 shadow-2xl backdrop-blur-md"
                   >
                     <div className="flex items-center justify-between text-[11px] font-mono text-steel border-b border-line/60 pb-2">
                       <span className="text-phosphor font-medium">✓ Copied to clipboard</span>
@@ -248,12 +249,12 @@ export function Hero() {
           initial={reduce ? false : { opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative w-full"
+          className="relative w-full min-w-0"
         >
-          <CardSpotlight className="p-6 sm:p-7 shadow-xl border border-line/70 bg-ink-2/80">
+          <CardSpotlight className="p-4 sm:p-7 shadow-xl border border-line/70 bg-ink-2/80 w-full">
             {/* Header: Photo and Current Track */}
-            <div className="flex items-center gap-4 border-b border-line/60 pb-5">
-              <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl border border-line bg-ink-3">
+            <div className="flex items-center gap-3 sm:gap-4 border-b border-line/60 pb-4 sm:pb-5">
+              <div className="relative h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded-xl border border-line bg-ink-3">
                 <img
                   src={site.headshotSrc}
                   alt={site.name}
@@ -261,7 +262,7 @@ export function Hero() {
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <h2 className="text-base font-bold text-paper truncate">
+                <h2 className="text-sm sm:text-base font-bold text-paper truncate">
                   Engineering Track Record
                 </h2>
                 <p className="text-xs text-steel mt-0.5 truncate">
@@ -271,35 +272,35 @@ export function Hero() {
             </div>
 
             {/* Concrete Metrics Grid (No hype, just numbers and context) */}
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-3.5">
-                <div className="text-2xl font-bold font-mono text-phosphor">−35%</div>
-                <div className="text-xs font-semibold text-paper mt-0.5">LCP Reduction</div>
-                <div className="text-[11px] text-steel mt-1 leading-snug">
+            <div className="mt-4 sm:mt-5 grid grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-2.5 sm:p-3.5 min-w-0">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-phosphor truncate">−35%</div>
+                <div className="text-[11px] sm:text-xs font-semibold text-paper mt-0.5 truncate">LCP Reduction</div>
+                <div className="text-[10px] sm:text-[11px] text-steel mt-1 leading-snug">
                   Marriott mTrust Coordinator UI
                 </div>
               </div>
 
-              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-3.5">
-                <div className="text-2xl font-bold font-mono text-amber">4.1s → 2.6s</div>
-                <div className="text-xs font-semibold text-paper mt-0.5">Page Load Time</div>
-                <div className="text-[11px] text-steel mt-1 leading-snug">
+              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-2.5 sm:p-3.5 min-w-0">
+                <div className="text-lg sm:text-2xl font-bold font-mono text-amber truncate">4.1s → 2.6s</div>
+                <div className="text-[11px] sm:text-xs font-semibold text-paper mt-0.5 truncate">Page Load Time</div>
+                <div className="text-[10px] sm:text-[11px] text-steel mt-1 leading-snug">
                   Citi Bank Settlements Desk
                 </div>
               </div>
 
-              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-3.5">
-                <div className="text-2xl font-bold font-mono text-paper">90%+</div>
-                <div className="text-xs font-semibold text-paper mt-0.5">Test Coverage</div>
-                <div className="text-[11px] text-steel mt-1 leading-snug">
+              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-2.5 sm:p-3.5 min-w-0">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-paper truncate">90%+</div>
+                <div className="text-[11px] sm:text-xs font-semibold text-paper mt-0.5 truncate">Test Coverage</div>
+                <div className="text-[10px] sm:text-[11px] text-steel mt-1 leading-snug">
                   Automated BDD & Unit Suites (Jasmine, RTL)
                 </div>
               </div>
 
-              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-3.5">
-                <div className="text-2xl font-bold font-mono text-paper">3 Apps</div>
-                <div className="text-xs font-semibold text-paper mt-0.5">Production Releases</div>
-                <div className="text-[11px] text-steel mt-1 leading-snug">
+              <div className="rounded-xl border border-line/50 bg-ink-3/40 p-2.5 sm:p-3.5 min-w-0">
+                <div className="text-xl sm:text-2xl font-bold font-mono text-paper truncate">3 Apps</div>
+                <div className="text-[11px] sm:text-xs font-semibold text-paper mt-0.5 truncate">Production Releases</div>
+                <div className="text-[10px] sm:text-[11px] text-steel mt-1 leading-snug">
                   Cross-Platform iOS & Google Play Store
                 </div>
               </div>

@@ -38,22 +38,28 @@ export function Layout() {
   };
 
   return (
-    <div className="grid-bg ambient-glow min-h-screen relative selection:bg-amber selection:text-white">
+    <div className="min-h-screen relative selection:bg-amber selection:text-white flex flex-col w-full overflow-x-hidden">
+      {/* Mobile-responsive fixed background: Dot grid + ambient lighting */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 grid-bg opacity-75" />
+        <div className="absolute inset-0 ambient-glow" />
+      </div>
+
       <SkipLink />
 
       {/* Floating Header */}
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 ${
+        className={`sticky top-0 z-40 transition-all duration-300 w-full ${
           scrolled
             ? "py-2.5 backdrop-blur-xl bg-ink/75 border-b border-line/60 shadow-card"
             : "py-4 bg-transparent border-b border-transparent"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 md:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 md:px-8 w-full">
           {/* Logo & Online Status */}
           <Link
             to="/"
-            className="group flex items-center gap-2.5 font-sans font-medium text-paper transition-opacity hover:opacity-90"
+            className="group flex items-center gap-2 sm:gap-2.5 font-sans font-medium text-paper transition-opacity hover:opacity-90 min-w-0 shrink"
           >
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
@@ -84,7 +90,7 @@ export function Layout() {
           </nav>
 
           {/* Right Action Icons */}
-          <div className="flex items-center gap-1.5 sm:gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Quick Cmd+K Search Button */}
             <button
               type="button"
@@ -240,7 +246,7 @@ export function Layout() {
 
       <CommandPalette />
 
-      <main id="main">
+      <main id="main" className="min-w-0 w-full flex-1">
         <Outlet />
       </main>
 

@@ -12,7 +12,7 @@ import { Work } from "../sections/Work";
 
 export function HomePage() {
   return (
-    <main id="main">
+    <div className="w-full min-w-0">
       <Hero />
       <Impact />
       <QualityProof />
@@ -24,6 +24,6 @@ export function HomePage() {
       <KindWords />
       <Education />
       <Contact />
-    </main>
+    </div>
   );
 }
