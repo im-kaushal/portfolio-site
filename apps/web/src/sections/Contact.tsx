@@ -4,7 +4,6 @@ import { site } from "../content/site";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
 import { VoiceRecorder, type AudioRecording } from "../components/VoiceRecorder";
-import { LiveVoiceUplink } from "../components/LiveVoiceUplink";
 
 const channels = [
   { href: `mailto:${site.publicEmail}`, label: "Email", hint: site.publicEmail, icon: "✉️" },
@@ -23,7 +22,6 @@ export function Contact() {
   const [messageText, setMessageText] = useState("");
   const [activeRecording, setActiveRecording] = useState<AudioRecording | null>(null);
   const [inputMode, setInputMode] = useState<"text" | "voice">("text");
-  const [showLiveContact, setShowLiveContact] = useState(false);
 
   // Automatically hide the success message after 5 seconds
   useEffect(() => {
@@ -111,51 +109,17 @@ export function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="max-w-2xl">
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-            Get In Touch
-          </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-            Let&apos;s Connect
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-            Open to frontend, mobile, and full-stack engineering opportunities. If you have an open role, an engineering challenge, or just want to chat about web performance, feel free to reach out.
-          </p>
-        </div>
-
-        {/* Live Voice Contact Toggle Button */}
-        <button
-          type="button"
-          onClick={() => setShowLiveContact((prev) => !prev)}
-          className="flex items-center gap-2 rounded-xl border border-phosphor/60 bg-phosphor/10 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-phosphor hover:bg-phosphor hover:text-ink transition-all shadow-sm"
-        >
-          <span className="inline-block h-2 w-2 rounded-full bg-phosphor animate-ping" />
-          <span>{showLiveContact ? "Close Live Voice" : "🎙 Talk to AI Assistant"}</span>
-        </button>
+      <div className="max-w-2xl">
+        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
+          Get In Touch
+        </span>
+        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          Let&apos;s Connect
+        </h2>
+        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          Open to frontend, mobile, and full-stack engineering opportunities. If you have an open role, an engineering challenge, or just want to chat about web performance, feel free to reach out.
+        </p>
       </div>
-
-      {/* Live Voice Assistant (Gemini Live preview) */}
-      <AnimatePresence>
-        {showLiveContact && (
-          <motion.div
-            initial={{ opacity: 0, height: 0, y: -10 }}
-            animate={{ opacity: 1, height: "auto", y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -10 }}
-            className="mt-6 overflow-hidden"
-          >
-            <CardSpotlight className="p-6">
-              <LiveVoiceUplink
-                isOpen={showLiveContact}
-                onToggle={() => setShowLiveContact((prev) => !prev)}
-                onInsertMessage={(text) => {
-                  setMessageText((prev) => (prev ? `${prev}\n\n${text}` : text));
-                }}
-              />
-            </CardSpotlight>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Contact Grid */}
       <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
