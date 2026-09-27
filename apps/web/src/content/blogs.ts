@@ -2,7 +2,7 @@ export interface BlogPost {
   slug: string;
   title: string;
   description: string;
-  category: "Web Performance" | "System Architecture" | "Mobile Engineering" | "JavaScript Internals";
+  category: "Web Performance" | "System Architecture" | "Mobile Engineering" | "JavaScript Internals" | "Career & Hiring";
   tags: string[];
   readTime: string;
   publishedAt: string;
@@ -33,6 +33,7 @@ export const blogCategories = [
   "System Architecture",
   "Mobile Engineering",
   "JavaScript Internals",
+  "Career & Hiring",
 ] as const;
 
 export const blogPosts: BlogPost[] = [
@@ -725,6 +726,88 @@ export async function dispatchMutation(job: MutationJob): Promise<void> {
           "type": "note",
           "text": "Always configure remote modules to be loaded asynchronously with Suspense fallback boundaries to prevent a single degraded remote service from crashing the host shell."
         }
+      }
+    ]
+  }
+},
+{
+  slug: "top-tech-staffing-recruitment-agencies-india",
+  title: "Top 60 Tech Staffing & Recruitment Agencies in India: The Senior Developer's Directory to High-Growth Startups & Tier-1 GCCs",
+  description: "An insider, verified directory of 60 top technical recruitment agencies and staffing partners in India—covering product unicorns (Swiggy, Razorpay, CRED), Fortune 500 GCCs (Citi, Wells Fargo, Target), recruiter contacts, and candidate outreach playbooks.",
+  category: "Career & Hiring",
+  tags: [
+    "Hiring Agencies",
+    "Tech Recruitment",
+    "Job Search",
+    "GCCs",
+    "Startups",
+    "SDE-2",
+    "Recruiter Outreach",
+    "Bengaluru Tech"
+  ],
+  readTime: "11 min read",
+  publishedAt: "Sep 2026",
+  featured: true,
+  views: "4.9k",
+  sourceUrl: "https://docs.google.com/spreadsheets/d/1MUUvv4eULJP0uvcFAPoGP_B1y0AXyL0vhkTHoN1z_Po/edit?gid=1839048928#gid=1839048928",
+  content: {
+    lead: "Over 60% of lateral software engineering positions (SDE-2, SDE-3, Lead Engineers) at India's premier product startups (Swiggy, Razorpay, CRED, Meesho) and Fortune 500 Global Capability Centers (Citi, Wells Fargo, Target, Amazon) are filled through trusted staffing agencies and executive search partners. Submitting resumes into generic automated applicant tracking system (ATS) portals often results in silence. Connecting directly with specialized technical recruiters gives senior engineers a direct line to engineering directors and hiring managers. Below is the curated directory of 60 verified tech staffing agencies in India, complete with recruiter contacts, key clients, and outreach strategy.",
+    sections: [
+      {
+        heading: "1. The Indian Tech Staffing Ecosystem: Startups, GCCs & Search",
+        paragraphs: [
+          "India's technology hiring landscape operates across five distinct recruitment models: Startup Talent Boutiques (Anzy Global, CareerNet, Success Pact, TopHire), Enterprise & GCC Staffing Powerhouses (TEKsystems, ANSR, Talent500, Michael Page, Randstad, Adecco), Executive Leadership Search (Purple Quarter, ABC Consultants), Global Remote Talent Platforms (Turing, Flexiple, Uplers), and IT Workforce Deployment Firms (NLB Services, Innova Solutions, Artech).",
+          "Understanding which agency serves which client type allows software engineers to target their outreach with surgical precision rather than spamming applications randomly across LinkedIn.",
+          "Product startup agencies prioritize hands-on problem solving, system design, and production frontend architecture (React, TypeScript, Next.js, Redux). Enterprise GCC agencies prioritize domain compliance, high-scale reliability, micro-frontend governance, and formal enterprise methodologies."
+        ],
+        callout: {
+          type: "important",
+          text: "Recruiters at specialized agencies earn success fees (typically 8.33% to 20% of annual CTC) only when you get hired. They are your allies in negotiating notice period buyouts and competitive CTC packages."
+        }
+      },
+      {
+        heading: "2. The Senior Engineer's Outreach Playbook: High-Conversion Messages",
+        paragraphs: [
+          "Top recruiters receive dozens of generic messages daily. Generic pitches like 'I came across your profile and was impressed' are immediately ignored.",
+          "Effective outreach is concise, conversational, humble, and directly highlights your core tech stack, enterprise caliber, and portfolio link.",
+          "Below is the exact tested outreach message formula for reaching out to 1st-degree connections and sending personalized connection requests under 300 characters."
+        ],
+        codeSnippet: {
+          language: "markdown",
+          filename: "outreach/linkedin-recruiter-templates.md",
+          code: `### 1st-Degree Connection Message (Conversational & Warm)
+Hey [First Name], hope you're having a good week!
+Reaching out since we're connected here, and I know [Agency Name] partners with some fantastic tech teams.
+I'm currently exploring new Frontend / SDE-2 opportunities in Bengaluru (open to hybrid/remote). I have about 3.5 years of experience building web and mobile apps primarily with React, TypeScript, and React Native—recently working on real-time trade settlement dashboards and incident management tools.
+If you have a couple of minutes, I'd really appreciate your guidance or a quick check if anything on your radar might be a fit: https://kausal.in
+No pressure at all if things are busy, but even pointing me in the right direction would mean a lot. Thanks so much! – Kaushal Kumar
+
+### Cold Connection Request (<300 Characters Limit)
+Hi [First Name], hope you're well! I'm a Frontend Engineer (3.5+ yrs in React/TypeScript) and know [Agency] works with top product teams. Exploring SDE-2 roles (kausal.in) and would love to connect and seek your guidance if any mandates align. Thanks, Kaushal!`
+        },
+        callout: {
+          type: "tip",
+          text: "Always provide a clean live portfolio link (kausal.in) with instant proof of work. Recruiters share candidate portfolios directly with Engineering Managers on Slack/Teams for fast review."
+        }
+      },
+      {
+        heading: "3. Contract-to-Hire (C2H) vs Direct Full-Time (FTE): Evaluating Offers",
+        paragraphs: [
+          "Contract-to-Hire (C2H) mandates are common among Fortune 500 banks and multinational GCCs (via TEKsystems, Collabera, Randstad). In a C2H engagement, you remain on the staffing agency's payroll for 6–12 months before formally transitioning to the client's direct payroll upon performance evaluation.",
+          "Direct Permanent (FTE) mandates (common with Michael Page, Anzy Global, Purple Quarter) place you directly on the client's permanent payroll from Day 1.",
+          "Notice Period Leverage: If you have a standard 60-to-90-day notice period in India, agencies frequently negotiate buyout compensation or bridge projects with early release support."
+        ],
+        callout: {
+          type: "note",
+          text: "C2H roles often pay a 20-30% premium in base take-home pay to compensate for temporary contract status, making them an attractive stepping stone into Tier-1 investment banks (Citi, JPMC, Wells Fargo)."
+        }
+      },
+      {
+        heading: "4. The 60 Verified Tech Recruitment Agencies Directory",
+        paragraphs: [
+          "Explore the interactive directory below to filter agencies by category, tech hub locations (Bengaluru, Hyderabad, NCR, Pune, Mumbai, Chennai), and target companies.",
+          "Each card includes direct links to official websites, LinkedIn company profiles, career portals, verified recruiter emails, and insider candidate hunting notes."
+        ]
       }
     ]
   }
