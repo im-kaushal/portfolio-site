@@ -1,0 +1,339 @@
+[
+  {
+    "heading": "Introduction: The 200 Questions Architecture Matrix",
+    "paragraphs": [
+      "Preparing for senior frontend and full-stack engineering roles requires moving beyond rote memorization into runtime mechanics: the V8 call stack, event loop microtask sequencing, memory retention closures, prototypal delegation, and network performance.",
+      "This guide contains a curated compilation of 200 verified JavaScript interview questions collected from real interview loops at top global companies (Google, Amazon, Meta, Microsoft, Stripe, Salesforce) and high-growth Indian tech leaders (Razorpay, Flipkart, CRED, Zoho, Swiggy, Meesho, Freshworks).",
+      "Each question is classified by Topic, Target Companies, and Difficulty Level (Beginner / Intermediate / Advanced).",
+      "Use this document as an active recall roadmap: filter by topic to shore up blind spots, test yourself on tricky runtime edge cases, and study the architectural deep-dives provided for core patterns."
+    ],
+    "callout": {
+      "type": "tip",
+      "text": "Interactive Notion Document: This curated guide is also maintained live on Notion. You can bookmark or duplicate the interactive workspace directly."
+    }
+  },
+  {
+    "heading": "Section 1: Closures & Scope (Q1–Q15)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q1. What is a closure in JavaScript? Explain with an example.\n🏷️ Closures | 🏢 #Google, #Amazon, #Flipkart, #Infosys | 🎯 Intermediate",
+      "Q2. How do closures help in data encapsulation?\n🏷️ Closures | 🏢 #Meta, #Microsoft, #Zoho | 🎯 Intermediate",
+      "Q3. What will be the output of this closure-based counter function?\n🏷️ Closures | 🏢 #Freshworks, #CRED | 🎯 Advanced",
+      "Q4. How does lexical scoping relate to closures?\n🏷️ Scope | 🏢 #Google, #TCS | 🎯 Intermediate",
+      "Q5. Can closures lead to memory leaks? How do you prevent them?\n🏷️ Closures | 🏢 #Amazon, #Salesforce | 🎯 Advanced",
+      "Q6. How do you simulate private variables using closures?\n🏷️ Closures | 🏢 #IBM, #Oracle | 🎯 Intermediate",
+      "Q7. Explain the concept of function currying using closures.\n🏷️ Closures | 🏢 #Razorpay, #Meesho | 🎯 Advanced",
+      "Q8. What is the difference between block scope and function scope?\n🏷️ Scope | 🏢 #Infosys, #Wipro | 🎯 Beginner",
+      "Q9. How does the this keyword behave inside closures?\n🏷️ Closures | 🏢 #Microsoft, #Zoho | 🎯 Advanced",
+      "Q10. How do closures behave inside loops?\n🏷️ Closures | 🏢 #Flipkart, #Swiggy | 🎯 Intermediate",
+      "Q11. How do you fix closure issues in for loops with var?\n🏷️ Closures | 🏢 #Amazon, #Google | 🎯 Intermediate",
+      "Q12. What is the output of this IIFE with closure?\n🏷️ Closures | 🏢 #CRED, #UrbanCompany | 🎯 Advanced",
+      "Q13. How do closures interact with asynchronous code?\n🏷️ Closures | 🏢 #Meta, #Stripe | 🎯 Advanced",
+      "Q14. Can you implement a memoization function using closures?\n🏷️ Closures | 🏢 #Zoho, #Dream11 | 🎯 Advanced",
+      "Q15. How do closures work with event listeners?\n🏷️ Closures | 🏢 #Swiggy, #Paytm | 🎯 Intermediate"
+    ],
+    "codeSnippet": {
+      "language": "javascript",
+      "filename": "closures/memoizationAndPrivateState.js",
+      "code": "// Simulating Private State & High-Performance Memoization via Closures\nfunction createMemoizedCounter() {\n  let count = 0; // Private lexical state\n  const cache = new Map();\n\n  return {\n    increment() { return ++count; },\n    getCount() { return count; },\n    computeExpensive(n) {\n      if (cache.has(n)) return cache.get(n);\n      const result = n * count;\n      cache.set(n, result);\n      return result;\n    }\n  };\n}\n\nconst counter = createMemoizedCounter();\nconsole.log(counter.increment()); // 1\nconsole.log(counter.computeExpensive(5)); // 5 (cached)"
+    },
+    "callout": {
+      "type": "important",
+      "text": "Closures retain references to their entire outer lexical scope. In modern Single Page Applications (React/Next.js), uncleaned event handlers or timers inside closures are the #1 cause of detached DOM memory leaks."
+    }
+  },
+  {
+    "heading": "Section 2: Hoisting & Execution Context (Q16–Q30)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q16. What is hoisting in JavaScript? What gets hoisted?\n🏷️ Hoisting | 🏢 #TCS, #Wipro, #IBM | 🎯 Beginner",
+      "Q17. What is the Temporal Dead Zone?\n🏷️ Hoisting | 🏢 #Google, #Amazon | 🎯 Intermediate",
+      "Q18. How does the JavaScript engine create the execution context?\n🏷️ Execution Context | 🏢 #Meta, #Oracle | 🎯 Advanced",
+      "Q19. Why does typeof undeclaredVar return \"undefined\"?\n🏷️ Hoisting | 🏢 #Infosys, #Microsoft | 🎯 Beginner",
+      "Q20. What is the difference between var, let, and const in terms of hoisting?\n🏷️ Hoisting | 🏢 #Flipkart, #Zoho | 🎯 Intermediate",
+      "Q21. How does hoisting affect function declarations vs expressions?\n🏷️ Hoisting | 🏢 #Freshworks, #CRED | 🎯 Intermediate",
+      "Q22. What happens if you access a variable before declaration?\n🏷️ Hoisting | 🏢 #Meesho, #UrbanCompany | 🎯 Beginner",
+      "Q23. How does the call stack relate to execution context?\n🏷️ Execution Context | 🏢 #Amazon, #Google | 🎯 Advanced",
+      "Q24. What is the difference between global and local execution contexts?\n🏷️ Execution Context | 🏢 #Salesforce, #Stripe | 🎯 Intermediate",
+      "Q25. How do arrow functions behave in terms of hoisting?\n🏷️ Hoisting | 🏢 #Microsoft, #Zoho | 🎯 Intermediate",
+      "Q26. Can you explain the phases of execution context creation?\n🏷️ Execution Context | 🏢 #IBM, #Oracle | 🎯 Advanced",
+      "Q27. What is the role of the scope chain in execution context?\n🏷️ Scope | 🏢 #Meta, #Infosys | 🎯 Intermediate",
+      "Q28. How does hoisting behave inside try/catch blocks?\n🏷️ Hoisting | 🏢 #TCS, #Wipro | 🎯 Advanced",
+      "Q29. What is the output of this hoisting-based snippet?\n🏷️ Hoisting | 🏢 #Flipkart, #Swiggy | 🎯 Intermediate",
+      "Q30. How does hoisting affect class declarations?\n🏷️ Hoisting | 🏢 #Google, #Amazon | 🎯 Advanced"
+    ],
+    "codeSnippet": {
+      "language": "javascript",
+      "filename": "internals/temporalDeadZone.js",
+      "code": "// Temporal Dead Zone (TDZ) and Execution Context Phases\nconsole.log(typeof undeclaredVar); // \"undefined\" (not TDZ)\n\ntry {\n  console.log(typeof declaredWithLet); // ReferenceError: Cannot access before initialization\n  let declaredWithLet = 42;\n} catch (e) {\n  console.error(\"Caught TDZ Access Error:\", e.message);\n}"
+    },
+    "callout": {
+      "type": "note",
+      "text": "var is hoisted and initialized with undefined during the Creation Phase. let and const are hoisted into the lexical environment record but remain uninitialized until execution reaches their declaration."
+    }
+  },
+  {
+    "heading": "Section 3: Async/Await & Promises (Q31–Q50)",
+    "paragraphs": [
+      "This domain covers 20 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q31. What is the difference between callbacks and promises?\n🏷️ Async | 🏢 #Microsoft, #Infosys | 🎯 Beginner",
+      "Q32. How does async/await improve code readability?\n🏷️ Async | 🏢 #Freshworks, #CRED | 🎯 Intermediate",
+      "Q33. What happens if you forget to use await inside an async function?\n🏷️ Async | 🏢 #Zoho, #Meesho | 🎯 Intermediate",
+      "Q34. How do you handle errors in async/await?\n🏷️ Async | 🏢 #Amazon, #Salesforce | 🎯 Intermediate",
+      "Q35. What is the event loop and how does it relate to promises?\n🏷️ Event Loop | 🏢 #Google, #Meta | 🎯 Advanced",
+      "Q36. How do microtasks and macrotasks differ?\n🏷️ Event Loop | 🏢 #Stripe, #Dream11 | 🎯 Advanced",
+      "Q37. What is the output of this chained promise snippet?\n🏷️ Promises | 🏢 #Flipkart, #Swiggy | 🎯 Intermediate",
+      "Q38. How do you implement a retry mechanism using promises?\n🏷️ Promises | 🏢 #Razorpay, #UrbanCompany | 🎯 Advanced",
+      "Q39. What is the difference between Promise.all, Promise.race, and Promise.any?\n🏷️ Promises | 🏢 #Google, #Amazon | 🎯 Intermediate",
+      "Q40. How do you cancel a promise in JavaScript?\n🏷️ Promises | 🏢 #Meta, #Microsoft | 🎯 Advanced",
+      "Q41. What are common pitfalls with async/await?\n🏷️ Async | 🏢 #Zoho, #Infosys | 🎯 Intermediate",
+      "Q42. How do you convert a callback-based function to a promise?\n🏷️ Promises | 🏢 #TCS, #Wipro | 🎯 Intermediate",
+      "Q43. What is the role of the finally block in promises?\n🏷️ Promises | 🏢 #Flipkart, #Meesho | 🎯 Beginner",
+      "Q44. How do you handle multiple async operations in parallel?\n🏷️ Async | 🏢 #Swiggy, #CRED | 🎯 Intermediate",
+      "Q45. How does the browser queue async tasks?\n🏷️ Event Loop | 🏢 #Google, #Meta | 🎯 Advanced",
+      "Q46. What is the difference between setTimeout and setImmediate?\n🏷️ Event Loop | 🏢 #Amazon, #Stripe | 🎯 Advanced",
+      "Q47. How do you debug async code effectively?\n🏷️ Async | 🏢 #Microsoft, #Salesforce | 🎯 Intermediate",
+      "Q48. What is the output of this async function with nested awaits?\n🏷️ Async | 🏢 #Zoho, #UrbanCompany | 🎯 Advanced",
+      "Q49. How do you implement a timeout wrapper for a promise?\n🏷️ Promises | 🏢 #Razorpay, #Dream11 | 🎯 Advanced",
+      "Q50. How do you handle race conditions in async code?\n🏷️ Async | 🏢 #CRED, #Freshworks | 🎯 Advanced"
+    ],
+    "codeSnippet": {
+      "language": "javascript",
+      "filename": "async/eventLoopMicrotasks.js",
+      "code": "// Execution Order: Synchronous -> Microtasks -> Macrotasks\nconsole.log(\"1 - Sync\");\n\nsetTimeout(() => {\n  console.log(\"2 - Macrotask (Timer)\");\n}, 0);\n\nPromise.resolve().then(() => {\n  console.log(\"3 - Microtask (Promise 1)\");\n}).then(() => {\n  console.log(\"4 - Microtask (Promise 2)\");\n});\n\nqueueMicrotask(() => {\n  console.log(\"5 - Microtask (queueMicrotask)\");\n});\n\nconsole.log(\"6 - Sync\");\n\n// Output: 1 -> 6 -> 3 -> 5 -> 4 -> 2"
+    },
+    "callout": {
+      "type": "important",
+      "text": "The JavaScript runtime drains the entire microtask queue (Promises, queueMicrotask, MutationObserver) after every macrotask callback and before the browser computes layout or renders frames."
+    }
+  },
+  {
+    "heading": "Section 4: DOM Manipulation & Events (Q51–Q70)",
+    "paragraphs": [
+      "This domain covers 20 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q51. How do you add an event listener to multiple elements?\n🏷️ DOM | 🏢 #Swiggy, #Meesho | 🎯 Beginner",
+      "Q52. What is event delegation and why is it useful?\n🏷️ Events | 🏢 #Google, #Flipkart | 🎯 Intermediate",
+      "Q53. How do you prevent event bubbling?\n🏷️ Events | 🏢 #Amazon, #UrbanCompany | 🎯 Intermediate",
+      "Q54. What is the difference between innerHTML and textContent?\n🏷️ DOM | 🏢 #Zoho, #Infosys | 🎯 Beginner",
+      "Q55. How do you throttle or debounce DOM events?\n🏷️ Events | 🏢 #Razorpay, #CRED | 🎯 Advanced",
+      "Q56. What is the difference between capturing and bubbling phases?\n🏷️ Events | 🏢 #Meta, #Microsoft | 🎯 Intermediate",
+      "Q57. How do you manipulate the DOM without using jQuery?\n🏷️ DOM | 🏢 #TCS, #Wipro | 🎯 Beginner",
+      "Q58. How do you create and append elements dynamically?\n🏷️ DOM | 🏢 #Freshworks, #Dream11 | 🎯 Intermediate",
+      "Q59. What is the role of event.target vs event.currentTarget?\n🏷️ Events | 🏢 #Google, #Amazon | 🎯 Intermediate",
+      "Q60. How do you implement a custom dropdown using vanilla JS?\n🏷️ DOM | 🏢 #Flipkart, #Swiggy | 🎯 Advanced",
+      "Q61. How do you detect clicks outside an element?\n🏷️ Events | 🏢 #Meesho, #UrbanCompany | 🎯 Intermediate",
+      "Q62. How do you implement infinite scrolling?\n🏷️ DOM | 🏢 #CRED, #Razorpay | 🎯 Advanced",
+      "Q63. What is the difference between setAttribute and direct property assignment?\n🏷️ DOM | 🏢 #Zoho, #Paytm | 🎯 Intermediate",
+      "Q64. How do you clone a DOM node?\n🏷️ DOM | 🏢 #Amazon, #Microsoft | 🎯 Intermediate",
+      "Q65. How do you prevent default behavior in event handling?\n🏷️ Events | 🏢 #Google, #Infosys | 🎯 Beginner",
+      "Q66. How do you implement drag-and-drop functionality?\n🏷️ DOM | 🏢 #Flipkart, #Freshworks | 🎯 Advanced",
+      "Q67. What is the difference between DOMContentLoaded and load events?\n🏷️ Events | 🏢 #Meta, #Stripe | 🎯 Intermediate",
+      "Q68. How do you handle keyboard events in JavaScript?\n🏷️ Events | 🏢 #UrbanCompany, #Zoho | 🎯 Intermediate",
+      "Q69. How do you implement a modal popup using vanilla JS?\n🏷️ DOM | 🏢 #Meesho, #CRED | 🎯 Intermediate",
+      "Q70. How do you optimize DOM manipulation for performance?\n🏷️ DOM | 🏢 #Amazon, #Google | 🎯 Advanced"
+    ],
+    "codeSnippet": {
+      "language": "javascript",
+      "filename": "dom/efficientEventDelegation.js",
+      "code": "// High-Performance Event Delegation with Target Matching\nconst table = document.querySelector(\"#settlements-table\");\n\ntable.addEventListener(\"click\", (event) => {\n  const target = event.target;\n  const button = target.closest(\"button[data-action]\");\n  if (!button || !table.contains(button)) return;\n\n  const action = button.dataset.action;\n  const rowId = button.closest(\"tr\")?.dataset.rowId;\n  console.log(\"Action:\", action, \"Row ID:\", rowId);\n});"
+    }
+  },
+  {
+    "heading": "Section 5: ES6+ Features (Q71–Q95)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q71. What are arrow functions and how do they differ from regular functions?\n🏷️ ES6 | 🏢 #Meta, #Amazon, #Freshworks | 🎯 Beginner",
+      "Q72. Explain destructuring in JavaScript with examples.\n🏷️ ES6 | 🏢 #Google, #Zoho | 🎯 Intermediate",
+      "Q73. What are template literals and how are they useful?\n🏷️ ES6 | 🏢 #Amazon, #Infosys | 🎯 Beginner",
+      "Q74. What is the spread operator and how is it different from rest?\n🏷️ ES6 | 🏢 #CRED, #Flipkart | 🎯 Intermediate",
+      "Q75. How do default parameters work in ES6?\n🏷️ ES6 | 🏢 #Zoho, #Meesho | 🎯 Beginner",
+      "Q76. What are generators and how do they work?\n🏷️ ES6 | 🏢 #Google, #Meta | 🎯 Advanced",
+      "Q77. What is the difference between for...in and for...of?\n🏷️ ES6 | 🏢 #Amazon, #Microsoft | 🎯 Intermediate",
+      "Q78. How do you use Map and Set in JavaScript?\n🏷️ ES6 | 🏢 #Infosys, #Stripe | 🎯 Intermediate",
+      "Q79. What are symbols in JavaScript and where are they used?\n🏷️ ES6 | 🏢 #Oracle, #IBM | 🎯 Advanced",
+      "Q80. How do you use optional chaining and nullish coalescing?\n🏷️ ES2020 | 🏢 #Zoho, #CRED | 🎯 Intermediate",
+      "Q81. What is the difference between shallow and deep copy using spread?\n🏷️ ES6 | 🏢 #Flipkart, #Freshworks | 🎯 Intermediate",
+      "Q82. How do you polyfill ES6 features for older browsers?\n🏷️ ES6 | 🏢 #TCS, #Wipro | 🎯 Advanced",
+      "Q83. What is the output of destructuring with default values?\n🏷️ ES6 | 🏢 #Google, #Amazon | 🎯 Intermediate",
+      "Q84. How do you use rest parameters in function definitions?\n🏷️ ES6 | 🏢 #Meesho, #UrbanCompany | 🎯 Beginner",
+      "Q85. What is the difference between Object.assign and spread operator?\n🏷️ ES6 | 🏢 #Zoho, #Paytm | 🎯 Intermediate"
+    ]
+  },
+  {
+    "heading": "Section 6: Object-Oriented JavaScript (Q96–Q110)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q86. What is prototypal inheritance in JavaScript?\n🏷️ OOP | 🏢 #IBM, #Oracle | 🎯 Intermediate",
+      "Q87. How does Object.create() work?\n🏷️ OOP | 🏢 #Meta, #Amazon | 🎯 Intermediate",
+      "Q88. What is the difference between class-based and prototype-based inheritance?\n🏷️ OOP | 🏢 #Google, #Salesforce | 🎯 Advanced",
+      "Q89. How do you implement private properties in ES6 classes?\n🏷️ OOP | 🏢 #Amazon, #Zoho | 🎯 Advanced",
+      "Q90. What are mixins and how are they used in JavaScript?\n🏷️ OOP | 🏢 #Salesforce, #Stripe | 🎯 Advanced",
+      "Q91. How do you override methods in JavaScript classes?\n🏷️ OOP | 🏢 #Infosys, #Freshworks | 🎯 Intermediate",
+      "Q92. What is the role of super() in class inheritance?\n🏷️ OOP | 🏢 #Google, #Meesho | 🎯 Intermediate",
+      "Q93. How do you implement multiple inheritance in JavaScript?\n🏷️ OOP | 🏢 #CRED, #UrbanCompany | 🎯 Advanced",
+      "Q94. What is the difference between constructor functions and ES6 classes?\n🏷️ OOP | 🏢 #Microsoft, #Zoho | 🎯 Intermediate",
+      "Q95. How do you use getters and setters in JavaScript?\n🏷️ OOP | 🏢 #Amazon, #Flipkart | 🎯 Intermediate",
+      "Q96. What is the prototype chain and how does it work?\n🏷️ OOP | 🏢 #Meta, #Google | 🎯 Advanced",
+      "Q97. How do you check if an object inherits from another?\n🏷️ OOP | 🏢 #Infosys, #Stripe | 🎯 Intermediate",
+      "Q98. How do you implement encapsulation in JavaScript?\n🏷️ OOP | 🏢 #Zoho, #Paytm | 🎯 Intermediate",
+      "Q99. What is the difference between static and instance methods?\n🏷️ OOP | 🏢 #Freshworks, #Dream11 | 🎯 Intermediate",
+      "Q100. How do you simulate interfaces in JavaScript?\n🏷️ OOP | 🏢 #Oracle, #IBM | 🎯 Advanced"
+    ]
+  },
+  {
+    "heading": "Section 7: Functional Programming (Q111–Q120)",
+    "paragraphs": [
+      "This domain covers 10 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q101. What is a pure function in JavaScript?\n🏷️ Functional | 🏢 #Google, #Zoho | 🎯 Intermediate",
+      "Q102. How do you implement immutability in JavaScript?\n🏷️ Functional | 🏢 #Amazon, #CRED | 🎯 Advanced",
+      "Q103. What is the difference between map, filter, and reduce?\n🏷️ Functional | 🏢 #Flipkart, #Meesho | 🎯 Intermediate",
+      "Q104. How do you implement a custom reduce function?\n🏷️ Functional | 🏢 #Freshworks, #UrbanCompany | 🎯 Advanced",
+      "Q105. What is function composition and how is it used?\n🏷️ Functional | 🏢 #Stripe, #Dream11 | 🎯 Advanced",
+      "Q106. What is the role of higher-order functions in JavaScript?\n🏷️ Functional | 🏢 #Microsoft, #Infosys | 🎯 Intermediate",
+      "Q107. How do you implement a pipeline of functions?\n🏷️ Functional | 🏢 #Zoho, #Razorpay | 🎯 Advanced",
+      "Q108. What is referential transparency and why does it matter?\n🏷️ Functional | 🏢 #Meta, #Oracle | 🎯 Advanced",
+      "Q109. How do you avoid side effects in JavaScript functions?\n🏷️ Functional | 🏢 #Amazon, #Google | 🎯 Intermediate",
+      "Q110. What is the difference between declarative and imperative code?\n🏷️ Functional | 🏢 #TCS, #Wipro | 🎯 Intermediate"
+    ]
+  },
+  {
+    "heading": "Section 8: Type Coercion & Equality (Q121–Q135)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q111. What is the difference between == and ===?\n🏷️ Equality | 🏢 #TCS, #Microsoft, #Meta, #Zoho | 🎯 Beginner",
+      "Q112. What is type coercion in JavaScript?\n🏷️ Types | 🏢 #Amazon, #Infosys | 🎯 Intermediate",
+      "Q113. What is the output of 4 + 1 + \"9\" and why?\n🏷️ Coercion | 🏢 #PrepInsta, #Flipkart | 🎯 Beginner",
+      "Q114. How do you check for NaN in JavaScript?\n🏷️ Types | 🏢 #Google, #Meesho | 🎯 Beginner",
+      "Q115. What is the difference between null, undefined, and undeclared?\n🏷️ Types | 🏢 #Microsoft, #Infosys, #Stripe | 🎯 Intermediate",
+      "Q116. How do you safely compare two objects for equality?\n🏷️ Equality | 🏢 #Zoho, #Dream11 | 🎯 Advanced",
+      "Q117. What is the output of true + false and why?\n🏷️ Coercion | 🏢 #Amazon, #UrbanCompany | 🎯 Intermediate",
+      "Q118. How do you avoid unexpected type coercion in comparisons?\n🏷️ Equality | 🏢 #Google, #CRED | 🎯 Intermediate",
+      "Q119. What is the result of [] == ![] and why?\n🏷️ Coercion | 🏢 #Flipkart, #Freshworks | 🎯 Advanced",
+      "Q120. How do you implement deep equality checks in JavaScript?\n🏷️ Equality | 🏢 #Oracle, #IBM | 🎯 Advanced",
+      "Q121. What is the difference between typeof null and typeof undefined?\n🏷️ Types | 🏢 #Meta, #Zoho | 🎯 Intermediate",
+      "Q122. How do you use Object.is() for equality checks?\n🏷️ Equality | 🏢 #Amazon, #Google | 🎯 Intermediate",
+      "Q123. What is the output of \"5\" - 2 and \"5\" + 2?\n🏷️ Coercion | 🏢 #Meesho, #Swiggy | 🎯 Beginner",
+      "Q124. How do you handle falsy values in JavaScript?\n🏷️ Types | 🏢 #Infosys, #Wipro | 🎯 Beginner",
+      "Q125. What are truthy and falsy values? List examples.\n🏷️ Types | 🏢 #TCS, #UrbanCompany | 🎯 Beginner"
+    ]
+  },
+  {
+    "heading": "Section 9: Error Handling & Debugging (Q136–Q150)",
+    "paragraphs": [
+      "This domain covers 15 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q126. How do you handle exceptions in JavaScript?\n🏷️ Errors | 🏢 #Amazon, #Google | 🎯 Beginner",
+      "Q127. What is the difference between throw and return?\n🏷️ Errors | 🏢 #Infosys, #Zoho | 🎯 Intermediate",
+      "Q128. How do you use try/catch/finally effectively?\n🏷️ Errors | 🏢 #Flipkart, #Freshworks | 🎯 Intermediate",
+      "Q129. How do you debug JavaScript code in the browser?\n🏷️ Debugging | 🏢 #Microsoft, #Meesho | 🎯 Beginner",
+      "Q130. What are common runtime errors in JavaScript?\n🏷️ Errors | 🏢 #Meta, #Stripe | 🎯 Intermediate",
+      "Q131. How do you handle async errors in promises?\n🏷️ Async | 🏢 #Amazon, #CRED | 🎯 Intermediate",
+      "Q132. What is the role of console.trace()?\n🏷️ Debugging | 🏢 #Google, #UrbanCompany | 🎯 Intermediate",
+      "Q133. How do you use breakpoints in DevTools?\n🏷️ Debugging | 🏢 #Infosys, #Zoho | 🎯 Beginner",
+      "Q134. How do you log structured data for debugging?\n🏷️ Debugging | 🏢 #Flipkart, #Dream11 | 🎯 Intermediate",
+      "Q135. What is the difference between syntax and runtime errors?\n🏷️ Errors | 🏢 #TCS, #Wipro | 🎯 Beginner",
+      "Q136. How do you catch errors in async/await functions?\n🏷️ Async | 🏢 #Freshworks, #Razorpay | 🎯 Intermediate",
+      "Q137. What is the output of a rejected promise without a catch?\n🏷️ Async | 🏢 #Google, #Amazon | 🎯 Advanced",
+      "Q138. How do you use window.onerror for global error handling?\n🏷️ Errors | 🏢 #Meta, #Stripe | 🎯 Advanced",
+      "Q139. What is the role of stack traces in debugging?\n🏷️ Debugging | 🏢 #Microsoft, #Oracle | 🎯 Intermediate",
+      "Q140. How do you handle uncaught exceptions in production?\n🏷️ Errors | 🏢 #Zoho, #UrbanCompany | 🎯 Advanced"
+    ]
+  },
+  {
+    "heading": "Section 10: Tricky Output & Real-World Scenarios (Q151–Q200)",
+    "paragraphs": [
+      "This domain covers 20 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q141. What is the output of typeof NaN?\n🏷️ Types | 🏢 #Google, #Amazon | 🎯 Beginner",
+      "Q142. What is the output of [] + []?\n🏷️ Coercion | 🏢 #Flipkart, #Meesho | 🎯 Advanced",
+      "Q143. What is the output of {} + []?\n🏷️ Coercion | 🏢 #CRED, #Freshworks | 🎯 Advanced",
+      "Q144. What is the output of typeof typeof 1?\n🏷️ Types | 🏢 #Zoho, #Infosys | 🎯 Intermediate",
+      "Q145. What is the output of null == undefined?\n🏷️ Equality | 🏢 #Amazon, #Google | 🎯 Beginner",
+      "Q146. What is the output of true == \"1\"?\n🏷️ Coercion | 🏢 #Stripe, #UrbanCompany | 🎯 Intermediate",
+      "Q147. What is the output of !!\"false\"?\n🏷️ Coercion | 🏢 #Meta, #Zoho | 🎯 Intermediate",
+      "Q148. What is the output of typeof function(){} === \"function\"?\n🏷️ Types | 🏢 #Infosys, #Wipro | 🎯 Beginner",
+      "Q149. What is the output of typeof []?\n🏷️ Types | 🏢 #TCS, #Microsoft | 🎯 Beginner",
+      "Q150. What is the output of typeof null?\n🏷️ Types | 🏢 #Google, #Amazon | 🎯 Beginner",
+      "Q151. How do you implement a deep clone utility?\n🏷️ Objects | 🏢 #Zoho, #CRED | 🎯 Advanced",
+      "Q152. How do you flatten a nested array?\n🏷️ Arrays | 🏢 #Google, #Flipkart | 🎯 Intermediate",
+      "Q153. What is the difference between .map() and .forEach()?\n🏷️ Arrays | 🏢 #Amazon, #Infosys | 🎯 Beginner",
+      "Q154. How do you remove duplicates from an array?\n🏷️ Arrays | 🏢 #Meesho, #UrbanCompany | 🎯 Intermediate",
+      "Q155. How do you sort an array of objects by a key?\n🏷️ Arrays | 🏢 #Freshworks, #Stripe | 🎯 Intermediate",
+      "Q156. How do you reverse an array without mutating it?\n🏷️ Arrays | 🏢 #Zoho, #Dream11 | 🎯 Intermediate",
+      "Q157. How do you chunk an array into smaller arrays?\n🏷️ Arrays | 🏢 #CRED, #Razorpay | 🎯 Advanced",
+      "Q158. How do you implement a custom filter function?\n🏷️ Arrays | 🏢 #Google, #Amazon | 🎯 Intermediate",
+      "Q159. How do you find the intersection of two arrays?\n🏷️ Arrays | 🏢 #Infosys, #Wipro | 🎯 Intermediate",
+      "Q160. How do you rotate an array by N positions?\n🏷️ Arrays | 🏢 #Flipkart, #Freshworks | 🎯 Advanced"
+    ]
+  },
+  {
+    "heading": "Section 12: Performance Optimization (Q171–Q180)",
+    "paragraphs": [
+      "This domain covers 10 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q161. How do you optimize JavaScript for performance?\n🏷️ Performance | 🏢 #Google, #Amazon | 🎯 Advanced",
+      "Q162. What is lazy loading and how is it implemented?\n🏷️ Performance | 🏢 #Flipkart, #Swiggy | 🎯 Intermediate",
+      "Q163. How do you reduce DOM reflows and repaints?\n🏷️ Performance | 🏢 #Meta, #Zoho | 🎯 Advanced",
+      "Q164. What is tree shaking in JavaScript bundlers?\n🏷️ Performance | 🏢 #Stripe, #Freshworks | 🎯 Intermediate",
+      "Q165. How do you measure script execution time?\n🏷️ Performance | 🏢 #Microsoft, #Infosys | 🎯 Intermediate",
+      "Q166. What is code splitting and why is it useful?\n🏷️ Performance | 🏢 #CRED, #UrbanCompany | 🎯 Intermediate",
+      "Q167. How do you optimize loops and iterations?\n🏷️ Performance | 🏢 #Zoho, #Dream11 | 🎯 Intermediate",
+      "Q168. How do you cache data in the browser?\n🏷️ Performance | 🏢 #Amazon, #Google | 🎯 Intermediate",
+      "Q169. What is the role of service workers in performance?\n🏷️ Performance | 🏢 #Flipkart, #Meesho | 🎯 Advanced",
+      "Q170. How do you reduce bundle size in a React/JS app?\n🏷️ Performance | 🏢 #Freshworks, #Razorpay | 🎯 Advanced"
+    ]
+  },
+  {
+    "heading": "Section 13: Security & Best Practices (Q181–Q190)",
+    "paragraphs": [
+      "This domain covers 10 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q171. What is XSS and how do you prevent it in JavaScript?\n🏷️ Security | 🏢 #Google, #Amazon | 🎯 Advanced",
+      "Q172. How do you sanitize user input in JavaScript?\n🏷️ Security | 🏢 #Zoho, #Stripe | 🎯 Intermediate",
+      "Q173. What is CSP and how does it protect your app?\n🏷️ Security | 🏢 #Meta, #Freshworks | 🎯 Advanced",
+      "Q174. How do you prevent CSRF in frontend apps?\n🏷️ Security | 🏢 #Infosys, #UrbanCompany | 🎯 Advanced",
+      "Q175. What are secure coding practices in JavaScript?\n🏷️ Security | 🏢 #Microsoft, #CRED | 🎯 Intermediate",
+      "Q176. How do you handle sensitive data in localStorage?\n🏷️ Security | 🏢 #Flipkart, #Meesho | 🎯 Intermediate",
+      "Q177. What is the role of HTTPS in frontend security?\n🏷️ Security | 🏢 #Amazon, #Google | 🎯 Beginner",
+      "Q178. How do you prevent clickjacking in JS apps?\n🏷️ Security | 🏢 #Stripe, #Dream11 | 🎯 Advanced",
+      "Q179. What is the difference between encoding and escaping?\n🏷️ Security | 🏢 #Zoho, #Oracle | 🎯 Intermediate",
+      "Q180. How do you audit JavaScript code for vulnerabilities?\n🏷️ Security | 🏢 #Salesforce, #IBM | 🎯 Advanced"
+    ]
+  },
+  {
+    "heading": "Section 14: Browser APIs & Tooling (Q191–Q195)",
+    "paragraphs": [
+      "This domain covers 5 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q181. How do you use the Fetch API in JavaScript?\n🏷️ Browser API | 🏢 #Google, #Amazon | 🎯 Beginner",
+      "Q182. What is the difference between Fetch and XMLHttpRequest?\n🏷️ Browser API | 🏢 #Infosys, #Zoho | 🎯 Intermediate",
+      "Q183. How do you use localStorage and sessionStorage?\n🏷️ Browser API | 🏢 #Flipkart, #Meesho | 🎯 Beginner",
+      "Q184. What is the role of Web Workers in JavaScript?\n🏷️ Browser API | 🏢 #Meta, #Stripe | 🎯 Advanced",
+      "Q185. How do you use the History API for routing?\n🏷️ Browser API | 🏢 #Freshworks, #UrbanCompany | 🎯 Intermediate"
+    ]
+  },
+  {
+    "heading": "Section 15: Real-World Coding Challenges (Q196–Q200)",
+    "paragraphs": [
+      "This domain covers 5 critical interview challenges frequently evaluated by top engineering hiring loops.",
+      "Q186. Implement a debounce function from scratch.\n🏷️ Functions | 🏢 #Razorpay, #CRED | 🎯 Advanced",
+      "Q187. Build a custom event emitter class.\n🏷️ OOP | 🏢 #Zoho, #Dream11 | 🎯 Advanced",
+      "Q188. Implement a deep equality checker for objects.\n🏷️ Equality | 🏢 #Google, #Amazon | 🎯 Advanced",
+      "Q189. Create a polyfill for Promise.all.\n🏷️ Promises | 🏢 #Stripe, #Freshworks | 🎯 Advanced",
+      "Q190. Build a lightweight clone of setInterval using setTimeout.\n🏷️ Timing | 🏢 #Meta, #UrbanCompany | 🎯 Advanced"
+    ],
+    "codeSnippet": {
+      "language": "javascript",
+      "filename": "challenges/debounceWithCancel.js",
+      "code": "// Production Debounce Utility with Immediate Execution and Cancel\nfunction debounce(func, wait = 300, immediate = false) {\n  let timeoutId = null;\n\n  function debounced(...args) {\n    const callNow = immediate && !timeoutId;\n    clearTimeout(timeoutId);\n\n    timeoutId = setTimeout(() => {\n      timeoutId = null;\n      if (!immediate) func.apply(this, args);\n    }, wait);\n\n    if (callNow) func.apply(this, args);\n  }\n\n  debounced.cancel = () => {\n    clearTimeout(timeoutId);\n    timeoutId = null;\n  };\n\n  return debounced;\n}"
+    }
+  },
+  {
+    "heading": "Personal Note & Continuous Study Roadmap",
+    "paragraphs": [
+      "Wishing you the very best with your upcoming engineering interview cycles! I compiled and refined this 200-question matrix during my own preparation journey and while mentoring junior and mid-level engineers.",
+      "I know firsthand how exhausting it is to sift through dozens of fragmented sources—random LinkedIn posts, Glassdoor snippets, AmbitionBox reviews, LeetCode discussion forums, and medium posts.",
+      "My goal with this resource was to curate a unified, battle-tested curriculum that saves you time and builds deep, unshakeable confidence in JavaScript runtime architecture.",
+      "If you have questions on any problem, want to propose additions, or are preparing for a senior frontend loop, reach out directly at work.kaushal@yahoo.com or connect with me on LinkedIn and GitHub!"
+    ],
+    "callout": {
+      "type": "tip",
+      "text": "Original Notion Sheet: https://app.notion.com/p/A2Z-JavaScript-Interview-Questions-2479f742a18780c98648cebd35ddbf0c — feel free to bookmark or duplicate to your personal Notion workspace!"
+    }
+  }
+]

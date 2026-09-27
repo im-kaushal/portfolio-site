@@ -4,7 +4,11 @@ import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { BorderBeam } from "../components/ui/BorderBeam";
 
 export function FeaturedBlogs() {
-  const posts = blogPosts.slice(0, 3);
+  const posts = [
+    blogPosts.find((p) => p.slug === "a2z-javascript-interview-questions") || blogPosts[0],
+    blogPosts.find((p) => p.slug === "optimizing-lcp-core-web-vitals-enterprise-react") || blogPosts[1],
+    blogPosts.find((p) => p.slug === "designing-virtualized-settlements-grid-citi-bank") || blogPosts[2],
+  ];
 
   return (
     <section id="blog" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
@@ -23,7 +27,7 @@ export function FeaturedBlogs() {
             Featured Tech Articles & Deep Dives
           </h2>
           <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-            In-depth architectural breakdowns covering Core Web Vitals optimization, low-latency financial grids, offline-first mobile sync, and JavaScript runtime internals.
+            In-depth architectural breakdowns covering JavaScript runtime internals, Core Web Vitals optimization, low-latency financial grids, and offline-first mobile sync.
           </p>
         </div>
 
@@ -47,10 +51,22 @@ export function FeaturedBlogs() {
 
               <div>
                 <div className="flex items-center justify-between text-xs font-mono text-steel">
-                  <span className="rounded bg-amber/10 border border-amber/25 px-2 py-0.5 text-amber text-[10px] font-medium">
-                    {post.category}
-                  </span>
-                  <span>{post.readTime}</span>
+                  <div className="flex items-center gap-1.5">
+                    <span className="rounded bg-amber/10 border border-amber/25 px-2 py-0.5 text-amber text-[10px] font-medium">
+                      {post.category}
+                    </span>
+                    {post.sourceUrl && (
+                      <span className="rounded bg-amber/20 border border-amber/40 px-1.5 py-0.5 text-[9px] font-bold text-amber">
+                        NOTION
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {post.views && (
+                      <span className="text-phosphor text-[10px] font-semibold">👁 {post.views}</span>
+                    )}
+                    <span>{post.readTime}</span>
+                  </div>
                 </div>
 
                 <h3 className="mt-4 text-base sm:text-lg font-bold text-paper group-hover:text-amber transition-colors leading-snug">

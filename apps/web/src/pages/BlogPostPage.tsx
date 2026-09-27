@@ -5,13 +5,27 @@ import { blogPosts } from "../content/blogs";
 import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
 import { site } from "../content/site";
+import { getAnswerForQuestion } from "../content/javascriptInterviewDataset";
 
 export function BlogPostPage() {
   const { slug } = useParams();
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = blogPosts.find(
+    (p) =>
+      p.slug === slug ||
+      (slug === "javascript-interview-questions-architecture-guide" &&
+        p.slug === "a2z-javascript-interview-questions") ||
+      (slug === "a2z-javascript-interview-questions" &&
+        p.slug === "javascript-interview-questions-architecture-guide")
+  );
   const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
-  const [activeSectionId, setActiveSectionId] = useState<string>("");
+  const [activeSectionId, setActiveSectionId] = useState<string>("section-0");
+  const [questionSearch, setQuestionSearch] = useState<string>("");
+  const [copiedQuestionKey, setCopiedQuestionKey] = useState<string | null>(null);
+  const [expandedQuestions, setExpandedQuestions] = useState<Record<string, boolean>>({});
+  const [copiedSnippetKey, setCopiedSnippetKey] = useState<string | null>(null);
+  const [allExpanded, setAllExpanded] = useState<boolean>(false);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All");
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -155,75 +169,453 @@ export function BlogPostPage() {
               {post.content.lead}
             </div>
 
+            {/* Original Source / Notion Badge Banner */}
+            {post.sourceUrl && (
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-amber/40 bg-amber/5 p-4 sm:p-5 backdrop-blur-sm">
+                <div className="flex items-center gap-3.5">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-amber/20 border border-amber/30 text-amber text-xl">
+                    📑
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-paper flex items-center gap-2">
+                      <span>Curated Notion Sheet</span>
+                      <span className="rounded bg-amber/20 px-1.5 py-0.2 text-[10px] font-mono text-amber font-semibold">
+                        ORIGINAL WORKSPACE
+                      </span>
+                    </div>
+                    <div className="text-xs text-steel mt-0.5">
+                      Access, bookmark, or duplicate the live interactive curriculum on Notion
+                    </div>
+                  </div>
+                </div>
+
+                <a
+                  href={post.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all shrink-0"
+                >
+                  <span>Open in Notion ↗</span>
+                </a>
+              </div>
+            )}
+
+            {/* Interactive Question Search for Study & Interview Guides */}
+            {post.content.sections.some((s) =>
+              s.paragraphs.some((p) => p.startsWith("Q") && p.includes("\n🏷️"))
+            ) && (
+              <div className="mt-6 rounded-2xl border border-line/80 bg-ink-2/95 p-3.5 sm:p-4 shadow-subtle">
+                <div className="flex items-center gap-3">
+                  <span className="text-amber text-base">🔍</span>
+                  <input
+                    type="text"
+                    value={questionSearch}
+                    onChange={(e) => setQuestionSearch(e.target.value)}
+                    placeholder="Search 200 questions by topic, company (#Google, #Amazon, #Meta, #Razorpay), or keyword..."
+                    className="w-full bg-transparent text-xs sm:text-sm text-paper placeholder-steel/60 focus:outline-none font-sans"
+                  />
+                  {questionSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setQuestionSearch("")}
+                      className="text-xs font-mono text-steel hover:text-paper shrink-0 px-2 py-1 rounded bg-ink-3"
+                    >
+                      ✕ Clear
+                    </button>
+                  )}
+                </div>
+                {questionSearch && (
+                  <div className="mt-2 pt-2 border-t border-line/50 text-[11px] font-mono text-amber">
+                    Showing questions matching &ldquo;{questionSearch}&rdquo;
+                  </div>
+                )}
+
+                {/* Filter and Action Bar */}
+                <div className="mt-3 space-y-2 border-t border-line/50 pt-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <div className="flex flex-wrap items-center gap-1.5 font-mono text-[11px]">
+                      <span className="text-steel">Difficulty:</span>
+                      {(["All", "Beginner", "Intermediate", "Advanced"] as const).map((diff) => (
+                        <button
+                          key={diff}
+                          type="button"
+                          onClick={() => setSelectedDifficulty(diff)}
+                          className={`rounded px-2 py-0.5 transition-colors ${
+                            selectedDifficulty === diff
+                              ? "bg-amber text-white font-semibold shadow-sm"
+                              : "bg-ink-3 text-steel hover:text-paper"
+                          }`}
+                        >
+                          {diff}
+                        </button>
+                      ))}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const next = !allExpanded;
+                        setAllExpanded(next);
+                        if (!next) {
+                          setExpandedQuestions({});
+                        } else {
+                          const newExp: Record<string, boolean> = {};
+                          post.content.sections.forEach((sec, sIdx) => {
+                            sec.paragraphs.forEach((p, pIdx) => {
+                              if (p.startsWith("Q") && p.includes("\n🏷️")) {
+                                newExp[`${sIdx}-${pIdx}`] = true;
+                              }
+                            });
+                          });
+                          setExpandedQuestions(newExp);
+                        }
+                      }}
+                      className="font-mono text-[11px] text-amber hover:text-amber-dim font-semibold transition-colors"
+                    >
+                      {allExpanded ? "⊟ Collapse All Answers" : "⊞ Expand All Answers"}
+                    </button>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[10px] font-mono text-steel">
+                    <span className="text-steel/70">Top Targets:</span>
+                    {["#Google", "#Amazon", "#Meta", "#Razorpay", "#Flipkart", "#CRED", "#Zoho"].map((tag) => (
+                      <button
+                        key={tag}
+                        type="button"
+                        onClick={() => setQuestionSearch(questionSearch === tag ? "" : tag)}
+                        className={`rounded px-1.5 py-0.5 border transition-colors ${
+                          questionSearch === tag
+                            ? "bg-amber/20 border-amber text-amber font-semibold"
+                            : "bg-ink border-line/60 text-steel hover:border-amber hover:text-amber"
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Post Sections */}
             <div className="mt-10 space-y-12">
-              {post.content.sections.map((section, idx) => (
-                <section
-                  key={idx}
-                  id={`section-${idx}`}
-                  className="scroll-mt-24 space-y-4"
-                >
-                  <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-paper">
-                    {section.heading}
-                  </h2>
+              {post.content.sections.map((section, idx) => {
+                // If question search or difficulty filter is active, check matching questions
+                const renderedParagraphs = section.paragraphs.filter((p) => {
+                  const isQ = p.startsWith("Q") && p.includes("\n🏷️");
+                  if (isQ && selectedDifficulty !== "All") {
+                    const [, qMeta] = p.split("\n");
+                    const metaParts = qMeta?.split("|").map((s) => s.trim()) || [];
+                    const diff = metaParts[2]?.replace("🎯", "").trim();
+                    if (diff !== selectedDifficulty) return false;
+                  } else if (!isQ && selectedDifficulty !== "All") {
+                    return false;
+                  }
 
-                  {section.paragraphs.map((p, pIdx) => (
-                    <p key={pIdx} className="text-sm sm:text-base text-steel leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
+                  if (!questionSearch.trim()) return true;
+                  const q = questionSearch.toLowerCase();
+                  return p.toLowerCase().includes(q) || section.heading.toLowerCase().includes(q);
+                });
 
-                  {/* Code Snippet Box with Copy Button */}
-                  {section.codeSnippet && (
-                    <div className="mt-5 overflow-hidden rounded-xl border border-line/80 bg-ink-2/95 shadow-xl font-mono text-xs">
-                      <div className="flex items-center justify-between border-b border-line/60 bg-ink-3/90 px-4 py-2 text-steel">
-                        <div className="flex items-center gap-2">
-                          <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
-                          <span className="ml-1.5 text-[11px] text-paper">
-                            {section.codeSnippet.filename || `${section.codeSnippet.language}.ts`}
-                          </span>
+                if ((questionSearch.trim() || selectedDifficulty !== "All") && renderedParagraphs.length === 0) {
+                  return null;
+                }
+
+                return (
+                  <section
+                    key={idx}
+                    id={`section-${idx}`}
+                    className="scroll-mt-24 space-y-4"
+                  >
+                    <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-paper flex items-center justify-between gap-3">
+                      <span>{section.heading}</span>
+                    </h2>
+
+                    {renderedParagraphs.map((p, pIdx) => {
+                      // Question card rendering
+                      if (p.startsWith("Q") && p.includes("\n🏷️")) {
+                        const [qTitle, qMeta] = p.split("\n");
+                        const metaParts = qMeta.split("|").map((s) => s.trim());
+                        const topic = metaParts[0]?.replace("🏷️", "").trim();
+                        const companies = metaParts[1]
+                          ?.replace("🏢", "")
+                          .trim()
+                          .split(",")
+                          .map((c) => c.trim())
+                          .filter(Boolean);
+                        const difficulty = metaParts[2]?.replace("🎯", "").trim();
+
+                        const diffColor =
+                          difficulty === "Beginner"
+                            ? "bg-phosphor/15 text-phosphor border-phosphor/30"
+                            : difficulty === "Advanced"
+                            ? "bg-rose-500/15 text-rose-400 border-rose-500/30"
+                            : "bg-amber/15 text-amber border-amber/30";
+
+                        const qKey = `${idx}-${pIdx}`;
+                        const qNumMatch = qTitle.match(/^Q(\d+)\./);
+                        const qNum = qNumMatch ? parseInt(qNumMatch[1], 10) : 0;
+                        const answer = getAnswerForQuestion(qNum, qTitle, topic);
+                        const isExpanded = !!expandedQuestions[qKey];
+
+                        return (
+                          <div
+                            key={pIdx}
+                            className="my-3 rounded-xl border border-line/70 bg-ink-2/80 p-4 transition-all hover:border-amber/40 hover:bg-ink-3/60 group shadow-sm"
+                          >
+                            <div className="flex items-start justify-between gap-3">
+                              <span className="font-semibold text-sm sm:text-base text-paper leading-snug">
+                                {qTitle}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  await copyToClipboard(`${qTitle}\n${qMeta}`);
+                                  setCopiedQuestionKey(qKey);
+                                  setTimeout(() => setCopiedQuestionKey(null), 2000);
+                                }}
+                                className="shrink-0 opacity-80 group-hover:opacity-100 rounded border border-line/60 bg-ink-3 px-2 py-0.5 text-[10px] font-mono text-steel hover:text-amber hover:border-amber transition-colors"
+                                title="Copy Question and Tags"
+                              >
+                                {copiedQuestionKey === qKey ? "✓ Copied" : "Copy"}
+                              </button>
+                            </div>
+
+                            <div className="mt-2.5 flex flex-wrap items-center gap-1.5 text-[10px] font-mono">
+                              {topic && (
+                                <span className="rounded bg-ink px-2 py-0.5 border border-line/80 text-steel">
+                                  🏷️ {topic}
+                                </span>
+                              )}
+                              {companies?.map((comp) => (
+                                <span
+                                  key={comp}
+                                  className="rounded bg-ink px-1.5 py-0.5 border border-line/60 text-paper font-medium"
+                                >
+                                  {comp}
+                                </span>
+                              ))}
+                              {difficulty && (
+                                <span
+                                  className={`ml-auto rounded px-2 py-0.5 border font-semibold ${diffColor}`}
+                                >
+                                  🎯 {difficulty}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Collapsible Answer & Senior Interview Guide */}
+                            <div className="mt-3 pt-2.5 border-t border-line/50 flex items-center justify-between">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setExpandedQuestions((prev) => ({
+                                    ...prev,
+                                    [qKey]: !prev[qKey],
+                                  }))
+                                }
+                                className="inline-flex items-center gap-1 text-xs font-semibold text-amber hover:text-amber-dim transition-colors group cursor-pointer"
+                              >
+                                <span>{isExpanded ? "▾ Hide Answer & Notes" : "▸ Show Answer & Notes"}</span>
+                              </button>
+                              <span className="text-[10px] font-mono text-steel">
+                                {isExpanded ? "Click to collapse" : "Intuition • Code • Gotchas"}
+                              </span>
+                            </div>
+
+                            {isExpanded && answer && (
+                              <div className="mt-3.5 space-y-3 pt-3 border-t border-line/40 text-xs sm:text-sm">
+                                {/* 1. Plain English Explanation */}
+                                <div className="rounded-lg bg-ink-3/70 p-3 border border-line/50">
+                                  <div className="flex items-center gap-1.5 font-semibold text-amber font-mono text-[11px] mb-1">
+                                    <span>💡 PLAIN-ENGLISH INTUITION</span>
+                                  </div>
+                                  <p className="text-steel leading-relaxed text-xs sm:text-sm">
+                                    {answer.plainEnglish}
+                                  </p>
+                                </div>
+
+                                {/* 1b. Runtime Mechanics & Concepts */}
+                                {answer.explanation && answer.explanation.length > 0 && (
+                                  <div className="rounded-lg bg-ink-2/90 p-3 border border-line/60">
+                                    <div className="flex items-center gap-1.5 font-semibold text-paper font-mono text-[11px] mb-1.5">
+                                      <span>⚙️ RUNTIME MECHANICS & DEEP DIVE</span>
+                                    </div>
+                                    <ul className="space-y-1 list-disc list-inside text-steel text-xs sm:text-sm leading-relaxed">
+                                      {answer.explanation.map((item, itemIdx) => (
+                                        <li key={itemIdx} className="marker:text-amber">
+                                          <span>{item}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                )}
+
+                                {/* 2. Clean Minimal Code Snippet */}
+                                {answer.codeSnippet && (
+                                  <div className="overflow-hidden rounded-lg border border-line/70 bg-ink-1 font-mono text-xs">
+                                    <div className="flex items-center justify-between bg-ink-3/90 px-3 py-1.5 border-b border-line/50 text-[11px] text-steel">
+                                      <span>{answer.codeSnippet.language}</span>
+                                      <button
+                                        type="button"
+                                        onClick={async () => {
+                                          await copyToClipboard(answer.codeSnippet.code);
+                                          setCopiedSnippetKey(qKey);
+                                          setTimeout(() => setCopiedSnippetKey(null), 2000);
+                                        }}
+                                        className="text-[10px] text-amber hover:underline cursor-pointer"
+                                      >
+                                        {copiedSnippetKey === qKey ? "✓ Code Copied" : "Copy Code"}
+                                      </button>
+                                    </div>
+                                    <pre className="p-3 text-paper overflow-x-auto text-[11px] sm:text-xs leading-relaxed">
+                                      <code>{answer.codeSnippet.code}</code>
+                                    </pre>
+                                    {answer.codeSnippet.output && (
+                                      <div className="px-3 py-1.5 bg-ink/80 border-t border-line/40 text-[11px] text-phosphor font-mono">
+                                        <span className="text-steel">Output: </span>
+                                        {answer.codeSnippet.output}
+                                      </div>
+                                    )}
+                                  </div>
+                                )}
+
+                                {/* 3. Interviewer Traps & Senior Signals */}
+                                {answer.interviewerGotchas && (
+                                  <div className="grid sm:grid-cols-2 gap-2 text-xs">
+                                    <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-2.5">
+                                      <div className="font-semibold text-rose-400 font-mono text-[11px] mb-1">
+                                        ⚠️ Interviewer Trap
+                                      </div>
+                                      <p className="text-steel leading-snug text-[11px]">
+                                        {answer.interviewerGotchas.trap}
+                                      </p>
+                                    </div>
+
+                                    <div className="rounded-lg border border-phosphor/30 bg-phosphor/5 p-2.5">
+                                      <div className="font-semibold text-phosphor font-mono text-[11px] mb-1">
+                                        ⭐ Senior Candidate Signal
+                                      </div>
+                                      <p className="text-steel leading-snug text-[11px]">
+                                        {answer.interviewerGotchas.seniorSignal}
+                                      </p>
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* 4. Key Takeaway */}
+                                {answer.keyTakeaway && (
+                                  <div className="rounded-lg bg-amber/5 border border-amber/30 p-2.5 text-[11px] flex items-start gap-2">
+                                    <span className="font-bold text-amber shrink-0">🎯 Takeaway:</span>
+                                    <span className="text-paper leading-snug">{answer.keyTakeaway}</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <p key={pIdx} className="text-sm sm:text-base text-steel leading-relaxed">
+                          {p}
+                        </p>
+                      );
+                    })}
+
+                    {/* Code Snippet Box with Copy Button */}
+                    {section.codeSnippet && (!questionSearch.trim() || section.codeSnippet.code.toLowerCase().includes(questionSearch.toLowerCase())) && (
+                      <div className="mt-5 overflow-hidden rounded-xl border border-line/80 bg-ink-2/95 shadow-xl font-mono text-xs">
+                        <div className="flex items-center justify-between border-b border-line/60 bg-ink-3/90 px-4 py-2 text-steel">
+                          <div className="flex items-center gap-2">
+                            <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-green-500/70" />
+                            <span className="ml-1.5 text-[11px] text-paper">
+                              {section.codeSnippet.filename || `${section.codeSnippet.language}.ts`}
+                            </span>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleCopyCode(section.codeSnippet!.code, idx)}
+                            className="rounded border border-line/60 bg-ink px-2 py-0.5 text-[11px] text-steel hover:text-amber transition-colors"
+                          >
+                            {copiedCodeIndex === idx ? "✓ Copied" : "Copy Code"}
+                          </button>
                         </div>
 
-                        <button
-                          type="button"
-                          onClick={() => handleCopyCode(section.codeSnippet!.code, idx)}
-                          className="rounded border border-line/60 bg-ink px-2 py-0.5 text-[11px] text-steel hover:text-amber transition-colors"
-                        >
-                          {copiedCodeIndex === idx ? "✓ Copied" : "Copy Code"}
-                        </button>
+                        <pre className="overflow-x-auto p-4 text-[12px] leading-relaxed text-paper">
+                          <code>{section.codeSnippet.code}</code>
+                        </pre>
                       </div>
+                    )}
 
-                      <pre className="overflow-x-auto p-4 text-[12px] leading-relaxed text-paper">
-                        <code>{section.codeSnippet.code}</code>
-                      </pre>
-                    </div>
-                  )}
+                    {/* Callout Box */}
+                    {section.callout && (
+                      <div
+                        className={`mt-4 rounded-xl border p-4 text-xs sm:text-sm leading-relaxed ${
+                          section.callout.type === "important"
+                            ? "border-amber/40 bg-amber/10 text-amber"
+                            : section.callout.type === "tip"
+                            ? "border-phosphor/40 bg-phosphor/10 text-phosphor"
+                            : "border-line bg-ink-2 text-steel"
+                        }`}
+                      >
+                        <strong className="uppercase font-mono text-[10px] tracking-wider block mb-1">
+                          {section.callout.type === "important"
+                            ? "⚠ Important Note"
+                            : section.callout.type === "tip"
+                            ? "💡 Architecture Pro-Tip"
+                            : "📌 Context"}
+                        </strong>
+                        <p className="font-sans text-paper/90">{section.callout.text}</p>
+                      </div>
+                    )}
+                  </section>
+                );
+              })}
+            </div>
 
-                  {/* Callout Box */}
-                  {section.callout && (
-                    <div
-                      className={`mt-4 rounded-xl border p-4 text-xs sm:text-sm leading-relaxed ${
-                        section.callout.type === "important"
-                          ? "border-amber/40 bg-amber/10 text-amber"
-                          : section.callout.type === "tip"
-                          ? "border-phosphor/40 bg-phosphor/10 text-phosphor"
-                          : "border-line bg-ink-2 text-steel"
-                      }`}
-                    >
-                      <strong className="uppercase font-mono text-[10px] tracking-wider block mb-1">
-                        {section.callout.type === "important"
-                          ? "⚠ Important Note"
-                          : section.callout.type === "tip"
-                          ? "💡 Architecture Pro-Tip"
-                          : "📌 Context"}
-                      </strong>
-                      <p className="font-sans text-paper/90">{section.callout.text}</p>
-                    </div>
-                  )}
-                </section>
-              ))}
+            {/* Author Conversation Box */}
+            <div className="mt-14 rounded-2xl border border-amber/30 bg-amber/5 p-6 sm:p-8 backdrop-blur-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={site.headshotSrc}
+                    alt={site.name}
+                    className="h-14 w-14 rounded-full border-2 border-amber object-cover shadow-sm"
+                  />
+                  <div>
+                    <h4 className="text-base font-bold text-paper">Curated by {site.name}</h4>
+                    <p className="text-xs text-steel font-mono">
+                      Software Engineer @ HashedIn by Deloitte · AWS Certified Developer
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <a
+                    href={site.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all"
+                  >
+                    💬 Discuss on WhatsApp
+                  </a>
+                  <a
+                    href={site.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-xl border border-line bg-ink-2 px-3.5 py-2 text-xs font-medium text-paper hover:text-amber transition-colors"
+                  >
+                    LinkedIn ↗
+                  </a>
+                </div>
+              </div>
+              <p className="mt-4 text-xs sm:text-sm text-paper/85 leading-relaxed">
+                Found this breakdown helpful? I regularly publish deep-dives on React 19, web performance, and enterprise frontend architecture. If you&apos;re preparing for engineering rounds or looking to collaborate, feel free to reach out!
+              </p>
             </div>
 
             {/* Tags Cloud */}

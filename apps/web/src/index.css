@@ -6,24 +6,24 @@
 
 :root {
   color-scheme: dark;
-  --bg: #09090b;
-  --bg-subtle: #121215;
-  --fg: #f4f4f5;
-  --muted: #a1a1aa;
+  --bg: #07080a;
+  --bg-subtle: #111318;
+  --fg: #f8fafc;
+  --muted: #94a3b8;
   --accent: #f08a72;
   --accent-dim: #c85a42;
   --live: #34d399;
-  --line: rgba(255, 255, 255, 0.12);
+  --line: rgba(255, 255, 255, 0.16);
 
-  --color-ink: 9 9 11;
-  --color-ink-2: 18 18 21;
-  --color-ink-3: 27 27 31;
-  --color-line: 39 39 42;
+  --color-ink: 7 8 10;
+  --color-ink-2: 17 19 24;
+  --color-ink-3: 25 28 36;
+  --color-line: 63 63 70;
   --color-amber: 240 138 114;
   --color-amber-dim: 200 90 66;
   --color-phosphor: 52 211 153;
-  --color-paper: 244 244 245;
-  --color-steel: 161 161 170;
+  --color-paper: 248 250 252;
+  --color-steel: 218 224 233;
 }
 
 html.light {
@@ -31,21 +31,21 @@ html.light {
   --bg: #fafafa;
   --bg-subtle: #f4f4f5;
   --fg: #09090b;
-  --muted: #71717a;
-  --accent: #d95338;
-  --accent-dim: #b33922;
-  --live: #10b981;
-  --line: rgba(0, 0, 0, 0.08);
+  --muted: #64748b;
+  --accent: #c2410c;
+  --accent-dim: #9a3412;
+  --live: #059669;
+  --line: rgba(0, 0, 0, 0.12);
 
   --color-ink: 250 250 250;
   --color-ink-2: 255 255 255;
-  --color-ink-3: 244 244 245;
-  --color-line: 228 228 231;
-  --color-amber: 217 83 56;
-  --color-amber-dim: 179 57 34;
-  --color-phosphor: 16 185 129;
-  --color-paper: 9 9 11;
-  --color-steel: 113 113 122;
+  --color-ink-3: 241 245 249;
+  --color-line: 203 213 225;
+  --color-amber: 194 65 12;
+  --color-amber-dim: 154 52 18;
+  --color-phosphor: 5 150 105;
+  --color-paper: 15 23 42;
+  --color-steel: 51 65 85;
 }
 
 html {
@@ -65,7 +65,7 @@ body {
   color: var(--fg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
 }
 
@@ -80,6 +80,27 @@ body {
   .grid-bg {
     background-size: 32px 32px;
   }
+}
+
+/* Ambient glow lighting - multi-point orbital radiance mesh */
+.ambient-glow-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    radial-gradient(ellipse 650px 480px at 15% 15%, rgba(240, 138, 114, 0.14) 0%, transparent 70%),
+    radial-gradient(ellipse 550px 420px at 85% 25%, rgba(52, 211, 153, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 900px 650px at 50% -10%, rgba(240, 138, 114, 0.09) 0%, transparent 80%);
+}
+
+.glass-chamfer-card {
+  background: linear-gradient(180deg, rgba(20, 23, 33, 0.72) 0%, rgba(13, 15, 22, 0.75) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 20px 48px -12px rgba(0, 0, 0, 0.55);
 }
 
 /* Ambient glow lighting - responsive ellipse anchored to viewport */

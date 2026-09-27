@@ -1,0 +1,926 @@
+[
+  {
+    "num": 13,
+    "question": "How do closures interact with asynchronous code?",
+    "topic": "Closures",
+    "section": "Closures & Scope",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 15,
+    "question": "How do closures work with event listeners?",
+    "topic": "Closures",
+    "section": "Closures & Scope",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 20,
+    "question": "What is the difference between var, let, and const in terms of hoisting?",
+    "topic": "Hoisting",
+    "section": "Hoisting & Execution Context",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 21,
+    "question": "How does hoisting affect function declarations vs expressions?",
+    "topic": "Hoisting",
+    "section": "Hoisting & Execution Context",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 22,
+    "question": "What happens if you access a variable before declaration?",
+    "topic": "Hoisting",
+    "section": "Hoisting & Execution Context",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 28,
+    "question": "How does hoisting behave inside try/catch blocks?",
+    "topic": "Hoisting",
+    "section": "Hoisting & Execution Context",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 29,
+    "question": "What is the output of this hoisting-based snippet?",
+    "topic": "Hoisting",
+    "section": "Hoisting & Execution Context",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 33,
+    "question": "What happens if you forget to use await inside an async function?",
+    "topic": "Async",
+    "section": "Async/Await & Promises",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 36,
+    "question": "How do microtasks and macrotasks differ?",
+    "topic": "Event Loop",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 37,
+    "question": "What is the output of this chained promise snippet?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 38,
+    "question": "How do you implement a retry mechanism using promises?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 40,
+    "question": "How do you cancel a promise in JavaScript?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 42,
+    "question": "How do you convert a callback-based function to a promise?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 43,
+    "question": "What is the role of the finally block in promises?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 44,
+    "question": "How do you handle multiple async operations in parallel?",
+    "topic": "Async",
+    "section": "Async/Await & Promises",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 45,
+    "question": "How does the browser queue async tasks?",
+    "topic": "Event Loop",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 46,
+    "question": "What is the difference between setTimeout and setImmediate?",
+    "topic": "Event Loop",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 47,
+    "question": "How do you debug async code effectively?",
+    "topic": "Async",
+    "section": "Async/Await & Promises",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 48,
+    "question": "What is the output of this async function with nested awaits?",
+    "topic": "Async",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 49,
+    "question": "How do you implement a timeout wrapper for a promise?",
+    "topic": "Promises",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 50,
+    "question": "How do you handle race conditions in async code?",
+    "topic": "Async",
+    "section": "Async/Await & Promises",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 51,
+    "question": "How do you add an event listener to multiple elements?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 54,
+    "question": "What is the difference between innerHTML and textContent?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 56,
+    "question": "What is the difference between capturing and bubbling phases?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 57,
+    "question": "How do you manipulate the DOM without using jQuery?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 58,
+    "question": "How do you create and append elements dynamically?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 59,
+    "question": "What is the role of event.target vs event.currentTarget?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 60,
+    "question": "How do you implement a custom dropdown using vanilla JS?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 61,
+    "question": "How do you detect clicks outside an element?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 62,
+    "question": "How do you implement infinite scrolling?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 63,
+    "question": "What is the difference between setAttribute and direct property assignment?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 64,
+    "question": "How do you clone a DOM node?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 65,
+    "question": "How do you prevent default behavior in event handling?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 66,
+    "question": "How do you implement drag-and-drop functionality?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 67,
+    "question": "What is the difference between DOMContentLoaded and load events?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 68,
+    "question": "How do you handle keyboard events in JavaScript?",
+    "topic": "Events",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 69,
+    "question": "How do you implement a modal popup using vanilla JS?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 70,
+    "question": "How do you optimize DOM manipulation for performance?",
+    "topic": "DOM",
+    "section": "DOM Manipulation & Events",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 73,
+    "question": "What are template literals and how are they useful?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 75,
+    "question": "How do default parameters work in ES6?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 76,
+    "question": "What are generators and how do they work?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 77,
+    "question": "What is the difference between for...in and for...of?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 79,
+    "question": "What are symbols in JavaScript and where are they used?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 80,
+    "question": "How do you use optional chaining and nullish coalescing?",
+    "topic": "ES2020",
+    "section": "ES6+ Features",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 81,
+    "question": "What is the difference between shallow and deep copy using spread?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 82,
+    "question": "How do you polyfill ES6 features for older browsers?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 84,
+    "question": "How do you use rest parameters in function definitions?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 85,
+    "question": "What is the difference between Object.assign and spread operator?",
+    "topic": "ES6",
+    "section": "ES6+ Features",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 87,
+    "question": "How does Object.create() work?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 90,
+    "question": "What are mixins and how are they used in JavaScript?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 93,
+    "question": "How do you implement multiple inheritance in JavaScript?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 95,
+    "question": "How do you use getters and setters in JavaScript?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 97,
+    "question": "How do you check if an object inherits from another?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 98,
+    "question": "How do you implement encapsulation in JavaScript?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 99,
+    "question": "What is the difference between static and instance methods?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 100,
+    "question": "How do you simulate interfaces in JavaScript?",
+    "topic": "OOP",
+    "section": "Object-Oriented JavaScript",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 103,
+    "question": "What is the difference between map, filter, and reduce?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 104,
+    "question": "How do you implement a custom reduce function?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 105,
+    "question": "What is function composition and how is it used?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 106,
+    "question": "What is the role of higher-order functions in JavaScript?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 107,
+    "question": "How do you implement a pipeline of functions?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 108,
+    "question": "What is referential transparency and why does it matter?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 109,
+    "question": "How do you avoid side effects in JavaScript functions?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 110,
+    "question": "What is the difference between declarative and imperative code?",
+    "topic": "Functional",
+    "section": "Functional Programming",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 112,
+    "question": "What is type coercion in JavaScript?",
+    "topic": "Types",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 113,
+    "question": "What is the output of 4 + 1 + \"9\" and why?",
+    "topic": "Coercion",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 114,
+    "question": "How do you check for NaN in JavaScript?",
+    "topic": "Types",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 115,
+    "question": "What is the difference between null, undefined, and undeclared?",
+    "topic": "Types",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 116,
+    "question": "How do you safely compare two objects for equality?",
+    "topic": "Equality",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 117,
+    "question": "What is the output of true + false and why?",
+    "topic": "Coercion",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 118,
+    "question": "How do you avoid unexpected type coercion in comparisons?",
+    "topic": "Equality",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 119,
+    "question": "What is the result of [] == ![] and why?",
+    "topic": "Coercion",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 122,
+    "question": "How do you use Object.is() for equality checks?",
+    "topic": "Equality",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 123,
+    "question": "What is the output of \"5\" - 2 and \"5\" + 2?",
+    "topic": "Coercion",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 124,
+    "question": "How do you handle falsy values in JavaScript?",
+    "topic": "Types",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 125,
+    "question": "What are truthy and falsy values? List examples.",
+    "topic": "Types",
+    "section": "Type Coercion & Equality",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 126,
+    "question": "How do you handle exceptions in JavaScript?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 127,
+    "question": "What is the difference between throw and return?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 128,
+    "question": "How do you use try/catch/finally effectively?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 129,
+    "question": "How do you debug JavaScript code in the browser?",
+    "topic": "Debugging",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 130,
+    "question": "What are common runtime errors in JavaScript?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 131,
+    "question": "How do you handle async errors in promises?",
+    "topic": "Async",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 132,
+    "question": "What is the role of console.trace()?",
+    "topic": "Debugging",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 133,
+    "question": "How do you use breakpoints in DevTools?",
+    "topic": "Debugging",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 134,
+    "question": "How do you log structured data for debugging?",
+    "topic": "Debugging",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 135,
+    "question": "What is the difference between syntax and runtime errors?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 137,
+    "question": "What is the output of a rejected promise without a catch?",
+    "topic": "Async",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 138,
+    "question": "How do you use window.onerror for global error handling?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 139,
+    "question": "What is the role of stack traces in debugging?",
+    "topic": "Debugging",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 140,
+    "question": "How do you handle uncaught exceptions in production?",
+    "topic": "Errors",
+    "section": "Error Handling & Debugging",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 143,
+    "question": "What is the output of {} + []?",
+    "topic": "Coercion",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 144,
+    "question": "What is the output of typeof typeof 1?",
+    "topic": "Types",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 145,
+    "question": "What is the output of null == undefined?",
+    "topic": "Equality",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 146,
+    "question": "What is the output of true == \"1\"?",
+    "topic": "Coercion",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 147,
+    "question": "What is the output of !!\"false\"?",
+    "topic": "Coercion",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 149,
+    "question": "What is the output of typeof []?",
+    "topic": "Types",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 151,
+    "question": "How do you implement a deep clone utility?",
+    "topic": "Objects",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 152,
+    "question": "How do you flatten a nested array?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 153,
+    "question": "What is the difference between .map() and .forEach()?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 154,
+    "question": "How do you remove duplicates from an array?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 155,
+    "question": "How do you sort an array of objects by a key?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 156,
+    "question": "How do you reverse an array without mutating it?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 157,
+    "question": "How do you chunk an array into smaller arrays?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 158,
+    "question": "How do you implement a custom filter function?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 159,
+    "question": "How do you find the intersection of two arrays?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 160,
+    "question": "How do you rotate an array by N positions?",
+    "topic": "Arrays",
+    "section": "Tricky Output & Real-World Scenarios",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 161,
+    "question": "How do you optimize JavaScript for performance?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 162,
+    "question": "What is lazy loading and how is it implemented?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 163,
+    "question": "How do you reduce DOM reflows and repaints?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 164,
+    "question": "What is tree shaking in JavaScript bundlers?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 165,
+    "question": "How do you measure script execution time?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 166,
+    "question": "What is code splitting and why is it useful?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 167,
+    "question": "How do you optimize loops and iterations?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 168,
+    "question": "How do you cache data in the browser?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 169,
+    "question": "What is the role of service workers in performance?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 170,
+    "question": "How do you reduce bundle size in a React/JS app?",
+    "topic": "Performance",
+    "section": "Performance Optimization",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 171,
+    "question": "What is XSS and how do you prevent it in JavaScript?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 172,
+    "question": "How do you sanitize user input in JavaScript?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 173,
+    "question": "What is CSP and how does it protect your app?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 174,
+    "question": "How do you prevent CSRF in frontend apps?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 175,
+    "question": "What are secure coding practices in JavaScript?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 176,
+    "question": "How do you handle sensitive data in localStorage?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 177,
+    "question": "What is the role of HTTPS in frontend security?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 178,
+    "question": "How do you prevent clickjacking in JS apps?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 179,
+    "question": "What is the difference between encoding and escaping?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 180,
+    "question": "How do you audit JavaScript code for vulnerabilities?",
+    "topic": "Security",
+    "section": "Security & Best Practices",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 181,
+    "question": "How do you use the Fetch API in JavaScript?",
+    "topic": "Browser API",
+    "section": "Browser APIs & Tooling",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 182,
+    "question": "What is the difference between Fetch and XMLHttpRequest?",
+    "topic": "Browser API",
+    "section": "Browser APIs & Tooling",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 183,
+    "question": "How do you use localStorage and sessionStorage?",
+    "topic": "Browser API",
+    "section": "Browser APIs & Tooling",
+    "difficulty": "Beginner"
+  },
+  {
+    "num": 184,
+    "question": "What is the role of Web Workers in JavaScript?",
+    "topic": "Browser API",
+    "section": "Browser APIs & Tooling",
+    "difficulty": "Advanced"
+  },
+  {
+    "num": 185,
+    "question": "How do you use the History API for routing?",
+    "topic": "Browser API",
+    "section": "Browser APIs & Tooling",
+    "difficulty": "Intermediate"
+  },
+  {
+    "num": 190,
+    "question": "Build a lightweight clone of setInterval using setTimeout.",
+    "topic": "Timing",
+    "section": "Real-World Coding Challenges",
+    "difficulty": "Advanced"
+  }
+]

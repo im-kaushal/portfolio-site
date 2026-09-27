@@ -18,6 +18,12 @@ interface StudyMetrics {
   secondary: { label: string; value: string };
 }
 
+interface StudyPSI {
+  problem: string;
+  solution: string;
+  impact: string;
+}
+
 const CASE_METRICS: Record<string, StudyMetrics> = {
   marriott: {
     primary: { label: "LCP Optimization", value: "−35%" },
@@ -30,6 +36,24 @@ const CASE_METRICS: Record<string, StudyMetrics> = {
   colina: {
     primary: { label: "Critical Defects Fixed", value: "180+" },
     secondary: { label: "Production Releases", value: "3 Apps" },
+  },
+};
+
+const CASE_PSI: Record<string, StudyPSI> = {
+  marriott: {
+    problem: "Coordinator desk suffered from 3.8s LCP and sluggish table rendering on high-volume hotel incident feeds.",
+    solution: "Re-architected in React.js using TanStack Query caching, virtualized data tables, and direct ServiceNow REST API integration.",
+    impact: "−35% LCP (3.2s → 2.1s), −28% bundle size, 100% incident operations handled without leaving workspace.",
+  },
+  citi: {
+    problem: "Trade settlement screens with 10,000+ records took 4.1s to load; manual QA database mapping checks took 3+ hours per release.",
+    solution: "Engineered Angular trading screens with Web Worker sorting, multi-row Excel batch ingestion, and built an automated Java + Angular QA mapping tool.",
+    impact: "4.1s → 2.6s page load, 90%+ test coverage, −70% manual QA effort (Rising Star Award).",
+  },
+  colina: {
+    problem: "Field insurance agents in low-connectivity zones faced failed policy submissions and screen layout inconsistencies across devices.",
+    solution: "Architected offline-first React Native architecture with Realm DB local persistence, background synchronization, and responsive device layouts.",
+    impact: "180+ critical defects resolved, 3 production mobile apps published to Google Play & App Store, 100% offline data integrity.",
   },
 };
 
@@ -51,7 +75,7 @@ export function Work() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-              Enterprise Architecture
+              Enterprise Architecture · Problem → Solution → Impact
             </span>
             <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
               Featured Case Studies
@@ -71,7 +95,7 @@ export function Work() {
         </div>
 
         <p className="mt-4 text-sm sm:text-base text-steel leading-relaxed max-w-3xl">
-          High-scale frontend systems delivered for global enterprises—featuring real-time settlements, coordinator workflows, Core Web Vitals optimization, and design system governance.
+          High-scale frontend and mobile systems delivered for global enterprises—featuring real-time settlements, coordinator workflows, Core Web Vitals optimization, and design system governance.
         </p>
       </div>
 
@@ -116,6 +140,7 @@ export function Work() {
               primary: { label: "Performance", value: "Optimized" },
               secondary: { label: "Coverage", value: "90%+" },
             };
+            const psi = CASE_PSI[study.slug];
 
             return (
               <motion.div
@@ -197,20 +222,41 @@ export function Work() {
                       </div>
                     </div>
 
-                    {/* Blurb */}
-                    <p className="mt-4 text-xs sm:text-sm text-steel leading-relaxed">
-                      {study.blurb}
-                    </p>
+                    {/* Problem - Solution - Impact Structured Section */}
+                    {psi && (
+                      <div className="mt-5 space-y-2 rounded-xl border border-line/50 bg-ink-3/40 p-3.5 text-xs">
+                        <div>
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-400">
+                            Problem
+                          </span>
+                          <p className="mt-0.5 text-steel leading-relaxed">{psi.problem}</p>
+                        </div>
+                        <div className="pt-2 border-t border-line/40">
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber">
+                            Solution
+                          </span>
+                          <p className="mt-0.5 text-steel leading-relaxed">{psi.solution}</p>
+                        </div>
+                        <div className="pt-2 border-t border-line/40">
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-phosphor">
+                            Impact
+                          </span>
+                          <p className="mt-0.5 text-paper font-medium font-mono leading-relaxed">{psi.impact}</p>
+                        </div>
+                      </div>
+                    )}
 
-                    {/* Key Outcome Highlight */}
-                    <div className="mt-4 rounded-xl border border-line/40 bg-ink/40 p-3">
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-amber font-semibold block">
-                        Core Outcome
-                      </span>
-                      <p className="text-xs font-mono text-paper font-medium mt-1">
-                        {study.outcomes[0]}
-                      </p>
-                    </div>
+                    {/* Interactive Simulator Hook for Marriott */}
+                    {isFeatured && (
+                      <div className="mt-4">
+                        <a
+                          href="#demo"
+                          className="inline-flex items-center gap-2 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-mono font-semibold text-amber hover:bg-amber hover:text-white transition-all w-full justify-center shadow-sm"
+                        >
+                          <span>⚡ Try Live Desk Simulator ↓</span>
+                        </a>
+                      </div>
+                    )}
                   </div>
 
                   {/* Actions */}
