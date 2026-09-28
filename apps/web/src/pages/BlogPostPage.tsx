@@ -12,6 +12,12 @@ import {
   type HiringAgency,
 } from "../content/hiringAgenciesData";
 import { playChime } from "../lib/audio";
+import {
+  examDomains,
+  examTrapRules,
+  examPracticeScenarios,
+  examCheatSheetData,
+} from "../content/ccdvfExamData";
 
 export function BlogPostPage() {
   const { slug } = useParams();
@@ -39,6 +45,15 @@ export function BlogPostPage() {
   const [agencyHub, setAgencyHub] = useState<string>("All");
   const [copiedAgencyEmailId, setCopiedAgencyEmailId] = useState<string | null>(null);
   const [copiedAgencyOutreachId, setCopiedAgencyOutreachId] = useState<string | null>(null);
+
+  // CCDV-F Exam Guide interactive state
+  const [examScenarioSearch, setExamScenarioSearch] = useState<string>("");
+  const [examDomainFilter, setExamDomainFilter] = useState<string>("All");
+  const [userSelectedAnswers, setUserSelectedAnswers] = useState<Record<string, "A" | "B" | "C" | "D">>({});
+  const [revealedRationales, setRevealedRationales] = useState<Record<string, boolean>>({});
+  const [allRationalesExpanded, setAllRationalesExpanded] = useState<boolean>(false);
+  const [trapSearch, setTrapSearch] = useState<string>("");
+  const [copiedCheatSheet, setCopiedCheatSheet] = useState<boolean>(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -223,6 +238,74 @@ export function BlogPostPage() {
       setCopiedAgencyEmailId(agencyId);
       setTimeout(() => setCopiedAgencyEmailId(null), 2500);
     }
+  };
+
+    // Filtered CCDV-F Scenarios
+  const filteredExamScenarios = useMemo(() => {
+    return examPracticeScenarios.filter((sc) => {
+      if (examDomainFilter !== "All" && sc.domain !== examDomainFilter) {
+        return false;
+      }
+      if (!examScenarioSearch.trim()) return true;
+      const q = examScenarioSearch.toLowerCase();
+      return (
+        sc.title.toLowerCase().includes(q) ||
+        sc.context.toLowerCase().includes(q) ||
+        sc.domain.toLowerCase().includes(q) ||
+        sc.rationale.toLowerCase().includes(q) ||
+        sc.options.some((o) => o.text.toLowerCase().includes(q))
+      );
+    });
+  }, [examDomainFilter, examScenarioSearch]);
+
+  // Filtered Trap Rules
+  const filteredTrapRules = useMemo(() => {
+    if (!trapSearch.trim()) return examTrapRules;
+    const q = trapSearch.toLowerCase();
+    return examTrapRules.filter(
+      (t) =>
+        t.suggestedAction.toLowerCase().includes(q) ||
+        t.whyItFails.toLowerCase().includes(q) ||
+        t.correctEngineeringApproach.toLowerCase().includes(q)
+    );
+  }, [trapSearch]);
+
+  // Calculate user score for attempted scenarios
+  const examScore = useMemo(() => {
+    let attempted = 0;
+    let correct = 0;
+    examPracticeScenarios.forEach((sc) => {
+      const selected = userSelectedAnswers[sc.id];
+      if (selected) {
+        attempted++;
+        if (selected === sc.correctAnswer) {
+          correct++;
+        }
+      }
+    });
+    return { attempted, correct, total: examPracticeScenarios.length };
+  }, [userSelectedAnswers]);
+
+  const handleSelectScenarioAnswer = (scenarioId: string, answer: "A" | "B" | "C" | "D") => {
+    setUserSelectedAnswers((prev) => ({ ...prev, [scenarioId]: answer }));
+    // Auto-reveal rationale when answered
+    setRevealedRationales((prev) => ({ ...prev, [scenarioId]: true }));
+    playChime();
+  };
+
+  const handleCopyCheatSheet = async () => {
+    const text = `ANTHROPIC CLAUDE CERTIFIED DEVELOPER - FOUNDATIONS (CCDV-F) CHEAT SHEET\n` +
+      `${examCheatSheetData.examSpecs}\n` +
+      `${examCheatSheetData.topDomains}\n\n` +
+      examCheatSheetData.sections
+        .map(
+          (sec) => `=== ${sec.domain} ===\n${sec.points.map((p) => `• ${p}`).join("\n")}`
+        )
+        .join("\n\n");
+    await copyToClipboard(text);
+    setCopiedCheatSheet(true);
+    playChime();
+    setTimeout(() => setCopiedCheatSheet(false), 2500);
   };
 
   const handleCopyAgencyOutreach = async (agency: HiringAgency) => {
@@ -1019,6 +1102,597 @@ export function BlogPostPage() {
                     No agencies match your active filters. Try clearing the search query or selecting &quot;All Categories&quot;.
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Interactive CCDV-F Exam Suite */}
+            {post.slug === "anthropic-claude-certified-developer-foundations-ccdv-f-guide" && (
+              <div className="mt-14 space-y-16" id="ccdvf-suite">
+                {/* 1. Command Center Hero Banner */}
+                <div className="rounded-3xl border border-amber/40 bg-gradient-to-br from-amber/10 via-ink-2 to-ink-3 p-6 sm:p-8 shadow-card relative overflow-hidden">
+                  <div className="absolute -right-8 -top-8 w-40 h-40 bg-amber/10 rounded-full blur-3xl pointer-events-none" />
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                    <div className="space-y-2">
+                      <div className="inline-flex items-center gap-2 rounded-full bg-amber/20 border border-amber/30 px-3 py-1 text-xs font-mono text-amber">
+                        <span>⚡ CERTIFICATION ARCHITECTURE SUITE</span>
+                        <span>•</span>
+                        <span>PEARSON VUE CDV-F</span>
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-extrabold text-paper">
+                        CCDV-F Exam Engineering Command Center
+                      </h3>
+                      <p className="text-xs sm:text-sm text-steel max-w-2xl leading-relaxed">
+                        53 Questions · 120 Minutes (~2.2 min/q) · Passing Score: 720/1000 (~72%) · Zero Negative Marking. 
+                        Interactive blueprints, universal trap elimination heuristics, and 13 scenario practice questions.
+                      </p>
+                    </div>
+
+                    {/* Quick Score Counter */}
+                    <div className="shrink-0 rounded-2xl border border-line/80 bg-ink-1/90 p-4 min-w-[200px] text-center shadow-subtle">
+                      <div className="text-[10px] font-mono text-steel uppercase tracking-wider">
+                        Practice Quiz Progress
+                      </div>
+                      <div className="mt-1 text-2xl font-bold font-mono text-paper">
+                        <span className="text-amber">{examScore.correct}</span>
+                        <span className="text-steel/70"> / {examScore.attempted}</span>
+                        <span className="text-xs text-steel block font-sans font-normal mt-0.5">
+                          {examScore.attempted > 0
+                            ? `${Math.round((examScore.correct / examScore.attempted) * 100)}% Accuracy`
+                            : "Click an option below"}
+                        </span>
+                      </div>
+                      <div className="mt-2 text-[10px] font-mono text-phosphor">
+                        Passing Benchmark: 72%
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Navigation Pills */}
+                  <div className="mt-6 pt-5 border-t border-line/50 flex flex-wrap items-center gap-2 text-xs font-mono">
+                    <a
+                      href="#exam-blueprint"
+                      className="rounded-xl border border-line bg-ink-3/80 px-3 py-1.5 text-paper hover:border-amber hover:text-amber transition-colors"
+                    >
+                      📊 1. Blueprint & 50% Rule
+                    </a>
+                    <a
+                      href="#trap-detector"
+                      className="rounded-xl border border-line bg-ink-3/80 px-3 py-1.5 text-paper hover:border-amber hover:text-amber transition-colors"
+                    >
+                      🚨 2. Trap Detector (7 Rules)
+                    </a>
+                    <a
+                      href="#scenario-bank"
+                      className="rounded-xl border border-line bg-ink-3/80 px-3 py-1.5 text-paper hover:border-amber hover:text-amber transition-colors"
+                    >
+                      🧩 3. 13 Practice Scenarios ({filteredExamScenarios.length})
+                    </a>
+                    <a
+                      href="#cheat-sheet"
+                      className="rounded-xl border border-line bg-ink-3/80 px-3 py-1.5 text-paper hover:border-amber hover:text-amber transition-colors"
+                    >
+                      📋 4. 15-Min Exam Day Cheat Sheet
+                    </a>
+                  </div>
+                </div>
+
+                {/* 2. Interactive Exam Blueprint Bento */}
+                <div id="exam-blueprint" className="space-y-6 scroll-mt-24">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-paper flex items-center gap-2.5">
+                        <span>📊 Exam Blueprint & Weighting Architecture</span>
+                      </h3>
+                      <p className="text-xs sm:text-sm text-steel mt-1">
+                        Domain weighting determines passing efficiency. Click any domain to filter the scenario practice bank below.
+                      </p>
+                    </div>
+
+                    <div className="rounded-xl border border-amber/30 bg-amber/10 px-3 py-1.5 text-xs font-mono text-amber shrink-0">
+                      💡 The 50% Rule: Domains 1 & 2 = 49.9%
+                    </div>
+                  </div>
+
+                  {/* 50% Rule Callout Banner */}
+                  <div className="rounded-2xl border border-amber/30 bg-amber/5 p-4 sm:p-5 text-xs sm:text-sm leading-relaxed text-paper">
+                    <div className="font-bold text-amber flex items-center gap-2 mb-1.5 font-mono uppercase tracking-wider text-xs">
+                      <span>🎯 Strategic Score Allocation</span>
+                    </div>
+                    <p className="text-paper/90">
+                      <strong>Applications & Integration (33.1%)</strong> and <strong>Model Selection & Optimization (16.8%)</strong> account for literally 50% of your total score.
+                      Adding <strong>Agents & Workflows (14.7%)</strong> brings total coverage to <strong>64.6%</strong>. If you master stateless message arrays, stable-prefix prompt caching, HTTP 429/529 backoff, context ceiling formulas, and bounded agent loops, passing is mathematically assured.
+                    </p>
+                  </div>
+
+                  {/* Domains Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {examDomains.map((domain, dIdx) => (
+                      <div
+                        key={domain.id}
+                        className={`rounded-2xl border p-4 sm:p-5 transition-all bg-ink-2/80 hover:bg-ink-3/90 ${
+                          examDomainFilter === domain.name
+                            ? "border-amber shadow-glow ring-1 ring-amber/50"
+                            : "border-line/70 hover:border-amber/40"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div>
+                            <span className="text-[11px] font-mono text-steel">
+                              Domain {dIdx + 1}
+                            </span>
+                            <h4 className="text-base font-bold text-paper mt-0.5">
+                              {domain.name}
+                            </h4>
+                          </div>
+
+                          <div className="text-right shrink-0">
+                            <span className="inline-block rounded-lg bg-amber/15 border border-amber/30 px-2.5 py-1 text-xs font-mono font-bold text-amber">
+                              {domain.weightingLabel}
+                            </span>
+                            <div className="text-[10px] font-mono text-steel mt-0.5">
+                              {domain.approxQuestions}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="mt-3 h-1.5 w-full rounded-full bg-ink-1 overflow-hidden">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-amber to-amber-dim"
+                            style={{ width: `${(domain.weighting / 33.1) * 100}%` }}
+                          />
+                        </div>
+
+                        <p className="mt-3 text-xs text-steel leading-relaxed">
+                          {domain.description}
+                        </p>
+
+                        {/* Core Concepts */}
+                        <div className="mt-3.5 pt-3 border-t border-line/50 space-y-1.5">
+                          <div className="text-[10px] font-mono uppercase tracking-wider text-steel font-semibold">
+                            Core Tested Competencies:
+                          </div>
+                          <ul className="space-y-1 text-[11px] text-paper/85">
+                            {domain.coreConcepts.slice(0, 3).map((concept, cIdx) => (
+                              <li key={cIdx} className="flex items-start gap-1.5">
+                                <span className="text-amber shrink-0">•</span>
+                                <span className="leading-snug">{concept}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="mt-4 pt-3 border-t border-line/40 flex items-center justify-between">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setExamDomainFilter(
+                                examDomainFilter === domain.name ? "All" : domain.name
+                              );
+                              const el = document.getElementById("scenario-bank");
+                              if (el) el.scrollIntoView({ behavior: "smooth" });
+                            }}
+                            className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
+                              examDomainFilter === domain.name
+                                ? "bg-amber text-white font-semibold"
+                                : "bg-ink border border-line text-steel hover:text-amber hover:border-amber"
+                            }`}
+                          >
+                            {examDomainFilter === domain.name
+                              ? "✓ Filtering Scenarios"
+                              : "Filter Scenarios →"}
+                          </button>
+
+                          <span className="text-[10px] font-mono text-steel">
+                            {examPracticeScenarios.filter((s) => s.domainNumber === dIdx + 1).length} Scenarios Available
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 3. The Candidate Trap Detector Matrix */}
+                <div id="trap-detector" className="space-y-6 scroll-mt-24">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-paper flex items-center gap-2.5">
+                        <span>🚨 The Candidate Trap Detector: 7 Universal Elimination Rules</span>
+                      </h3>
+                      <p className="text-xs sm:text-sm text-steel mt-1">
+                        Instantly eliminate 2 to 3 distractors on Pearson VUE by spotting these non-production anti-patterns.
+                      </p>
+                    </div>
+
+                    <div className="relative min-w-[220px]">
+                      <input
+                        type="text"
+                        value={trapSearch}
+                        onChange={(e) => setTrapSearch(e.target.value)}
+                        placeholder="Search elimination traps..."
+                        className="w-full rounded-xl border border-line bg-ink-1 px-3 py-1.5 text-xs text-paper placeholder-steel/60 focus:border-amber focus:outline-none"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-4">
+                    {filteredTrapRules.map((trap, tIdx) => (
+                      <div
+                        key={tIdx}
+                        className="rounded-2xl border border-line/70 bg-ink-2/80 p-5 shadow-sm hover:border-line transition-all space-y-3"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="rounded-lg bg-rose-500/15 border border-rose-500/30 text-rose-400 px-2 py-0.5 text-[10px] font-mono font-bold shrink-0">
+                            ❌ Distractor Option
+                          </span>
+                          <span className="font-semibold text-sm sm:text-base text-paper leading-snug">
+                            &ldquo;{trap.suggestedAction}&rdquo;
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1 text-xs">
+                          <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-3.5 text-rose-300">
+                            <strong className="block font-mono uppercase text-[10px] tracking-wider mb-1 text-rose-400">
+                              ⚠️ Why It Fails (Eliminate Immediately!):
+                            </strong>
+                            <p className="text-steel/90 leading-relaxed font-sans">{trap.whyItFails}</p>
+                          </div>
+
+                          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3.5 text-emerald-300">
+                            <strong className="block font-mono uppercase text-[10px] tracking-wider mb-1 text-emerald-400">
+                              ✓ What Production Engineers Choose:
+                            </strong>
+                            <p className="text-paper/90 leading-relaxed font-sans">{trap.correctEngineeringApproach}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 4. Interactive 13-Scenario Practice Quiz Bank */}
+                <div id="scenario-bank" className="space-y-6 scroll-mt-24">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-paper flex items-center gap-2.5">
+                        <span>🧩 Interactive Scenario Practice Bank</span>
+                        <span className="rounded-full bg-amber/15 border border-amber/30 px-2.5 py-0.5 text-xs font-mono text-amber">
+                          {filteredExamScenarios.length} Cases
+                        </span>
+                      </h3>
+                      <p className="text-xs sm:text-sm text-steel mt-1">
+                        High-yield exam scenarios rephrased with full architectural contexts, options, and deep engineering rationales.
+                      </p>
+                    </div>
+
+                    {/* Master Controls */}
+                    <div className="flex items-center gap-2 self-start sm:self-auto">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const next = !allRationalesExpanded;
+                          setAllRationalesExpanded(next);
+                          const newExp: Record<string, boolean> = {};
+                          examPracticeScenarios.forEach((sc) => {
+                            newExp[sc.id] = next;
+                          });
+                          setRevealedRationales(newExp);
+                        }}
+                        className="rounded-xl border border-line bg-ink-3 px-3 py-1.5 text-xs font-mono text-steel hover:text-amber hover:border-amber transition-colors"
+                      >
+                        {allRationalesExpanded ? "⊟ Collapse Rationales" : "⊞ Expand Rationales"}
+                      </button>
+
+                      {examScore.attempted > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setUserSelectedAnswers({});
+                            setRevealedRationales({});
+                            setAllRationalesExpanded(false);
+                          }}
+                          className="rounded-xl border border-line bg-ink-3 px-3 py-1.5 text-xs font-mono text-steel hover:text-rose-400 transition-colors"
+                        >
+                          ↺ Reset
+                        </button>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Search and Domain Filters */}
+                  <div className="rounded-2xl border border-line/80 bg-ink-2/95 p-4 sm:p-5 shadow-card space-y-4">
+                    <div className="relative">
+                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-steel text-sm">
+                        🔍
+                      </span>
+                      <input
+                        type="text"
+                        value={examScenarioSearch}
+                        onChange={(e) => setExamScenarioSearch(e.target.value)}
+                        placeholder="Search scenarios by incident, domain, or architectural keyword..."
+                        className="w-full rounded-xl border border-line bg-ink-1 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-paper placeholder-steel/60 focus:border-amber focus:outline-none transition-colors"
+                      />
+                      {examScenarioSearch && (
+                        <button
+                          type="button"
+                          onClick={() => setExamScenarioSearch("")}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-steel hover:text-paper px-1.5 py-0.5 rounded bg-ink-3"
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Domain Filter Buttons */}
+                    <div className="space-y-1.5 pt-1">
+                      <div className="text-[11px] font-mono text-steel uppercase tracking-wider font-semibold">
+                        Filter by Exam Domain:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        <button
+                          type="button"
+                          onClick={() => setExamDomainFilter("All")}
+                          className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
+                            examDomainFilter === "All"
+                              ? "bg-amber text-white font-semibold shadow-sm"
+                              : "bg-ink-3 text-steel hover:text-paper"
+                          }`}
+                        >
+                          All Domains ({examPracticeScenarios.length})
+                        </button>
+                        {Array.from(new Set(examPracticeScenarios.map((s) => s.domain))).map((d) => {
+                          const count = examPracticeScenarios.filter((s) => s.domain === d).length;
+                          return (
+                            <button
+                              key={d}
+                              type="button"
+                              onClick={() => setExamDomainFilter(d)}
+                              className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
+                                examDomainFilter === d
+                                  ? "bg-amber text-white font-semibold shadow-sm"
+                                  : "bg-ink-3 text-steel hover:text-paper"
+                              }`}
+                            >
+                              {d} ({count})
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Scenarios List */}
+                  <div className="space-y-6">
+                    {filteredExamScenarios.map((sc) => {
+                      const selected = userSelectedAnswers[sc.id];
+                      const isRevealed = !!revealedRationales[sc.id];
+                      const isCorrect = selected === sc.correctAnswer;
+
+                      return (
+                        <div
+                          key={sc.id}
+                          className="rounded-2xl border border-line/80 bg-ink-2/90 p-5 sm:p-6 shadow-sm space-y-4 hover:border-amber/30 transition-all"
+                        >
+                          {/* Scenario Header */}
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-line/50 pb-3">
+                            <div className="flex items-center gap-2">
+                              <span className="rounded-lg bg-amber/15 border border-amber/30 px-2 py-0.5 text-xs font-mono font-bold text-amber">
+                                Scenario #{sc.number}
+                              </span>
+                              <h4 className="text-base sm:text-lg font-bold text-paper">
+                                {sc.title}
+                              </h4>
+                            </div>
+
+                            <div className="flex items-center gap-2 text-[10px] font-mono">
+                              <span className="rounded bg-ink px-2 py-0.5 border border-line text-steel">
+                                Domain {sc.domainNumber}: {sc.domain}
+                              </span>
+                              <span
+                                className={`rounded px-2 py-0.5 border font-semibold ${
+                                  sc.difficulty === "Core"
+                                    ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                                    : sc.difficulty === "Advanced"
+                                    ? "bg-amber/15 text-amber border-amber/30"
+                                    : "bg-purple-500/15 text-purple-400 border-purple-500/30"
+                                }`}
+                              >
+                                {sc.difficulty}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Context Box */}
+                          <div className="rounded-xl border border-line/60 bg-ink-1/90 p-4 text-xs sm:text-sm text-paper/90 leading-relaxed font-sans">
+                            <strong className="block text-[11px] font-mono text-steel uppercase tracking-wider mb-1">
+                              Incident / System Context:
+                            </strong>
+                            <p>{sc.context}</p>
+                          </div>
+
+                          {/* Question Prompt */}
+                          <div className="font-semibold text-sm sm:text-base text-paper">
+                            {sc.question}
+                          </div>
+
+                          {/* Options Grid */}
+                          <div className="space-y-2.5 pt-1">
+                            {sc.options.map((opt) => {
+                              const isThisSelected = selected === opt.id;
+                              const isThisCorrect = opt.id === sc.correctAnswer;
+
+                              let cardStyle = "border-line/70 bg-ink-3/70 hover:border-amber/50 hover:bg-ink-3";
+                              let badgeStyle = "bg-ink border-line text-steel";
+
+                              if (selected) {
+                                if (isThisSelected && isThisCorrect) {
+                                  cardStyle = "border-emerald-500 bg-emerald-500/10 shadow-glow";
+                                  badgeStyle = "bg-emerald-500 text-white font-bold border-emerald-400";
+                                } else if (isThisSelected && !isThisCorrect) {
+                                  cardStyle = "border-rose-500/70 bg-rose-500/10";
+                                  badgeStyle = "bg-rose-500 text-white font-bold border-rose-400";
+                                } else if (isThisCorrect) {
+                                  cardStyle = "border-emerald-500/50 bg-emerald-500/5";
+                                  badgeStyle = "bg-emerald-500/20 text-emerald-400 border-emerald-500/30";
+                                } else {
+                                  cardStyle = "border-line/40 bg-ink-3/40 opacity-60";
+                                }
+                              }
+
+                              return (
+                                <button
+                                  key={opt.id}
+                                  type="button"
+                                  onClick={() => handleSelectScenarioAnswer(sc.id, opt.id)}
+                                  className={`w-full text-left rounded-xl border p-3.5 sm:p-4 text-xs sm:text-sm transition-all flex items-start gap-3 ${cardStyle}`}
+                                >
+                                  <span
+                                    className={`shrink-0 rounded-lg px-2 py-0.5 text-xs font-mono border ${badgeStyle}`}
+                                  >
+                                    {opt.id}
+                                  </span>
+                                  <div className="flex-1 leading-snug text-paper">
+                                    {opt.text}
+                                  </div>
+
+                                  {selected && isThisSelected && (
+                                    <span
+                                      className={`shrink-0 text-xs font-mono font-bold ${
+                                        isThisCorrect ? "text-emerald-400" : "text-rose-400"
+                                      }`}
+                                    >
+                                      {isThisCorrect ? "✓ Correct" : "✗ Selected"}
+                                    </span>
+                                  )}
+
+                                  {selected && !isThisSelected && isThisCorrect && (
+                                    <span className="shrink-0 text-xs font-mono font-bold text-emerald-400">
+                                      ✓ Correct Choice
+                                    </span>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
+
+                          {/* Rationale Toggle & Details Box */}
+                          <div className="pt-2">
+                            <div className="flex items-center justify-between">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setRevealedRationales((prev) => ({
+                                    ...prev,
+                                    [sc.id]: !prev[sc.id],
+                                  }))
+                                }
+                                className="text-xs font-mono text-amber hover:text-amber-dim font-semibold transition-colors flex items-center gap-1.5"
+                              >
+                                <span>{isRevealed ? "⊟ Hide Rationale" : "⊞ View Engineering Rationale"}</span>
+                              </button>
+
+                              {selected && (
+                                <span
+                                  className={`text-xs font-mono font-semibold ${
+                                    isCorrect ? "text-emerald-400" : "text-amber"
+                                  }`}
+                                >
+                                  {isCorrect
+                                    ? "✓ Nailed it on first try"
+                                    : `Correct Answer was Option ${sc.correctAnswer}`}
+                                </span>
+                              )}
+                            </div>
+
+                            {isRevealed && (
+                              <div className="mt-4 rounded-xl border border-line/80 bg-ink-1/95 p-4 sm:p-5 space-y-3.5 text-xs leading-relaxed animate-in fade-in duration-200">
+                                <div className="space-y-1">
+                                  <div className="font-bold text-emerald-400 flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-wider">
+                                    <span>🧠 Architectural Rationale:</span>
+                                  </div>
+                                  <p className="text-paper/90 font-sans text-xs sm:text-sm leading-relaxed">
+                                    {sc.rationale}
+                                  </p>
+                                </div>
+
+                                <div className="rounded-lg bg-amber/5 border border-amber/20 p-3 space-y-1">
+                                  <div className="font-bold text-amber flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider">
+                                    <span>💡 Interviewer Signal:</span>
+                                  </div>
+                                  <p className="text-steel font-sans leading-snug">
+                                    {sc.interviewerInsight}
+                                  </p>
+                                </div>
+
+                                <div className="rounded-lg bg-emerald-500/5 border border-emerald-500/20 p-3 flex items-start gap-2">
+                                  <span className="font-bold text-emerald-400 shrink-0 font-mono text-[10px] uppercase tracking-wider">
+                                    🎯 Takeaway:
+                                  </span>
+                                  <span className="text-paper leading-snug font-sans">
+                                    {sc.keyTakeaway}
+                                  </span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                    {filteredExamScenarios.length === 0 && (
+                      <div className="rounded-2xl border border-line/60 bg-ink-2/60 p-8 text-center text-steel font-mono text-sm">
+                        No scenarios match your active search filters. Try clearing your search keyword or resetting the domain filter.
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* 5. The Final 15-Minute Exam Day Cheat Sheet */}
+                <div id="cheat-sheet" className="space-y-6 scroll-mt-24">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-paper flex items-center gap-2.5">
+                        <span>📋 The Final 15-Minute Exam Day Cheat Sheet</span>
+                      </h3>
+                      <p className="text-xs sm:text-sm text-steel mt-1">
+                        Keep these bullet points fresh in working memory right before you launch your Pearson VUE proctored exam.
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={handleCopyCheatSheet}
+                      className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all shrink-0 font-mono"
+                    >
+                      <span>{copiedCheatSheet ? "✓ Cheat Sheet Copied!" : "📋 Copy Full Cheat Sheet"}</span>
+                    </button>
+                  </div>
+
+                  <div className="rounded-2xl border border-line/80 bg-ink-2/95 p-5 sm:p-6 shadow-xl space-y-6 font-mono text-xs">
+                    <div className="border-b border-line/60 pb-3 text-steel flex flex-wrap items-center justify-between gap-2">
+                      <span className="text-amber font-bold">{examCheatSheetData.examSpecs}</span>
+                      <span className="text-emerald-400">{examCheatSheetData.topDomains}</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {examCheatSheetData.sections.map((sec, sIdx) => (
+                        <div key={sIdx} className="space-y-2">
+                          <div className="font-bold text-paper border-b border-line/40 pb-1 text-xs">
+                            {sec.domain}
+                          </div>
+                          <ul className="space-y-1.5 text-steel/90 text-[11px] leading-relaxed">
+                            {sec.points.map((pt, pIdx) => (
+                              <li key={pIdx} className="flex items-start gap-1.5">
+                                <span className="text-amber shrink-0">•</span>
+                                <span>{pt}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
 

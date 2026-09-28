@@ -5,9 +5,9 @@ import { BorderBeam } from "../components/ui/BorderBeam";
 
 export function FeaturedBlogs() {
   const posts = [
-    blogPosts.find((p) => p.slug === "top-tech-staffing-recruitment-agencies-india") || blogPosts[0],
-    blogPosts.find((p) => p.slug === "a2z-javascript-interview-questions") || blogPosts[1],
-    blogPosts.find((p) => p.slug === "optimizing-lcp-core-web-vitals-enterprise-react") || blogPosts[2],
+    blogPosts.find((p) => p.slug === "anthropic-claude-certified-developer-foundations-ccdv-f-guide") || blogPosts[0],
+    blogPosts.find((p) => p.slug === "top-tech-staffing-recruitment-agencies-india") || blogPosts[1],
+    blogPosts.find((p) => p.slug === "a2z-javascript-interview-questions") || blogPosts[2],
   ];
 
   return (
@@ -27,7 +27,7 @@ export function FeaturedBlogs() {
             Featured Tech Articles & Deep Dives
           </h2>
           <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-            In-depth architectural breakdowns covering JavaScript runtime internals, Core Web Vitals optimization, low-latency financial grids, and offline-first mobile sync.
+            In-depth architectural breakdowns covering Anthropic Claude certification, JavaScript runtime internals, Core Web Vitals optimization, and recruiter outreach playbooks.
           </p>
         </div>
 
@@ -55,6 +55,11 @@ export function FeaturedBlogs() {
                     <span className="rounded bg-amber/10 border border-amber/25 px-2 py-0.5 text-amber text-[10px] font-medium">
                       {post.category}
                     </span>
+                    {post.slug === "anthropic-claude-certified-developer-foundations-ccdv-f-guide" && (
+                      <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-1.5 py-0.5 text-[9px] font-bold text-emerald-400">
+                        EXAM GUIDE
+                      </span>
+                    )}
                     {post.sourceUrl && (
                       <span className="rounded bg-amber/20 border border-amber/40 px-1.5 py-0.5 text-[9px] font-bold text-amber">
                         {post.sourceUrl.includes("notion")
