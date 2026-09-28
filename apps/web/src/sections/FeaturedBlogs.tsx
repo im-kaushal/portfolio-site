@@ -5,9 +5,9 @@ import { BorderBeam } from "../components/ui/BorderBeam";
 
 export function FeaturedBlogs() {
   const posts = [
-    blogPosts.find((p) => p.slug === "a2z-javascript-interview-questions") || blogPosts[0],
-    blogPosts.find((p) => p.slug === "optimizing-lcp-core-web-vitals-enterprise-react") || blogPosts[1],
-    blogPosts.find((p) => p.slug === "designing-virtualized-settlements-grid-citi-bank") || blogPosts[2],
+    blogPosts.find((p) => p.slug === "top-tech-staffing-recruitment-agencies-india") || blogPosts[0],
+    blogPosts.find((p) => p.slug === "a2z-javascript-interview-questions") || blogPosts[1],
+    blogPosts.find((p) => p.slug === "optimizing-lcp-core-web-vitals-enterprise-react") || blogPosts[2],
   ];
 
   return (
@@ -57,7 +57,11 @@ export function FeaturedBlogs() {
                     </span>
                     {post.sourceUrl && (
                       <span className="rounded bg-amber/20 border border-amber/40 px-1.5 py-0.5 text-[9px] font-bold text-amber">
-                        NOTION
+                        {post.sourceUrl.includes("notion")
+                          ? "NOTION"
+                          : post.sourceUrl.includes("google")
+                          ? "SHEET"
+                          : "SOURCE"}
                       </span>
                     )}
                   </div>

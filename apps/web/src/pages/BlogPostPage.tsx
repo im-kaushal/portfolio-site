@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { blogPosts } from "../content/blogs";
@@ -6,6 +6,12 @@ import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
 import { site } from "../content/site";
 import { getAnswerForQuestion } from "../content/javascriptInterviewDataset";
+import {
+  hiringAgenciesList,
+  agencyCategories,
+  type HiringAgency,
+} from "../content/hiringAgenciesData";
+import { playChime } from "../lib/audio";
 
 export function BlogPostPage() {
   const { slug } = useParams();
@@ -26,6 +32,13 @@ export function BlogPostPage() {
   const [copiedSnippetKey, setCopiedSnippetKey] = useState<string | null>(null);
   const [allExpanded, setAllExpanded] = useState<boolean>(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("All");
+
+  // Agency Directory state for hiring agencies article
+  const [agencySearch, setAgencySearch] = useState<string>("");
+  const [agencyCategory, setAgencyCategory] = useState<string>("All");
+  const [agencyHub, setAgencyHub] = useState<string>("All");
+  const [copiedAgencyEmailId, setCopiedAgencyEmailId] = useState<string | null>(null);
+  const [copiedAgencyOutreachId, setCopiedAgencyOutreachId] = useState<string | null>(null);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -55,6 +68,172 @@ export function BlogPostPage() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [post]);
+
+  // Dynamically update SEO Metadata & Schema.org JSON-LD Structured Data
+  useEffect(() => {
+    if (!post) return;
+
+    const originalTitle = document.title;
+    document.title = `${post.title} | Kaushal Kumar`;
+
+    // Meta Description
+    let metaDesc = document.querySelector('meta[name="description"]');
+    const originalDesc = metaDesc?.getAttribute("content") || "";
+    if (metaDesc) {
+      metaDesc.setAttribute("content", post.description);
+    } else {
+      metaDesc = document.createElement("meta");
+      metaDesc.setAttribute("name", "description");
+      metaDesc.setAttribute("content", post.description);
+      document.head.appendChild(metaDesc);
+    }
+
+    // Canonical Link
+    let canonical = document.querySelector('link[rel="canonical"]');
+    const originalCanonical = canonical?.getAttribute("href") || "";
+    const postCanonicalUrl = `https://kausal.in/blog/${post.slug}`;
+    if (canonical) {
+      canonical.setAttribute("href", postCanonicalUrl);
+    } else {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      canonical.setAttribute("href", postCanonicalUrl);
+      document.head.appendChild(canonical);
+    }
+
+    // OpenGraph & Twitter Tags
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute("content", post.title);
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute("content", post.description);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute("content", postCanonicalUrl);
+
+    // Schema.org JSON-LD Structured Data
+    const scriptId = "blog-post-json-ld";
+    let scriptEl = document.getElementById(scriptId) as HTMLScriptElement | null;
+    if (!scriptEl) {
+      scriptEl = document.createElement("script");
+      scriptEl.id = scriptId;
+      scriptEl.type = "application/ld+json";
+      document.head.appendChild(scriptEl);
+    }
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": `${postCanonicalUrl}#article`,
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://kausal.in/#website",
+            "name": "Kaushal Kumar Portfolio",
+            "url": "https://kausal.in/"
+          },
+          "headline": post.title,
+          "description": post.description,
+          "datePublished": "2026-09-20T00:00:00+05:30",
+          "dateModified": "2026-09-27T21:00:00+05:30",
+          "mainEntityOfPage": postCanonicalUrl,
+          "inLanguage": "en-US",
+          "author": {
+            "@type": "Person",
+            "name": "Kaushal Kumar",
+            "url": "https://kausal.in/",
+            "jobTitle": "Frontend Software Engineer (SDE-2)"
+          },
+          "publisher": {
+            "@type": "Person",
+            "name": "Kaushal Kumar"
+          },
+          "keywords": post.tags.join(", ")
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${postCanonicalUrl}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://kausal.in/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Technical Articles",
+              "item": "https://kausal.in/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": post.title,
+              "item": postCanonicalUrl
+            }
+          ]
+        }
+      ]
+    };
+
+    scriptEl.textContent = JSON.stringify(structuredData);
+
+    return () => {
+      document.title = originalTitle;
+      if (metaDesc && originalDesc) metaDesc.setAttribute("content", originalDesc);
+      if (canonical && originalCanonical) canonical.setAttribute("href", originalCanonical);
+      const existingScript = document.getElementById(scriptId);
+      if (existingScript) existingScript.remove();
+    };
+  }, [post]);
+
+  // Filtered agencies for hiring agencies article
+  const filteredAgencies = useMemo(() => {
+    return hiringAgenciesList.filter((agency) => {
+      if (agencyCategory !== "All" && agency.category !== agencyCategory) {
+        return false;
+      }
+      if (agencyHub !== "All") {
+        const matchesHub = agency.hubs.some((h) =>
+          h.toLowerCase().includes(agencyHub.toLowerCase())
+        );
+        if (!matchesHub) return false;
+      }
+      if (agencySearch.trim()) {
+        const q = agencySearch.toLowerCase().trim();
+        const matchesName = agency.name.toLowerCase().includes(q);
+        const matchesRoles = agency.roles.some((r) => r.toLowerCase().includes(q));
+        const matchesCompanies = agency.companies.some((c) => c.toLowerCase().includes(q));
+        const matchesNotes = agency.notes.toLowerCase().includes(q);
+        const matchesHubs = agency.hubs.some((h) => h.toLowerCase().includes(q));
+        if (!matchesName && !matchesRoles && !matchesCompanies && !matchesNotes && !matchesHubs) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [agencyCategory, agencyHub, agencySearch]);
+
+  const handleCopyAgencyEmail = async (email: string, agencyId: string) => {
+    const success = await copyToClipboard(email);
+    if (success) {
+      playChime();
+      setCopiedAgencyEmailId(agencyId);
+      setTimeout(() => setCopiedAgencyEmailId(null), 2500);
+    }
+  };
+
+  const handleCopyAgencyOutreach = async (agency: HiringAgency) => {
+    const text = `Hey, hope you're having a great week! Reaching out since I know ${agency.name} partners with fantastic tech teams like ${agency.companies.slice(0, 3).join(", ") || "top product engineering firms"}. I'm a Frontend / Software Engineer with 3.5+ years of experience specializing in React, TypeScript, and React Native (recently building trade settlement UIs at Citi Bank and incident platforms at Marriott). Currently exploring SDE-2 opportunities in Bengaluru (open to hybrid/remote): https://kausal.in — I'd really appreciate your guidance if any mandates align. Thanks so much! – Kaushal Kumar`;
+    const success = await copyToClipboard(text);
+    if (success) {
+      playChime();
+      setCopiedAgencyOutreachId(agency.id);
+      setTimeout(() => setCopiedAgencyOutreachId(null), 2500);
+    }
+  };
 
   const handleCopyCode = async (code: string, index: number) => {
     const success = await copyToClipboard(code);
@@ -576,6 +755,272 @@ export function BlogPostPage() {
                 );
               })}
             </div>
+
+            {/* Interactive 60 Agencies Directory Component */}
+            {post.slug === "top-tech-staffing-recruitment-agencies-india" && (
+              <div className="mt-12 space-y-8" id="agency-directory">
+                {/* Directory Controls Panel */}
+                <div className="rounded-2xl border border-line/80 bg-ink-2/95 p-5 sm:p-6 shadow-card space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-paper flex items-center gap-2">
+                        <span>🏢 60 Verified Tech Recruitment Agencies</span>
+                        <span className="rounded-full bg-amber/15 border border-amber/30 px-2 py-0.5 text-xs font-mono text-amber">
+                          {filteredAgencies.length} Active
+                        </span>
+                      </h3>
+                      <p className="text-xs text-steel mt-0.5 font-sans">
+                        Filter by hiring domain, metropolitan hub, client companies, or tech roles
+                      </p>
+                    </div>
+
+                    <a
+                      href={post.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl border border-line bg-ink-3 px-3 py-1.5 text-xs font-mono text-paper hover:border-amber hover:text-amber transition-colors"
+                    >
+                      <span>📊 Open Raw Google Sheet ↗</span>
+                    </a>
+                  </div>
+
+                  {/* Search Bar */}
+                  <div className="relative">
+                    <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-steel text-sm">
+                      🔍
+                    </span>
+                    <input
+                      type="text"
+                      value={agencySearch}
+                      onChange={(e) => setAgencySearch(e.target.value)}
+                      placeholder="Search by agency, client (e.g. Swiggy, Amazon, Citi), location (Bengaluru), or role (React)..."
+                      className="w-full rounded-xl border border-line bg-ink-1 pl-10 pr-10 py-2.5 text-xs sm:text-sm text-paper placeholder-steel/60 focus:border-amber focus:outline-none transition-colors"
+                    />
+                    {agencySearch && (
+                      <button
+                        type="button"
+                        onClick={() => setAgencySearch("")}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-mono text-steel hover:text-paper px-1.5 py-0.5 rounded bg-ink-3"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Category Filter Pills */}
+                  <div className="space-y-2 pt-1">
+                    <div className="text-[11px] font-mono text-steel uppercase tracking-wider font-semibold">
+                      Hiring Category:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => setAgencyCategory("All")}
+                        className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
+                          agencyCategory === "All"
+                            ? "bg-amber text-white font-semibold shadow-sm"
+                            : "bg-ink-3 text-steel hover:text-paper"
+                        }`}
+                      >
+                        All Categories ({hiringAgenciesList.length})
+                      </button>
+                      {agencyCategories.map((cat) => {
+                        const count = hiringAgenciesList.filter((a) => a.category === cat).length;
+                        return (
+                          <button
+                            key={cat}
+                            type="button"
+                            onClick={() => setAgencyCategory(cat)}
+                            className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
+                              agencyCategory === cat
+                                ? "bg-amber text-white font-semibold shadow-sm"
+                                : "bg-ink-3 text-steel hover:text-paper"
+                            }`}
+                          >
+                            {cat} ({count})
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Metropolitan Hub Filter Pills */}
+                  <div className="space-y-1.5 pt-1 border-t border-line/50">
+                    <div className="text-[11px] font-mono text-steel uppercase tracking-wider font-semibold">
+                      Major Indian Tech Hub:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5 text-xs font-mono">
+                      {[
+                        "All",
+                        "Bengaluru",
+                        "Hyderabad",
+                        "Delhi-NCR",
+                        "Pune",
+                        "Mumbai",
+                        "Chennai",
+                      ].map((hub) => (
+                        <button
+                          key={hub}
+                          type="button"
+                          onClick={() => setAgencyHub(hub)}
+                          className={`rounded px-2 py-0.5 border transition-colors ${
+                            agencyHub === hub
+                              ? "bg-phosphor/20 border-phosphor text-phosphor font-semibold"
+                              : "bg-ink-3 border-line/60 text-steel hover:border-amber hover:text-paper"
+                          }`}
+                        >
+                          {hub === "All" ? "All Hubs" : hub}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Directory Cards Grid */}
+                <div className="grid gap-5 md:grid-cols-2">
+                  {filteredAgencies.map((agency) => {
+                    const isCopiedEmail = copiedAgencyEmailId === agency.id;
+                    const isCopiedOutreach = copiedAgencyOutreachId === agency.id;
+
+                    return (
+                      <div
+                        key={agency.id}
+                        className="rounded-2xl border border-line/70 bg-ink-2/80 p-5 sm:p-6 flex flex-col justify-between hover:border-amber/40 transition-all shadow-subtle group"
+                      >
+                        <div className="space-y-3.5">
+                          {/* Top Badges */}
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <span className="rounded bg-amber/10 border border-amber/30 px-2 py-0.5 text-[10px] font-mono font-semibold text-amber">
+                              {agency.category}
+                            </span>
+                            <span className="text-[11px] font-mono text-steel truncate max-w-[200px]">
+                              📍 {agency.hubs[0] || "India"}
+                            </span>
+                          </div>
+
+                          {/* Agency Title & Website Link */}
+                          <div>
+                            <h4 className="text-base sm:text-lg font-bold text-paper group-hover:text-amber transition-colors flex items-center justify-between">
+                              <span>{agency.name}</span>
+                              {agency.website && (
+                                <a
+                                  href={agency.website}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs font-mono text-steel hover:text-amber font-normal transition-colors"
+                                  title="Visit Official Website"
+                                >
+                                  website ↗
+                                </a>
+                              )}
+                            </h4>
+                          </div>
+
+                          {/* Associated Client Companies */}
+                          {agency.companies.length > 0 && (
+                            <div>
+                              <div className="text-[10px] font-mono uppercase tracking-wider text-steel font-semibold mb-1">
+                                Known Client Companies:
+                              </div>
+                              <div className="flex flex-wrap gap-1">
+                                {agency.companies.slice(0, 6).map((comp) => (
+                                  <span
+                                    key={comp}
+                                    className="rounded bg-ink px-1.5 py-0.5 border border-line/60 text-[10px] font-mono text-paper font-medium"
+                                  >
+                                    #{comp}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Tech Roles */}
+                          {agency.roles.length > 0 && (
+                            <div className="text-xs text-steel">
+                              <span className="font-mono text-[10px] uppercase text-steel/70 font-semibold block mb-0.5">
+                                Roles Recruited:
+                              </span>
+                              <span className="text-paper/90 text-[11px] leading-relaxed">
+                                {agency.roles.join(" · ")}
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Insider Notes / Hunting Tips */}
+                          {agency.notes && (
+                            <div className="rounded-lg bg-ink-3/70 p-2.5 border border-line/50 text-[11px] text-steel leading-relaxed">
+                              <span className="font-bold text-amber font-mono mr-1">💡 Note:</span>
+                              <span>{agency.notes}</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Recruiter Contact & Action Strip */}
+                        <div className="mt-5 pt-3.5 border-t border-line/60 space-y-2.5">
+                          {agency.contactInfo && (
+                            <div className="text-[11px] font-mono text-steel truncate">
+                              <span className="text-paper font-semibold">Contact: </span>
+                              <span>{agency.contactInfo}</span>
+                            </div>
+                          )}
+
+                          <div className="flex flex-wrap items-center gap-2 pt-1">
+                            {agency.primaryEmail && (
+                              <button
+                                type="button"
+                                onClick={() => handleCopyAgencyEmail(agency.primaryEmail!, agency.id)}
+                                className="inline-flex items-center gap-1 rounded-lg border border-line bg-ink-3 px-2.5 py-1 text-[11px] font-mono text-steel hover:border-amber hover:text-amber transition-colors"
+                                title={`Copy email: ${agency.primaryEmail}`}
+                              >
+                                <span>{isCopiedEmail ? "✓ Email Copied" : "✉ Copy Email"}</span>
+                              </button>
+                            )}
+
+                            <button
+                              type="button"
+                              onClick={() => handleCopyAgencyOutreach(agency)}
+                              className="inline-flex items-center gap-1 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-[11px] font-mono text-amber hover:bg-amber hover:text-white transition-colors"
+                              title="Copy tailored recruiter outreach pitch"
+                            >
+                              <span>{isCopiedOutreach ? "✓ Pitch Copied" : "📋 Copy Outreach"}</span>
+                            </button>
+
+                            {agency.linkedinUrl && (
+                              <a
+                                href={agency.linkedinUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="ml-auto text-[11px] font-mono text-steel hover:text-amber transition-colors"
+                              >
+                                LinkedIn ↗
+                              </a>
+                            )}
+
+                            {agency.careersUrl && (
+                              <a
+                                href={agency.careersUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[11px] font-mono text-steel hover:text-amber transition-colors"
+                              >
+                                Jobs Portal ↗
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {filteredAgencies.length === 0 && (
+                  <div className="rounded-2xl border border-line/60 bg-ink-2/60 p-8 text-center text-steel font-mono text-sm">
+                    No agencies match your active filters. Try clearing the search query or selecting &quot;All Categories&quot;.
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Author Conversation Box */}
             <div className="mt-14 rounded-2xl border border-amber/30 bg-amber/5 p-6 sm:p-8 backdrop-blur-sm">
