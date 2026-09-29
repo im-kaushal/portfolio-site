@@ -41,7 +41,7 @@ export function BlogListPage() {
           Architecture, Performance & Systems Engineering
         </h1>
         <p className="mt-4 text-base sm:text-lg text-steel leading-relaxed">
-          In-depth technical writeups on web performance optimization, virtualized data grids, offline-first mobile architecture, and JavaScript runtime internals from production deployments at Deloitte, Citi, and Marriott.
+          In-depth technical writeups on web performance optimization, virtualized data grids, offline-first mobile architecture, and JavaScript runtime internals from enterprise production deployments at scale.
         </p>
       </div>
 

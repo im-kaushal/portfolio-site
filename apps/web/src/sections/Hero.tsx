@@ -17,7 +17,52 @@ export function Hero() {
   const [activeTab, setActiveTab] = useState<"overview" | "contact" | "endorsement">("overview");
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
-  const voiceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [playbackProgress, setPlaybackProgress] = useState(0);
+  const [currentPlayTime, setCurrentPlayTime] = useState("0:00");
+  const [audioDuration, setAudioDuration] = useState("0:58");
+  const audioElementRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio("/greeting.mp3");
+    audio.preload = "metadata";
+    audioElementRef.current = audio;
+
+    const onLoadedMetadata = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        const mins = Math.floor(audio.duration / 60);
+        const secs = Math.floor(audio.duration % 60);
+        setAudioDuration(`${mins}:${secs < 10 ? "0" : ""}${secs}`);
+      }
+    };
+
+    const onTimeUpdate = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        setPlaybackProgress(progress);
+        const mins = Math.floor(audio.currentTime / 60);
+        const secs = Math.floor(audio.currentTime % 60);
+        setCurrentPlayTime(`${mins}:${secs < 10 ? "0" : ""}${secs}`);
+      }
+    };
+
+    const onEnded = () => {
+      setIsPlayingVoice(false);
+      setPlaybackProgress(0);
+      setCurrentPlayTime("0:00");
+    };
+
+    audio.addEventListener("loadedmetadata", onLoadedMetadata);
+    audio.addEventListener("timeupdate", onTimeUpdate);
+    audio.addEventListener("ended", onEnded);
+
+    return () => {
+      audio.pause();
+      audio.removeEventListener("loadedmetadata", onLoadedMetadata);
+      audio.removeEventListener("timeupdate", onTimeUpdate);
+      audio.removeEventListener("ended", onEnded);
+      audioElementRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -54,48 +99,39 @@ export function Hero() {
   };
 
   const toggleVoiceGreeting = () => {
+    const audio = audioElementRef.current;
+    if (!audio) return;
+
     if (isPlayingVoice) {
-      if ("speechSynthesis" in window) {
-        window.speechSynthesis.cancel();
-      }
-      if (voiceTimeoutRef.current) {
-        clearTimeout(voiceTimeoutRef.current);
-      }
+      audio.pause();
       setIsPlayingVoice(false);
       return;
     }
 
     playChime();
-    setIsPlayingVoice(true);
-
-    const speechSynth = typeof window !== "undefined" ? window.speechSynthesis : null;
-
-    if (speechSynth) {
-      speechSynth.cancel();
-      const utterance = new SpeechSynthesisUtterance(
-        "Hey, I'm Kaushal. Welcome to my engineering space. I'm a software engineer at HashedIn by Deloitte, architecting enterprise frontend and mobile platforms for Citi Bank and Marriott."
-      );
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-
-      utterance.onend = () => {
+    audio
+      .play()
+      .then(() => {
+        setIsPlayingVoice(true);
+      })
+      .catch((err) => {
+        console.error("Audio playback error:", err);
         setIsPlayingVoice(false);
-      };
-      utterance.onerror = () => {
-        setIsPlayingVoice(false);
-      };
+      });
+  };
 
-      speechSynth.speak(utterance);
-
-      // Safety timeout in case onend doesn't fire
-      voiceTimeoutRef.current = setTimeout(() => {
-        setIsPlayingVoice(false);
-      }, 12000);
-    } else {
-      voiceTimeoutRef.current = setTimeout(() => {
-        setIsPlayingVoice(false);
-      }, 8000);
-    }
+  const handleSeek = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    const audio = audioElementRef.current;
+    if (!audio || !audio.duration) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const ratio = Math.max(0, Math.min(1, clickX / rect.width));
+    audio.currentTime = ratio * audio.duration;
+    setPlaybackProgress(ratio * 100);
+    const mins = Math.floor(audio.currentTime / 60);
+    const secs = Math.floor(audio.currentTime % 60);
+    setCurrentPlayTime(`${mins}:${secs < 10 ? "0" : ""}${secs}`);
   };
 
   return (
@@ -114,16 +150,8 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
             </span>
-            <span className="font-mono text-xs text-steel">
-              Software Engineer <strong className="text-paper font-semibold">@ HashedIn by Deloitte</strong>
-            </span>
-            <span className="text-line hidden sm:inline">•</span>
-            <span className="font-mono text-[11px] font-semibold text-amber">
-              AWS Certified Developer
-            </span>
-            <span className="text-line hidden sm:inline">•</span>
-            <span className="font-mono text-[11px] text-steel">
-              Class of 2023
+            <span className="font-mono text-xs text-paper font-medium">
+              Open for new opportunities
             </span>
           </div>
 
@@ -136,79 +164,98 @@ export function Hero() {
               Kaushal Kumar<span className="font-serif italic font-normal text-amber">.</span>
             </h1>
             <p className="mt-2 text-lg sm:text-2xl font-bold text-gradient-amber">
-              Software Engineer at HashedIn by Deloitte · Shipping for Citi & Marriott
+              Software Engineer at HashedIn by Deloitte · Shipping Enterprise Banking & Hospitality Platforms
             </p>
           </div>
 
           {/* Authentic Personal Narrative */}
           <p className="mt-4 max-w-xl text-base sm:text-lg leading-relaxed text-steel">
             With <strong className="text-paper font-semibold">3.5+ years of enterprise engineering experience</strong> at{" "}
-            <strong className="text-paper font-semibold">HashedIn by Deloitte</strong>, I architect high-performance web systems and cross-platform mobile apps for Fortune 500 enterprises including{" "}
-            <strong className="text-paper font-semibold">Citi Bank</strong> and <strong className="text-paper font-semibold">Marriott</strong>. Focused on sub-second Core Web Vitals, accessible component design, and zero-jank client architectures.
+            <strong className="text-paper font-semibold">HashedIn by Deloitte</strong>, I architect high-performance web systems and cross-platform mobile apps for Fortune 500 enterprises across Banking, Financial Services, and Global Hospitality. Focused on sub-second Core Web Vitals, accessible component design, and zero-jank client architectures.
           </p>
 
-          {/* 15-Second Authentic Voice Greeting Player */}
+          {/* Authentic Voice Audio Introduction Player */}
           <div className="mt-5 max-w-xl">
-            <button
-              type="button"
+            <div
               onClick={toggleVoiceGreeting}
-              className={`w-full flex items-center justify-between gap-3 rounded-2xl border px-4 py-2.5 transition-all text-left ${
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  toggleVoiceGreeting();
+                }
+              }}
+              className={`group relative overflow-hidden rounded-2xl border p-3.5 sm:p-4 transition-all cursor-pointer ${
                 isPlayingVoice
-                  ? "border-amber/60 bg-amber/10 shadow-glow"
-                  : "border-line/80 bg-ink-2/90 hover:border-amber/40 hover:bg-ink-3/80"
+                  ? "border-amber/70 bg-gradient-to-r from-amber/15 via-ink-2/90 to-ink-3/90 shadow-glow"
+                  : "border-line/80 bg-ink-2/90 hover:border-amber/40 hover:bg-ink-3/80 shadow-sm"
               }`}
-              aria-label="Play 15-second authentic voice introduction"
+              aria-label="Play authentic voice summary by Kaushal Kumar"
             >
-              <div className="flex items-center gap-3">
-                <div
-                  className={`h-9 w-9 rounded-xl flex items-center justify-center font-mono text-xs font-bold transition-transform ${
-                    isPlayingVoice
-                      ? "bg-amber text-white scale-105"
-                      : "bg-ink-3 border border-line text-amber"
-                  }`}
-                >
-                  {isPlayingVoice ? "❚❚" : "▶"}
-                </div>
-                <div>
-                  <div className="text-xs font-semibold text-paper flex items-center gap-2">
-                    <span>15-Sec Audio Greeting</span>
-                    {isPlayingVoice && (
-                      <span className="rounded-full bg-phosphor/20 text-phosphor px-1.5 py-0.2 text-[9px] font-mono font-medium animate-pulse">
-                        PLAYING
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-[11px] text-steel font-mono">
-                    &ldquo;Hey, I&apos;m Kaushal — welcome to my engineering space...&rdquo;
-                  </div>
-                </div>
-              </div>
-
-              {/* Animated Equalizer Waveform Bars */}
-              <div className="flex items-end gap-1 h-5 shrink-0 px-2" aria-hidden="true">
-                {[40, 75, 100, 60, 85, 45].map((h, i) => (
-                  <span
-                    key={i}
-                    style={{ height: isPlayingVoice ? `${h}%` : "30%" }}
-                    className={`w-1 rounded-full transition-all duration-300 ${
-                      isPlayingVoice ? "bg-amber animate-pulse" : "bg-steel/40"
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div
+                    className={`h-10 w-10 shrink-0 rounded-xl flex items-center justify-center font-mono text-sm font-bold transition-all shadow-sm ${
+                      isPlayingVoice
+                        ? "bg-amber text-white scale-105 shadow-glow"
+                        : "bg-ink-3 border border-line text-amber group-hover:bg-amber group-hover:text-white"
                     }`}
-                  />
-                ))}
-              </div>
-            </button>
-          </div>
+                  >
+                    {isPlayingVoice ? "❚❚" : "▶"}
+                  </div>
+                  <div className="min-w-0">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-semibold text-paper">
+                        Voice Introduction
+                      </span>
+                      <span className="font-mono text-[11px] text-steel">
+                        {isPlayingVoice ? `${currentPlayTime} / ${audioDuration}` : audioDuration}
+                      </span>
+                      {isPlayingVoice ? (
+                        <span className="rounded-full bg-phosphor/20 text-phosphor px-2 py-0.5 text-[9px] font-mono font-medium animate-pulse">
+                          PLAYING
+                        </span>
+                      ) : (
+                        <span className="rounded-full bg-amber/10 text-amber border border-amber/20 px-1.5 py-0.2 text-[9px] font-mono font-medium">
+                          AUTHENTIC AUDIO
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-0.5 text-[11px] sm:text-xs text-steel font-mono truncate">
+                      &ldquo;Hey, I am Kaushal. I am a software engineer at HashedIn by Deloitte...&rdquo;
+                    </p>
+                  </div>
+                </div>
 
-          {/* Live /now Pulse Status Indicator */}
-          <div className="mt-4 max-w-xl rounded-xl border border-line/60 bg-ink-2/60 px-3.5 py-2 text-xs font-mono text-steel flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
-            </span>
-            <div className="truncate">
-              <span className="text-paper font-semibold">Now: </span>
-              <span>{site.nowStatus.headline} · </span>
-              <span className="text-amber">{site.nowStatus.exploring}</span>
+                {/* Animated Waveform Equalizer */}
+                <div className="flex items-end gap-1 h-6 shrink-0 px-2" aria-hidden="true">
+                  {[35, 75, 95, 60, 85, 45, 80, 55].map((h, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        height: isPlayingVoice ? `${h}%` : "25%",
+                        animationDelay: `${i * 120}ms`,
+                      }}
+                      className={`w-1 rounded-full transition-all duration-300 ${
+                        isPlayingVoice ? "bg-amber animate-pulse" : "bg-steel/30"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* Interactive Scrubbing / Progress Track */}
+              <div
+                onClick={handleSeek}
+                className="mt-3 relative h-1.5 w-full bg-ink-4/80 rounded-full overflow-hidden cursor-pointer"
+                title="Click to jump in audio"
+              >
+                <div
+                  className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-amber to-phosphor rounded-full transition-[width] duration-150"
+                  style={{ width: `${playbackProgress}%` }}
+                />
+              </div>
             </div>
           </div>
 
@@ -219,12 +266,12 @@ export function Hero() {
               <div className="text-steel text-[10px] mt-0.5">Production Exp</div>
             </div>
             <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
-              <div className="text-phosphor font-bold text-sm">Citi & Marriott</div>
-              <div className="text-steel text-[10px] mt-0.5">Key Clients</div>
+              <div className="text-phosphor font-bold text-sm">Fintech & Hospitality</div>
+              <div className="text-steel text-[10px] mt-0.5">Enterprise Sectors</div>
             </div>
             <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
               <div className="text-paper font-bold text-sm">−35% LCP</div>
-              <div className="text-steel text-[10px] mt-0.5">mTrust Speed</div>
+              <div className="text-steel text-[10px] mt-0.5">LCP Speedup</div>
             </div>
             <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
               <div className="text-amber font-bold text-sm">High Five ★</div>
@@ -232,12 +279,12 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Primary High-Intent Magnetic CTAs */}
+          {/* Primary High-Intent Magnetic CTAs (Harmonized Heights & Hierarchy) */}
           <div className="mt-7 flex flex-wrap items-center gap-3 w-full">
             <Magnetic strength={0.25}>
               <a
                 href="#work"
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-amber px-6 py-3.5 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-amber px-6 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
               >
                 <span>Explore Enterprise Work ↓</span>
               </a>
@@ -255,7 +302,7 @@ export function Hero() {
                     }
                   });
                 }}
-                className="inline-flex items-center justify-center gap-2 rounded-xl border border-amber/40 bg-amber/10 px-5 py-3.5 text-sm font-semibold text-amber hover:bg-amber hover:text-white transition-all active:scale-[0.98]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-amber/40 bg-amber/10 px-5 text-sm font-semibold text-amber hover:bg-amber hover:text-white transition-all active:scale-[0.98]"
                 title="Download latest resume PDF"
               >
                 {downloading ? (
@@ -279,13 +326,17 @@ export function Hero() {
               </button>
             </Magnetic>
 
-            <Link
-              to="/blog"
-              className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-line/80 bg-ink-2/90 px-4 py-3.5 text-xs font-mono text-steel hover:text-paper hover:border-amber transition-all"
-            >
-              <span>Tech Blogs</span>
-              <span className="rounded bg-amber/20 px-1 py-0.2 text-[9px] font-bold text-amber">15.5k+</span>
-            </Link>
+            <Magnetic strength={0.25}>
+              <Link
+                to="/blog"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-line/80 bg-ink-2/90 px-5 text-sm font-semibold text-paper hover:text-amber hover:border-amber/50 transition-all active:scale-[0.98]"
+              >
+                <span>Tech Blogs</span>
+                <span className="rounded-full bg-amber/15 border border-amber/30 px-2 py-0.5 text-[11px] font-mono font-bold text-amber">
+                  15.5k+
+                </span>
+              </Link>
+            </Magnetic>
           </div>
 
           {/* Multi-Intent WhatsApp Instant Connect Chips */}
@@ -492,10 +543,10 @@ export function Hero() {
                             </svg>
                             <span>Enterprise Experience</span>
                           </span>
-                          <span className="text-[10px] text-amber">Citi & Marriott</span>
+                          <span className="text-[10px] text-amber">Enterprise Platforms</span>
                         </div>
                         <p className="mt-1 text-[11px] text-steel font-sans leading-relaxed">
-                          HashedIn by Deloitte · Citi Bank Settlements (4.1s → 2.6s) · Marriott mTrust (−35% LCP)
+                          HashedIn by Deloitte · Financial Data Grid (4.1s → 2.6s) · Operations Coordinator (−35% LCP)
                         </p>
                       </div>
 
@@ -603,7 +654,7 @@ export function Hero() {
                       </div>
 
                       <p className="text-xs sm:text-sm italic text-paper/95 leading-relaxed font-sans">
-                        &ldquo;Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.&rdquo;
+                        &ldquo;Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the enterprise coordinator flow. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.&rdquo;
                       </p>
 
                       <div className="pt-2 border-t border-amber/20 flex items-center justify-between text-[11px] font-mono">

@@ -9,7 +9,7 @@ import { FeaturedBlogs } from "../sections/FeaturedBlogs";
 import { Hero } from "../sections/Hero";
 import { Impact } from "../sections/Impact";
 import { KindWords } from "../sections/KindWords";
-import { MtrustDeskDemo } from "../sections/MtrustDeskDemo";
+// import { MtrustDeskDemo } from "../sections/MtrustDeskDemo";
 import { QualityProof } from "../sections/QualityProof";
 import { Skills } from "../sections/Skills";
 import { Work } from "../sections/Work";
@@ -37,7 +37,8 @@ export function HomePage() {
       <Impact />
       <QualityProof />
       <Work />
-      <MtrustDeskDemo />
+      {/* Interactive Architecture Simulation / Incident Coordinator Desk (temporarily disabled) */}
+      {/* <MtrustDeskDemo /> */}
       <Skills />
       <Experience />
       <Awards />

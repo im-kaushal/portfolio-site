@@ -3839,7 +3839,7 @@ export const jsQuestionsList: JSQuestion[] = [
         "Implemented via dynamic import('./module.js') combined with bundler code-splitting."
       ],
       "code": "import { lazy, Suspense } from 'react';\nconst AdminDashboard = lazy(() => import('./AdminDashboard'));\n\nfunction App() {\n  return (\n    <Suspense fallback={<LoadingSpinner />}>\n      <AdminDashboard />\n    </Suspense>\n  );\n}",
-      "gotcha": "At Marriott mTrust, code-splitting heavy coordinator modules reduced the initial JS bundle from 412KB to 296KB (-28%), boosting Lighthouse from 68 to 94."
+      "gotcha": "In production enterprise apps, code-splitting heavy operational modules reduced the initial JS bundle from 412KB to 296KB (-28%), boosting Lighthouse from 68 to 94."
     }
   },
   {
@@ -4276,8 +4276,8 @@ export const jsQuestionsList: JSQuestion[] = [
         "The popstate event fires when the user clicks browser Back or Forward buttons.",
         "Forms the foundation of client-side routers like React Router and Vue Router."
       ],
-      "code": "// Update URL without page reload:\nhistory.pushState({ page: 'case-study' }, '', '/work/marriott-mtrust');\n\nwindow.addEventListener('popstate', (e) => {\n  console.log('User navigated back/forward to:', window.location.pathname);\n  renderPage(window.location.pathname);\n});",
-      "gotcha": "Server configuration required: servers must rewrite all paths back to index.html so refreshing /work/marriott-mtrust does not return a 404."
+      "code": "// Update URL without page reload:\nhistory.pushState({ page: 'case-study' }, '', '/work/coordinator-platform');\n\nwindow.addEventListener('popstate', (e) => {\n  console.log('User navigated back/forward to:', window.location.pathname);\n  renderPage(window.location.pathname);\n});",
+      "gotcha": "Server configuration required: servers must rewrite all paths back to index.html so refreshing /work/coordinator-platform does not return a 404."
     }
   },
   {

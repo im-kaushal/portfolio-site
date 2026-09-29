@@ -3,7 +3,7 @@ export const site = {
   callsign: "KK.FE",
   title: "Frontend Software Engineer · React, TypeScript & Mobile",
   headline:
-    "Software Engineer @ HashedIn (Deloitte) — shipping React, Angular & React Native products for Citi Bank & Marriott",
+    "Software Engineer @ HashedIn (Deloitte) — shipping React, Angular & React Native products for Banking & Hospitality Enterprises",
   employer: "HashedIn by Deloitte",
   role: "Software Engineer",
   location: "Bengaluru, India",
@@ -18,7 +18,7 @@ export const site = {
     recruiter:
       "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20I%20reviewed%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20Senior%20Engineering%20role%20at%20%5BCompany%5D.",
     techChat:
-      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20saw%20your%20work%20on%20Citi%20Bank%20virtualized%20grids%20and%20wanted%20to%20connect%20regarding%20architecture.",
+      "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20saw%20your%20work%20on%20virtualized%20data%20grids%20and%20wanted%20to%20connect%20regarding%20architecture.",
     coffee:
       "https://wa.me/917970513448?text=Hi%20Kaushal%2C%20loved%20your%20work%20and%20JavaScript%20guide!%20Would%20love%20to%20connect%20for%20a%20virtual%20coffee.",
   },
@@ -35,7 +35,7 @@ export const site = {
   resumeHref: "/Kaushal_Kumar_Resume.pdf",
   headshotSrc: "/kaushal-headshot.png",
   summary:
-    "Software Engineer at HashedIn by Deloitte delivering scalable frontend, mobile, and full-stack solutions for Fortune 500 enterprises including Citi Bank and Marriott. AWS Certified Developer Associate proficient in React, Angular, React Native, and TypeScript with a passion for web performance, Core Web Vitals, and resilient user interfaces.",
+    "Software Engineer at HashedIn by Deloitte delivering scalable frontend, mobile, and full-stack solutions for Fortune 500 enterprises in Banking and Hospitality. AWS Certified Developer Associate proficient in React, Angular, React Native, and TypeScript with a passion for web performance, Core Web Vitals, and resilient user interfaces.",
   recruiterOverview: {
     experience: "3.5+ Years",
     currentRole: "Software Engineer at HashedIn by Deloitte",
@@ -51,21 +51,21 @@ export const site = {
       "Tailwind CSS",
       "AWS",
     ],
-    domains: ["Banking & Finance (Citi Bank)", "Hospitality Tech (Marriott)", "Mobile Platforms (HuntsJob)"],
+    domains: ["Banking & Financial Services", "Hospitality & Operational Platforms", "Mobile Platforms"],
     certifications: [
       "AWS Certified Developer – Associate",
       "AWS Certified Cloud Practitioner (Deloitte ACE 3.0)",
       "Claude Certified Architect – Foundations",
       "Deloitte Certified Front End Developer",
     ],
-    status: "Software Engineer at HashedIn by Deloitte · Shipping for Citi & Marriott",
+    status: "Software Engineer at HashedIn by Deloitte · Shipping for Tier-1 Enterprise Clients",
     education: "B.Tech Computer Science, Lovely Professional University (Class of 2023)",
     leadershipQuote: {
       quote:
-        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.",
+        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the enterprise coordinator flow. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.",
       author: "Himanshu Mahajan & Amit Bhavikatti",
       role: "Engineering Leads @ HashedIn by Deloitte",
-      context: "Marriott mTrust Coordinator Delivery · Deloitte High Five Award",
+      context: "Enterprise Operational Platform Delivery · Deloitte High Five Award",
     },
     communityImpact: {
       title: "200 Questions to Crack Any JavaScript Interview",
@@ -74,10 +74,10 @@ export const site = {
         "Curated real interview questions for top tech firms including Amazon, Google, Flipkart, CRED, and Deloitte.",
     },
     keyMetrics: [
-      { value: "−35%", label: "LCP Optimization", detail: "Marriott mTrust Coordinator UI" },
-      { value: "4.1s → 2.6s", label: "Page Load Time", detail: "Citi Bank Settlements Desk" },
+      { value: "−35%", label: "LCP Optimization", detail: "Enterprise Coordinator UI" },
+      { value: "4.1s → 2.6s", label: "Page Load Time", detail: "High-Frequency Financial Grid" },
       { value: "90%+", label: "Test Coverage", detail: "Jasmine & React Testing Library" },
-      { value: "180+", label: "Critical Defects Fixed", detail: "Damco Mobile Production Releases" },
+      { value: "180+", label: "Critical Defects Fixed", detail: "Enterprise Mobile Production Releases" },
       { value: "3 Apps", label: "Production Apps", detail: "App Store & Google Play Releases" },
       { value: "15.5k+", label: "Community Reach", detail: "JavaScript Interview Preparation Guide" },
     ],
@@ -104,12 +104,12 @@ export const nav = [
 ] as const;
 
 export const impact = [
-  { id: "lcp", readout: "−35%", label: "LCP Optimization", note: "Marriott mTrust Coordinator UI" },
+  { id: "lcp", readout: "−35%", label: "LCP Optimization", note: "Enterprise Coordinator UI" },
   { id: "bundle", readout: "−28%", label: "JS Bundle Size", note: "Code Splitting & Core Web Vitals" },
-  { id: "tti", readout: "4.1s → 2.6s", label: "Page Load Time", note: "Citi Bank Settlements Desk" },
+  { id: "tti", readout: "4.1s → 2.6s", label: "Page Load Time", note: "High-Frequency Financial Grid" },
   { id: "tests", readout: "90%+", label: "Test Coverage", note: "Jasmine & React Testing Library" },
   { id: "qa", readout: "−70%", label: "Manual QA Effort", note: "Spot Award Java & React Utility" },
-  { id: "defects", readout: "180+", label: "Critical Defects Fixed", note: "Damco Mobile Production Releases" },
+  { id: "defects", readout: "180+", label: "Critical Defects Fixed", note: "Mobile Production Releases" },
 ] as const;
 
 export const qualityProof = {
@@ -122,7 +122,7 @@ export const qualityProof = {
     { id: "seo", label: "SEO", score: 92, note: "Semantic Document Structure" },
   ],
   engineering: [
-    { id: "lcp", label: "LCP", before: "3.2s", after: "2.1s", delta: "−35%", context: "mTrust Incident Queue" },
+    { id: "lcp", label: "LCP", before: "3.2s", after: "2.1s", delta: "−35%", context: "Operational Incident Queue" },
     { id: "bundle", label: "JS Bundle", before: "412 KB", after: "296 KB", delta: "−28%", context: "Route Splitting & Cache" },
     { id: "coverage", label: "Unit & E2E Coverage", before: "62%", after: "91%", delta: "+29pp", context: "Critical User Journeys" },
     { id: "defects", label: "Defect Resolution", before: "—", after: "187+", delta: "1 Sprint", context: "Mobile Production UAT" },
@@ -148,34 +148,34 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "marriott",
     code: "CASE-01",
-    client: "Marriott",
-    title: "mTrust Incident Management",
+    client: "Global Hospitality Enterprise",
+    title: "Enterprise Incident Operations Platform",
     blurb:
-      "Coordinator workspace for hotel trust operations, covering incident workflows, breached SER monitoring, and dense incident tables without sending operators back to ServiceNow.",
+      "High-throughput operational workbench for mission-critical service operations, handling dense incident streams, SLA monitoring, and low-latency virtualized data tables.",
     stack: [
       "React.js",
       "TanStack Query",
       "Context API",
-      "ServiceNow REST APIs",
+      "REST APIs",
       "TypeScript",
       "TanStack Table",
     ],
     outcomes: [
-      "Built the full Coordinator workspace interface in React.js integrating ServiceNow REST APIs.",
-      "Improved Largest Contentful Paint by 35% on primary coordinator views.",
-      "JavaScript bundle reduced by 28% through code splitting, lazy loading, and Core Web Vitals optimizations.",
-      "Implemented custom ticket filtering, automated email triggers, and high-performance tabular rendering.",
+      "Built the operational coordinator workspace interface in React.js and TypeScript integrating enterprise REST APIs.",
+      "Improved Largest Contentful Paint (LCP) by 35% on primary operational views through code splitting and asset preloading.",
+      "JavaScript bundle reduced by 28% through dynamic import splitting, lazy loading, and Core Web Vitals optimizations.",
+      "Implemented custom ticket filtering, automated event triggers, and high-performance tabular rendering.",
     ],
     architecture: [
-      "TanStack Query for query caching and invalidation across incident states.",
+      "TanStack Query for normalized query caching, optimistic updates, and cache invalidation across incident states.",
       "Virtualized data tables for dense incident feeds with keyboard shortcuts and bulk actions.",
-      "ServiceNow REST API integration enabling end-to-end incident resolution inside a dedicated workspace.",
-      "Incident lifecycle flows: advanced filters, breached SER monitoring, reopen/close, and automated email alerts.",
+      "Enterprise REST API integration enabling end-to-end incident resolution inside a dedicated workspace.",
+      "Incident lifecycle flows: advanced multi-faceted filters, SLA breach monitoring, state transitions, and automated alerts.",
     ],
     highlights: [
-      "Built the full Coordinator workspace interface in React.js, integrating ServiceNow REST APIs to enable operational teams to process incident workflows without using external ServiceNow interfaces.",
-      "Implemented custom ticket filtering, automated email triggers, and high-performance tabular rendering using TanStack Query/Table.",
-      "Reduced Largest Contentful Paint by 35% and bundle size by 28% via modern performance patterns.",
+      "Built the full coordinator workspace interface in React.js, integrating enterprise REST APIs to enable operational teams to process high-volume workflows without external context switching.",
+      "Implemented custom ticket filtering, automated event triggers, and high-performance tabular rendering using TanStack Query/Table.",
+      "Reduced Largest Contentful Paint by 35% and bundle size by 28% via modern performance engineering patterns.",
     ],
     role: "Software Engineer I · Frontend Lead",
     period: "Mar 2026 — Present",
@@ -183,10 +183,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "citi",
     code: "CASE-02",
-    client: "Citi Bank",
-    title: "Financial Applications & Trade Settlements",
+    client: "Tier-1 Investment Bank",
+    title: "High-Frequency Financial Data Grid & Trade Settlements",
     blurb:
-      "Angular trade settlement screens backed by Spring Boot and Kafka, including multi-row editing, bulk Excel processing, automated tests, and a QA utility.",
+      "Angular and TypeScript transaction ledger processing high-concurrency settlement feeds, multi-row inline editing, bulk data operations, and automated contract testing.",
     stack: [
       "Angular",
       "TypeScript",
@@ -200,20 +200,20 @@ export const caseStudies: CaseStudy[] = [
       "Jasmine",
     ],
     outcomes: [
-      "Average page load time cut from 4.1s to 2.6s on the settlements desk.",
+      "Average page load time cut from 4.1s to 2.6s on high-density financial transaction screens.",
       "Unit and integration test coverage raised to 90%+ with Jasmine and React Testing Library.",
-      "Contract-testing Java + Angular utility cut manual QA database mapping checks by 70% (Rising Star Award).",
-      "Automated Gherkin BDD test suites across 15+ services with Harness post-install hooks.",
+      "Contract-testing verification utility cut manual QA database mapping checks by 70% (Rising Star Award).",
+      "Automated Gherkin BDD test suites across 15+ services with CI/CD post-install verification hooks.",
     ],
     architecture: [
-      "Angular interfaces for trade settlement workflows with multi-row editing and bulk Excel processing.",
-      "Settlement trade processing via Spring Boot, Kafka topics, and trade-routing by trade type.",
+      "Angular interfaces for high-concurrency trade settlement workflows with multi-row editing and bulk data processing.",
+      "Event-driven transaction processing integrated with Spring Boot services and message streaming topics.",
       "Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services.",
       "Internal Java + Angular visualization utility automating QA database mapping checks.",
     ],
     highlights: [
       "Built Angular interfaces for trade settlement workflows and a Java + Angular utility that automated QA database mapping checks.",
-      "Designed Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services, validating consumed Kafka messages against locally stored expected outputs and integrating them with Harness post-install hooks to run automatically during deployments.",
+      "Designed Gherkin-based automated BDD test suites at component, integration, and template levels for 15+ services, validating streaming messages against expected outputs in continuous deployment pipelines.",
       "Received Rising Star Award (May 2025) for cutting manual testing effort by 70% with an internal utility.",
     ],
     role: "Software Engineer I · Frontend & Full-Stack",
@@ -222,10 +222,10 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "colina",
     code: "CASE-03",
-    client: "Colina Insurance",
-    title: "Mobile Application (Colina Insurance)",
+    client: "Enterprise InsurTech",
+    title: "Offline-First Cross-Platform Mobile Application",
     blurb:
-      "React Native insurance application with offline sync using Realm DB and authentication through Firebase.",
+      "React Native insurance application with offline local database sync using Realm DB and secure cloud authentication via Firebase.",
     stack: [
       "React Native",
       "TypeScript",
@@ -236,7 +236,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     outcomes: [
       "Built modular React Native component library and delivered 3 cross-platform mobile apps to iOS App Store & Google Play.",
-      "Resolved 180+ UI and API integration defects across mobile releases before UAT.",
+      "Resolved 180+ UI and API integration defects across mobile releases before production UAT.",
       "Offline-first synchronization with Realm DB and cloud authentication via Firebase.",
       "Optimized mobile layout structures for uniform rendering across a wide range of screen sizes.",
     ],
@@ -331,13 +331,13 @@ export const timeline: Role[] = [
     title: "Software Engineer I",
     dates: "Jul 2024 — Present",
     location: "Bangalore, India",
-    clientBadge: "Citi Bank & Marriott",
+    clientBadge: "Enterprise Banking & Hospitality",
     points: [
       "Build reusable React and Angular features and help maintain shared UI components used across teams. I also mentor developers through code reviews and onboarding.",
-      "Improved frontend quality and performance, including 90%+ test coverage and reducing average page load time from 4.1s to 2.6s through code splitting and lazy loading.",
-      "Marriott mTrust: Built the Coordinator workspace in React and integrated ServiceNow REST APIs for incident workflows.",
-      "Citi Bank: Built Angular trade settlement interfaces with multi-row editing, bulk Excel processing, and a Java + Angular QA utility.",
-      "Testing: Built Gherkin-based BDD suites across 15+ services and wired them into deployment checks with Harness.",
+      "Improved frontend quality and performance, including 90%+ test coverage and reducing average page load time from 4.1s to 2.6s through code splitting, virtualization, and lazy loading.",
+      "Enterprise Incident Operations: Built the coordinator workspace in React and integrated enterprise REST APIs for mission-critical incident workflows.",
+      "Financial Services: Built Angular trade settlement interfaces with multi-row editing, bulk data processing, and a Java + Angular QA verification utility.",
+      "Testing & CI/CD: Built Gherkin-based BDD suites across 15+ services and wired them into automated deployment checks with Harness.",
     ],
   },
   {
@@ -454,21 +454,21 @@ export type Award = {
 
 export const awards: Award[] = [
   {
-    id: "high-five-deloitte",
-    title: "High Five Award",
-    org: "HashedIn by Deloitte",
-    date: "Jun 2026",
-    note: "Awarded for exceptional ownership and instrumental impact on the frontend track, building the coordinator flow for Marriott mTrust end-to-end.",
-    metric: "Marriott mTrust Delivery",
-    official: true,
-  },
-  {
     id: "excellence-deloitte",
     title: "Excellence Award",
     org: "Deloitte",
-    date: "Jun 2026",
-    note: "Recognized for technical contributions to production releases and architecture documentation.",
-    metric: "Technical Leadership & ADRs",
+    date: "Jan 2026",
+    note: "Recognized for technical contributions to production releases of two Java services while working at Citi project, while simultaneously guiding 50+ interns on the Angular track.",
+    metric: "Technical Leadership & Mentorship",
+    official: true,
+  },
+  {
+    id: "high-five-deloitte",
+    title: "High Five Award",
+    org: "HashedIn by Deloitte",
+    date: "Jun 2025",
+    note: "Awarded for exceptional ownership and instrumental impact on the frontend track, building the coordinator flow for Marriott mTrust end-to-end and successful production release.",
+    metric: "Marriott mTrust Delivery",
     official: true,
   },
   {
@@ -583,17 +583,17 @@ export const kindWords = {
     "Sharing some kind words from my manager and leads that mean a lot to me:",
   items: [
     {
-      id: "mtrust-leads",
+      id: "coordinator-leads",
       channel: "CH.01",
       source: "Himanshu Mahajan & Amit Bhavikatti · Engineering Leads @ HashedIn by Deloitte",
       variant: "featured",
       quote:
-        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the coordinator flow for mTrust. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track. His proactive communication, accountability, and ability to translate requirements into a solid, user-focused implementation were critical to the success of this effort.",
+        "Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the enterprise coordinator flow. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track. His proactive communication, accountability, and ability to translate requirements into a solid, user-focused implementation were critical to the success of this effort.",
     },
     {
       id: "citi-manager",
       channel: "CH.02",
-      source: "Manager assessment · Citi engagement · HashedIn RT review",
+      source: "Engineering Manager Review · Financial Services Engagement",
       variant: "featured",
       quote:
         "Thank you for your contributions towards the success of the organisation. Your continuous efforts on ensuring we stay on track with the project goals have helped the client immensely.",
@@ -601,7 +601,7 @@ export const kindWords = {
     {
       id: "citi-overall",
       channel: "CH.03",
-      source: "Delivery lead · Citi engagement · HashedIn RT review",
+      source: "Delivery Leadership Review · Financial Services Engagement",
       variant: "featured",
       quote:
         "Kaushal has consistently demonstrated outstanding performance above role expectations. With an impressive ability to adapt, self-learn, and add value across multiple business streams, he delivered reliably even under challenging circumstances. His initiative in taking on new domains, dedication to high-quality output, and positive influence on teams are strong indicators of potential for higher responsibility and leadership. Kaushal serves as a role model for resilience, technical depth, and cross-functional teamwork.",
@@ -609,15 +609,15 @@ export const kindWords = {
     {
       id: "citi-delivery",
       channel: "HL.01",
-      source: "Delivery & process · Citi",
+      source: "Delivery & Process Lead · Tier-1 Financial Services",
       variant: "highlight",
       quote:
-        "Consistently delivered on commitments across frontend and backend on ETD1-Fenix, Fusion Brokerage, and Fusion Clear, with minimal onboarding time.",
+        "Consistently delivered on commitments across frontend and backend on core derivative, brokerage, and clearing interfaces with minimal onboarding time.",
     },
     {
       id: "citi-communication",
       channel: "HL.02",
-      source: "Business communication · Citi",
+      source: "Business Communication Review · Tier-1 Financial Services",
       variant: "highlight",
       quote:
         "Provided thorough written updates and regular client and stakeholder meetings; bridged QA, frontend, backend, and clients.",
@@ -625,7 +625,7 @@ export const kindWords = {
     {
       id: "citi-leadership",
       channel: "HL.03",
-      source: "Leadership · Citi",
+      source: "Engineering Leadership Review · Tier-1 Financial Services",
       variant: "highlight",
       quote:
         "Volunteered for challenging assignments including backend and DevOps; mentored 10+ developers on setup and tooling.",

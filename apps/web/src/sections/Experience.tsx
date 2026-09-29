@@ -19,14 +19,14 @@ interface CompanyMeta {
 
 const COMPANY_DETAILS: Record<string, CompanyMeta> = {
   hashedin: {
-    badgeName: "Deloitte / Citi & Marriott",
+    badgeName: "Deloitte / Enterprise Delivery",
     badgeBg: "bg-emerald-500/10",
     badgeBorder: "border-emerald-500/30",
     badgeText: "text-emerald-400",
     glowColor: "rgba(52, 211, 153, 0.2)",
     metrics: [
       { label: "LCP Optimization", value: "−35%" },
-      { label: "Settlement Desk Load", value: "4.1s → 2.6s" },
+      { label: "Data Grid Load", value: "4.1s → 2.6s" },
       { label: "Test Coverage", value: "90%+" },
       { label: "Manual QA Reduction", value: "−70%" },
     ],
@@ -35,7 +35,7 @@ const COMPANY_DETAILS: Record<string, CompanyMeta> = {
       "Angular",
       "TypeScript",
       "TanStack Query",
-      "ServiceNow APIs",
+      "REST APIs",
       "Kafka",
       "Spring Boot",
       "Jasmine",

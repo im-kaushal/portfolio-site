@@ -44,19 +44,19 @@ export function Awards() {
           </h3>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-3">
           {awards.map((a: Award) => {
             const isSpotAward = a.id === "rising-star-deloitte";
 
             return (
               <CardSpotlight
                 key={a.id}
-                className="p-6 sm:p-8 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 border-amber/30"
+                className="p-6 sm:p-7 flex flex-col justify-between h-full hover:-translate-y-1 transition-transform duration-300 border-amber/30"
               >
-                <div>
+                <div className="flex-1">
                   <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-phosphor">{a.date}</span>
-                    <span className="rounded-full bg-amber/10 border border-amber/30 px-2.5 py-0.5 text-amber font-medium">
+                    <span className="text-phosphor font-medium">{a.date}</span>
+                    <span className="rounded-full bg-amber/10 border border-amber/30 px-2.5 py-0.5 text-amber font-medium text-[11px]">
                       Official Honor
                     </span>
                   </div>
@@ -78,9 +78,9 @@ export function Awards() {
                     <button
                       type="button"
                       onClick={() => setLetterOpen(true)}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3 py-1.5 text-xs text-amber hover:bg-amber hover:text-white transition-all"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-xs text-amber hover:bg-amber hover:text-white transition-all shadow-sm"
                     >
-                      <span>View Spot Award Letter</span>
+                      <span>Spot Award Letter</span>
                       <span aria-hidden="true">↗</span>
                     </button>
                   )}

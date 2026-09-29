@@ -30,7 +30,7 @@ const CASE_METRICS: Record<string, StudyMetrics> = {
     secondary: { label: "JS Bundle Reduction", value: "−28%" },
   },
   citi: {
-    primary: { label: "Settlement Desk Load", value: "4.1s → 2.6s" },
+    primary: { label: "Page Load Reduction", value: "4.1s → 2.6s" },
     secondary: { label: "Test Coverage", value: "90%+" },
   },
   colina: {
@@ -41,12 +41,12 @@ const CASE_METRICS: Record<string, StudyMetrics> = {
 
 const CASE_PSI: Record<string, StudyPSI> = {
   marriott: {
-    problem: "Coordinator desk suffered from 3.8s LCP and sluggish table rendering on high-volume hotel incident feeds.",
-    solution: "Re-architected in React.js using TanStack Query caching, virtualized data tables, and direct ServiceNow REST API integration.",
-    impact: "−35% LCP (3.2s → 2.1s), −28% bundle size, 100% incident operations handled without leaving workspace.",
+    problem: "Operational coordinator workbench suffered from 3.8s LCP and sluggish table rendering on high-volume incident feeds.",
+    solution: "Re-architected in React.js using TanStack Query caching, virtualized data tables, and enterprise REST API integration.",
+    impact: "−35% LCP (3.2s → 2.1s), −28% bundle size, 100% operational flows handled without context switching.",
   },
   citi: {
-    problem: "Trade settlement screens with 10,000+ records took 4.1s to load; manual QA database mapping checks took 3+ hours per release.",
+    problem: "Financial transaction ledgers with 10,000+ records took 4.1s to load; manual QA database mapping checks took 3+ hours per release.",
     solution: "Engineered Angular trading screens with Web Worker sorting, multi-row Excel batch ingestion, and built an automated Java + Angular QA mapping tool.",
     impact: "4.1s → 2.6s page load, 90%+ test coverage, −70% manual QA effort (Rising Star Award).",
   },
@@ -153,7 +153,7 @@ export function Work() {
                 className="h-full"
               >
                 <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative">
-                  {/* Animated Border Beam on Featured Marriott mTrust */}
+                  {/* Animated Border Beam on Featured Case Study */}
                   {isFeatured && (
                     <BorderBeam
                       size={220}
@@ -246,8 +246,8 @@ export function Work() {
                       </div>
                     )}
 
-                    {/* Interactive Simulator Hook for Marriott */}
-                    {isFeatured && (
+                    {/* Interactive Simulator Hook for Marriott (temporarily commented out) */}
+                    {/* {isFeatured && (
                       <div className="mt-4">
                         <a
                           href="#demo"
@@ -256,7 +256,7 @@ export function Work() {
                           <span>⚡ Try Live Desk Simulator ↓</span>
                         </a>
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   {/* Actions */}

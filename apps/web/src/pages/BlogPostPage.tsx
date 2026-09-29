@@ -309,7 +309,7 @@ export function BlogPostPage() {
   };
 
   const handleCopyAgencyOutreach = async (agency: HiringAgency) => {
-    const text = `Hey, hope you're having a great week! Reaching out since I know ${agency.name} partners with fantastic tech teams like ${agency.companies.slice(0, 3).join(", ") || "top product engineering firms"}. I'm a Frontend / Software Engineer with 3.5+ years of experience specializing in React, TypeScript, and React Native (recently building trade settlement UIs at Citi Bank and incident platforms at Marriott). Currently exploring SDE-2 opportunities in Bengaluru (open to hybrid/remote): https://kausal.in — I'd really appreciate your guidance if any mandates align. Thanks so much! – Kaushal Kumar`;
+    const text = `Hey, hope you're having a great week! Reaching out since I know ${agency.name} partners with fantastic tech teams like ${agency.companies.slice(0, 3).join(", ") || "top product engineering firms"}. I'm a Frontend / Software Engineer with 3.5+ years of experience specializing in React, TypeScript, and React Native (recently building financial trade settlement data grids and enterprise operational platforms). Currently exploring SDE-2 opportunities in Bengaluru (open to hybrid/remote): https://kausal.in — I'd really appreciate your guidance if any mandates align. Thanks so much! – Kaushal Kumar`;
     const success = await copyToClipboard(text);
     if (success) {
       playChime();

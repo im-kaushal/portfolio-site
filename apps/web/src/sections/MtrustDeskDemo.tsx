@@ -164,7 +164,7 @@ export function MtrustDeskDemo() {
           Interactive Architecture Simulation
         </span>
         <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          mTrust Incident Coordinator Desk
+          Enterprise Incident Coordinator Desk
         </h2>
         <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
           Synthetic coordinator incident queue demonstrating state normalization, optimistic updates, and keyboard shortcuts (<kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">/</kbd> search, <kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">j</kbd>/<kbd className="rounded border border-line bg-ink px-1.5 py-0.5 text-xs font-mono text-paper">k</kbd> navigate).

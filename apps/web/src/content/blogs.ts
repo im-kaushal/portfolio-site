@@ -40,9 +40,9 @@ export const blogCategories = [
 export const blogPosts: BlogPost[] = [
   {
     slug: "optimizing-lcp-core-web-vitals-enterprise-react",
-    title: "Optimizing LCP by 35% on Enterprise React: Real-World Code Splitting & Core Web Vitals at Marriott",
+    title: "Optimizing LCP by 35% on Enterprise React: Real-World Code Splitting & Core Web Vitals at Scale",
     description:
-      "How we audited Largest Contentful Paint, eliminated render-blocking modules, and reduced initial JS bundle size by 28% for Marriott's mTrust coordinator interface.",
+      "How we audited Largest Contentful Paint, eliminated render-blocking modules, and reduced initial JS bundle size by 28% for an enterprise operational coordinator interface.",
     category: "Web Performance",
     tags: ["React", "Performance", "Core Web Vitals", "Code Splitting", "Lighthouse"],
     readTime: "6 min read",
@@ -51,12 +51,12 @@ export const blogPosts: BlogPost[] = [
     views: "3.4k",
     content: {
       lead:
-        "When engineering enterprise platforms used by thousands of operational staff daily, performance isn't a cosmetic preference—it directly impacts booking throughput and user frustration. On the Marriott mTrust project, our coordinator flow suffered from an initial LCP of 3.8s over 3G/4G connections. Here is the exact architectural playbook we used to bring it down to 2.45s (a 35% reduction).",
+        "When engineering enterprise platforms used by thousands of operational staff daily, performance isn't a cosmetic preference—it directly impacts system throughput and user frustration. On our enterprise coordinator platform, the primary operational view suffered from an initial LCP of 3.8s over 3G/4G connections. Here is the exact architectural playbook we used to bring it down to 2.45s (a 35% reduction).",
       sections: [
         {
           heading: "1. The Diagnostic: Breaking Down the 3.8s LCP Waterfall",
           paragraphs: [
-            "Using Chrome DevTools Performance Profiler and WebPageTest, we identified three critical bottlenecks in the Marriott coordinator view: an oversized 412KB monolithic JavaScript bundle, eagerly imported heavy charting and PDF dependencies, and unoptimized hero images loading after cascading CSS evaluation.",
+            "Using Chrome DevTools Performance Profiler and WebPageTest, we identified three critical bottlenecks in the coordinator view: an oversized 412KB monolithic JavaScript bundle, eagerly imported heavy charting and PDF dependencies, and unoptimized hero visual blocks loading after cascading CSS evaluation.",
             "The Largest Contentful Paint candidate was a coordinator status overview container that depended on a waterfall of three consecutive API requests before rendering.",
           ],
           callout: {
@@ -104,13 +104,13 @@ export function CoordinatorView() {
             filename: "index.html",
             code: `<!-- High-priority font preloads -->
 <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
-<link rel="preconnect" href="https://api.marriott-mtrust.internal" />`,
+<link rel="preconnect" href="https://api.gateway.internal" />`,
           },
         },
         {
           heading: "4. The Result: Measurable Production Wins",
           paragraphs: [
-            "After releasing these changes across Marriott staging and production clusters, our Lighthouse Performance audit surged from 68 to 94. Largest Contentful Paint dropped from 3.8s to 2.45s (−35%), and the initial JavaScript download was reduced by 28% (from 412KB to 296KB).",
+            "After releasing these changes across enterprise staging and production clusters, our Lighthouse Performance audit surged from 68 to 94. Largest Contentful Paint dropped from 3.8s to 2.45s (−35%), and the initial JavaScript download was reduced by 28% (from 412KB to 296KB).",
             "This initiative was recognized with the Deloitte High Five Award for engineering excellence.",
           ],
           callout: {
@@ -123,18 +123,18 @@ export function CoordinatorView() {
   },
   {
     slug: "designing-virtualized-settlements-grid-citi-bank",
-    title: "Designing Low-Latency Virtualized Grids for High-Concurrency Trading Desks: 4.1s to 2.6s",
+    title: "Designing Low-Latency Virtualized Grids for High-Concurrency Financial Trading Desks: 4.1s to 2.6s",
     description:
-      "Architectural patterns for rendering 10,000+ real-time transaction rows with zero frame drops using virtual windowing and Web Workers at Citi Bank.",
+      "Architectural patterns for rendering 10,000+ real-time transaction rows with zero frame drops using virtual windowing and Web Workers in financial systems.",
     category: "System Architecture",
-    tags: ["TypeScript", "Virtualization", "React", "Performance", "Citi Bank"],
+    tags: ["TypeScript", "Virtualization", "React", "Performance", "Fintech Architecture"],
     readTime: "8 min read",
     publishedAt: "Jun 2026",
     featured: true,
     views: "2.8k",
     content: {
       lead:
-        "Financial settlements desks process hundreds of thousands of transactions daily. At Citi Bank, traders experienced sluggish UI responses when filtering through 10,000+ transaction rows in real time. We overhauled the settlements desk rendering architecture, achieving a 4.1s to 2.6s page load improvement and consistent 60fps scrolling.",
+        "Financial transaction ledgers process hundreds of thousands of transactions daily. In high-concurrency trading systems, operators experienced sluggish UI responses when filtering through 10,000+ transaction rows in real time. We overhauled the data grid rendering architecture, achieving a 4.1s to 2.6s page load improvement and consistent 60fps scrolling.",
       sections: [
         {
           heading: "1. The Challenge: DOM Bloat in Financial Grids",
@@ -710,7 +710,7 @@ export async function dispatchMutation(job: MutationJob): Promise<void> {
   "featured": false,
   "views": "1.4k",
   "content": {
-    "lead": "When organizations scale beyond 50+ engineers working on a single core product, monolithic frontends become release bottlenecks. Drawing from enterprise platforms at Citi Bank and Marriott, here is how to orchestrate autonomous frontend deployment using Module Federation 2.0 without sacrificing performance.",
+    "lead": "When organizations scale beyond 50+ engineers working on a single core product, monolithic frontends become release bottlenecks. Drawing from enterprise platforms in banking and hospitality, here is how to orchestrate autonomous frontend deployment using Module Federation 2.0 without sacrificing performance.",
     "sections": [
       {
         "heading": "1. The Dilemma: Autonomous Velocity vs Runtime Weight",

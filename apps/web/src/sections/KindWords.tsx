@@ -115,11 +115,11 @@ export function KindWords() {
         ) : null}
       </div>
 
-      {/* Highlights Grid (Citi Client & Team Reviews) */}
+      {/* Highlights Grid (Enterprise Client & Team Reviews) */}
       {highlights.length > 0 && (
         <div className="mt-12">
           <h3 className="text-xs font-bold font-mono text-phosphor uppercase tracking-wider">
-            Citi Client & Team Execution Reviews
+            Enterprise Client & Stakeholder Execution Reviews
           </h3>
           <div className="mt-4 grid gap-4 md:grid-cols-3">
             {highlights.map((item) => (
