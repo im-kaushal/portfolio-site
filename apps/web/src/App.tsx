@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { Layout } from "./components/Layout";
 import { ThemeContext, type Theme } from "./lib/theme";
 import { CaseStudyPage } from "./pages/CaseStudyPage";
@@ -50,6 +51,7 @@ export function App() {
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>
+        <Analytics />
       </SmoothScrollProvider>
     </ThemeContext.Provider>
   );
