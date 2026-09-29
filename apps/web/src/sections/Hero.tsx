@@ -150,7 +150,11 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
             </span>
-            <span className="font-mono text-xs text-paper font-medium">
+            <span className="font-mono text-xs font-semibold text-amber">
+              Software Engineer @ HashedIn by Deloitte
+            </span>
+            <span className="text-line text-xs">·</span>
+            <span className="font-mono text-xs text-paper/90 font-medium">
               Open for new opportunities
             </span>
           </div>

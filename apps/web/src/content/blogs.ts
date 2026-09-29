@@ -815,8 +815,8 @@ Hi [First Name], hope you're well! I'm a Frontend Engineer (3.5+ yrs in React/Ty
 },
   {
     slug: "anthropic-claude-certified-developer-foundations-ccdv-f-guide",
-    title: "The Master Engineering Guide to Cracking the Claude Certified Developer – Foundations (CCDV-F) Exam",
-    description: "A production-grade, scenario-driven breakdown of Anthropic's CCDV-F exam: domain blueprints, prompt cache invalidation, agent loops, MCP protocols, universal trap elimination rules, and 13 real-world engineering practice scenarios.",
+    title: "Anthropic CCDV-F Exam Master Guide: Core Domains, Architecture & The 50% Rule (Part 1)",
+    description: "Part 1 of the CCDV-F Certification Series: In-depth architectural guide covering the 8 exam domains, the 50% score rule, stateless message mechanics, prefix cache economics, and bounded agent loops.",
     category: "AI & LLM Engineering",
     tags: [
       "Anthropic",
@@ -829,12 +829,12 @@ Hi [First Name], hope you're well! I'm a Frontend Engineer (3.5+ yrs in React/Ty
       "LLM Architecture",
       "Pearson VUE"
     ],
-    readTime: "18 min read",
+    readTime: "12 min read",
     publishedAt: "Sep 2026",
     featured: true,
     views: "5.8k",
     content: {
-      lead: "The Anthropic Claude Certified Developer – Foundations (CCDV-F / Pearson VUE CDV-F) is not a syntax-memorization trivia quiz. You will not be asked to code an agent from scratch without docs or recite obscure parameter lists. Instead, this exam tests real-world production engineering judgment: diagnosing why a prompt cache hit rate dropped to zero, preventing runaway agentic loops, bounding context ceilings, writing deterministic security hooks, and choosing the right model trade-offs under latency and budget constraints. Here is the complete engineering master guide to clearing the 720/1000 passing threshold with confidence.",
+      lead: "The Anthropic Claude Certified Developer – Foundations (CCDV-F / Pearson VUE CDV-F) is not a syntax-memorization trivia quiz. You will not be asked to code an agent from scratch without docs or recite obscure parameter lists. Instead, this exam tests real-world production engineering judgment: diagnosing why a prompt cache hit rate dropped to zero, preventing runaway agentic loops, bounding context ceilings, writing deterministic security hooks, and choosing the right model trade-offs under latency and budget constraints. Here is Part 1 of our 3-part master guide, diving deep into the exam blueprint, scoring weights, and the 8 core tested architectural domains.",
       sections: [
         {
           heading: "1. Exam Blueprint & Score Weighting: The 50% Rule",
@@ -985,10 +985,159 @@ export async function runAutomatedInvestigation(userIncident: string) {
           ]
         },
         {
-          heading: "9. The Candidate Trap Detector: 7 Universal Elimination Rules",
+          heading: "9. Strategic Next Steps & Interlinked Certification Series",
           paragraphs: [
-            "When answering multiple-choice questions on Pearson VUE, you can immediately eliminate 2 to 3 distractors by applying universal architectural heuristics.",
-            "Explore the interactive elimination matrix and practice scenarios below to sharpen your intuition and clear the exam with ease."
+            "Now that you have mastered the core 8-domain architectural foundation and the 50% Rule, continue to the next installments of this series to optimize your exam readiness:",
+            "• Part 2: Quick Tips & 7 Trap Elimination Rules — Learn the 15-minute exam-day cheat sheet and the universal heuristics to instantly eliminate wrong distractor choices on Pearson VUE.",
+            "• Part 3: Interactive 13-Scenario Mock Test Simulator — Put your engineering judgment to the test with real production incidents, live scoring, domain filtering, and comprehensive architectural rationales."
+          ],
+          callout: {
+            type: "tip",
+            text: "Explore Part 2 and Part 3 below to complete your preparation and clear the CCDV-F exam with the highest score in minimal study time."
+          }
+        }
+      ]
+    }
+  },
+  {
+    slug: "anthropic-ccdv-f-exam-quick-tips-trap-elimination-guide",
+    title: "Anthropic CCDV-F Exam Quick Tips, 15-Min Cheat Sheet & 7 Trap Elimination Rules (Part 2)",
+    description: "Part 2 of the CCDV-F Certification Series: High-yield quick review shortcuts, Pearson VUE exam mechanics, the 15-minute quick cheat sheet, and 7 universal trap elimination rules to instantly disqualify distractors.",
+    category: "AI & LLM Engineering",
+    tags: [
+      "Anthropic",
+      "Claude Certification",
+      "CCDV-F",
+      "Cheat Sheet",
+      "Quick Tips",
+      "Trap Elimination",
+      "Pearson VUE",
+      "LLM Architecture"
+    ],
+    readTime: "9 min read",
+    publishedAt: "Sep 2026",
+    featured: false,
+    views: "4.8k",
+    content: {
+      lead: "When taking the 53-question, 120-minute Pearson VUE CCDV-F exam, speed, elimination heuristics, and pattern recognition are critical. You do not have time to re-derive every architectural concept from first principles during the test. Part 2 of our certification series provides high-yield quick tips, the essential 15-minute exam-day cheat sheet, and 7 universal elimination rules that instantly disqualify 2 to 3 multiple-choice distractors per question.",
+      sections: [
+        {
+          heading: "1. Pearson VUE Test Logistics, Timing & Multiple-Response Pacing",
+          paragraphs: [
+            "The CCDV-F exam consists of exactly 53 questions across 120 minutes. That grants an average of ~2.2 minutes per question. Because questions vary in complexity from 15-second model selection scenarios to 3-minute multi-step agent architecture evaluations, aggressive pacing is essential.",
+            "Zero Negative Marking: Every blank question is a guaranteed zero. If you are stuck between two choices, make your best tactical guess, flag the question, and keep moving. Never let an individual question stall your momentum.",
+            "Explicit Multiple-Response Prompts: Whenever an exam question requires multiple answers, Pearson VUE explicitly states it in bold: 'Select TWO' or 'Select THREE'. If a question does not include this explicit instruction, it is strictly single-choice.",
+            "The Flag-and-Sweep Technique: On your first pass, answer every question that you can solve in under 60 seconds with 100% confidence. Flag the longer scenario problems. By minute 70, you should have answered 35+ core questions, banking 50 minutes to comfortably deconstruct the remaining 15 complex scenario questions."
+          ],
+          callout: {
+            type: "important",
+            text: "Time Management Target: Aim to complete question 25 by minute 55, and complete your initial pass of all 53 questions by minute 100. That leaves 20 minutes to review flagged questions."
+          }
+        },
+        {
+          heading: "2. High-Yield Architectural Quick Tips & Rules of Thumb",
+          paragraphs: [
+            "HTTP 429 vs 529: HTTP 429 means client-side rate limit exceeded (RPM/TPM). HTTP 529 means Anthropic server GPU capacity overload. Remediation for both: Exponential Backoff with Jitter and honoring the Retry-After header. Never immediately retry in a tight while loop.",
+            "Prompt Caching Byte-0 Rule: Prompt caching operates on an exact prefix match starting from byte index 0. Always place static instructions, static reference schemas, and static knowledge base documents first, followed by cache_control breakpoints. Dynamic user queries, timestamps, and request IDs must always live at the end of the payload.",
+            "Context Ceiling Math: Context window capacity is a hard ceiling shared between prompt input tokens and requested max_tokens. If Input Tokens + max_tokens exceeds the model limit (e.g. 200,000 tokens), the API immediately throws an HTTP 400 error without generating a token.",
+            "The temperature = 0 Myth: Setting temperature = 0 controls sampling entropy but does not guarantee bit-for-bit determinism across distributed GPU clusters. Never rely on temperature = 0 as a validation guarantee—always pass outputs through schema parsers (Pydantic / Zod).",
+            "MCP Transports: Use stdio for local subprocesses running on the same machine (CLI tools, desktop apps). Use SSE (Server-Sent Events) or Streamable HTTP for remote, multi-tenant enterprise MCP servers over network boundaries.",
+            "Autonomous Agent Stopping Criteria: An agent loop terminates when Claude returns stop_reason = 'end_turn' (no tool calls emitted). Never parse natural language strings like 'DONE' or 'TASK COMPLETED'. Always enforce programmatic safeguards with max_turns and max_budget_usd."
+          ]
+        },
+        {
+          heading: "3. The 15-Minute Exam Day Cheat Sheet",
+          paragraphs: [
+            "Review this condensed reference guide right before entering the testing center or launching the Pearson VUE OnVUE secure browser.",
+            "Below is the complete architectural reference matrix mapping tested domains to key mechanics, critical formulas, default parameters, and failure modes."
+          ],
+          callout: {
+            type: "tip",
+            text: "Use the copy button in the interactive cheat sheet card below to grab the entire formatted quick-reference text for your offline revision."
+          }
+        },
+        {
+          heading: "4. The Candidate Trap Detector: 7 Universal Elimination Heuristics",
+          paragraphs: [
+            "Pearson VUE exam writers build predictable trap options designed to catch candidates who rely on intuition rather than production engineering patterns.",
+            "Explore the interactive elimination matrix below to inspect the 7 universal trap rules, why each distractor fails, and what production engineers choose instead."
+          ]
+        },
+        {
+          heading: "5. Production Engineering Gotchas vs. Test Distractors",
+          paragraphs: [
+            "Trap 1: 'Modify System Prompt for Security'. Asking Claude politely not to execute harmful SQL or delete files in the prompt is probabilistic, not deterministic. Security requires Pre-Execution Hooks (PreToolUse) in host application code.",
+            "Trap 2: 'Raise Temperature to Fix Context Errors'. Temperature controls randomness, not context size. Context capacity errors require context pruning, sliding windows, or map-reduce chunking.",
+            "Trap 3: 'Increase Model Tier to Fix Stale Tool Confusion'. If an agent confuses two similar tools (query_orders vs query_invoices), swapping Sonnet for Opus will not fix poor parameter definitions. Fix the tool descriptions and schema boundaries.",
+            "Trap 4: 'Natural Language Agent Termination'. Checking if the text includes 'DONE' will fail on format variations. Check stop_reason === 'end_turn' and configure max_turns."
+          ]
+        },
+        {
+          heading: "6. Next in Series: Practice with the 13-Scenario Mock Exam (Part 3)",
+          paragraphs: [
+            "Now that you know how to identify distractors and apply rapid heuristics, test your skills in Part 3 with our interactive 13-scenario mock exam simulator.",
+            "Each question simulates a complex real-world production incident with detailed rationales, interviewer insights, and key takeaways."
+          ],
+          callout: {
+            type: "tip",
+            text: "Jump directly to Part 3 below to begin your full scenario practice test."
+          }
+        }
+      ]
+    }
+  },
+  {
+    slug: "anthropic-ccdv-f-interactive-mock-test-practice-scenarios",
+    title: "Anthropic CCDV-F Interactive Mock Exam: 13 Practice Scenarios & Rationales (Part 3)",
+    description: "Part 3 of the CCDV-F Certification Series: Full interactive mock exam simulator featuring 13 real-world production incident scenarios, live scoring counter, domain filtering, and comprehensive architectural rationales based on personal preparation.",
+    category: "AI & LLM Engineering",
+    tags: [
+      "Anthropic",
+      "Claude Certification",
+      "CCDV-F",
+      "Mock Exam",
+      "Practice Questions",
+      "Interactive Test",
+      "Pearson VUE",
+      "Scenario Questions"
+    ],
+    readTime: "15 min read",
+    publishedAt: "Sep 2026",
+    featured: false,
+    views: "6.4k",
+    content: {
+      lead: "Welcome to Part 3 of the CCDV-F Certification Series: an interactive practice simulator featuring 13 production incident scenarios covering all 8 exam domains. Each question replicates the multi-layered architectural trade-offs you will encounter on test day, followed by full rationales, interviewer insights, and key takeaways.",
+      sections: [
+        {
+          heading: "1. Author Notice & 100% Exam Success Preparation Guarantee",
+          paragraphs: [
+            "This mock test is created based on my own direct personal preparation, deep architecture research, and hands-on production code that led to clearing the official Anthropic Claude Certified Developer – Foundations (CCDV-F / Pearson VUE CDV-F) certification exam.",
+            "They are NOT the exact live test questions from Pearson VUE, but realistic production-grade scenarios designed around Anthropic's tested competencies and edge cases. Mastering these 13 scenario cases and their core architectural failure modes is 100% guaranteed to help you crack your exam with the least effort by training you on the exact competencies, edge cases, and reasoning patterns Anthropic evaluates."
+          ],
+          callout: {
+            type: "important",
+            text: "Preparation Guarantee: These 13 scenarios simulate the exact cognitive demand of Pearson VUE questions. If you understand the engineering rationales behind all 13 questions, you are thoroughly prepared to pass."
+          }
+        },
+        {
+          heading: "2. How to Approach These Production Incident Scenarios",
+          paragraphs: [
+            "Unlike traditional multiple choice tests that ask 'What is the definition of X?', every question below presents a real engineering incident: a pipeline failing with 529 errors, prompt cache hit rates dropping to 0%, an agent stuck in an endless query loop, or an enterprise facing strict data residency mandates.",
+            "Read each scenario carefully, identify the core engineering failure mode, eliminate distractor options using the heuristics from Part 2, and select your answer. Click any option to immediately reveal the verified rationale, interviewer insight, and takeaway."
+          ]
+        },
+        {
+          heading: "3. Interactive Mock Exam Domain Distribution & Passing Benchmark",
+          paragraphs: [
+            "Passing threshold on the Pearson VUE exam is 720 out of 1000 points (~72%). On this 13-question practice suite, aim to score at least 10/13 (77%) to ensure a safe margin of victory.",
+            "You can use the domain filter buttons in the interactive quiz below to focus on specific weak areas or practice across all 8 domains simultaneously."
+          ]
+        },
+        {
+          heading: "4. Post-Test Remediation & Next Steps",
+          paragraphs: [
+            "For any question you missed, expand the engineering rationale and make note of the underlying failure mode.",
+            "If you need a refresher on the underlying architectural principles, refer back to Part 1: Exam Blueprint & 8 Domains Guide or review the rapid elimination heuristics in Part 2: Quick Tips & 7 Trap Elimination Rules."
           ]
         }
       ]

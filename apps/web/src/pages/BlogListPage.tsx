@@ -181,9 +181,26 @@ export function BlogListPage() {
                 <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between border border-line/70 bg-ink-2/80 hover:-translate-y-1 hover:border-amber/40 transition-all">
                   <div>
                     <div className="flex items-center justify-between text-xs font-mono text-steel">
-                      <span className="rounded bg-amber/10 border border-amber/20 px-2 py-0.5 text-amber text-[11px] font-medium">
-                        {post.category}
-                      </span>
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="rounded bg-amber/10 border border-amber/20 px-2 py-0.5 text-amber text-[11px] font-medium">
+                          {post.category}
+                        </span>
+                        {post.slug === "anthropic-claude-certified-developer-foundations-ccdv-f-guide" && (
+                          <span className="rounded bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 text-emerald-400 text-[10px] font-bold">
+                            PART 1 • BLUEPRINT
+                          </span>
+                        )}
+                        {post.slug === "anthropic-ccdv-f-exam-quick-tips-trap-elimination-guide" && (
+                          <span className="rounded bg-amber/15 border border-amber/30 px-1.5 py-0.5 text-amber text-[10px] font-bold">
+                            PART 2 • TIPS & CHEAT SHEET
+                          </span>
+                        )}
+                        {post.slug === "anthropic-ccdv-f-interactive-mock-test-practice-scenarios" && (
+                          <span className="rounded bg-phosphor/15 border border-phosphor/30 px-1.5 py-0.5 text-phosphor text-[10px] font-bold">
+                            PART 3 • MOCK EXAM
+                          </span>
+                        )}
+                      </div>
                       <span>{post.readTime}</span>
                     </div>
 
