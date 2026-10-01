@@ -834,7 +834,7 @@ Hi [First Name], hope you're well! I'm a Frontend Engineer (3.5+ yrs in React/Ty
     featured: true,
     views: "5.8k",
     content: {
-      lead: "The Anthropic Claude Certified Developer – Foundations (CCDV-F / Pearson VUE CDV-F) is not a syntax-memorization trivia quiz. You will not be asked to code an agent from scratch without docs or recite obscure parameter lists. Instead, this exam tests real-world production engineering judgment: diagnosing why a prompt cache hit rate dropped to zero, preventing runaway agentic loops, bounding context ceilings, writing deterministic security hooks, and choosing the right model trade-offs under latency and budget constraints. Here is Part 1 of our 3-part master guide, diving deep into the exam blueprint, scoring weights, and the 8 core tested architectural domains.",
+      lead: "The Anthropic Claude Certified Developer – Foundations (CCDV-F / Pearson VUE CDV-F) is not a syntax-memorization trivia quiz. You will not be asked to code an agent from scratch without docs or recite obscure parameter lists. Instead, this exam tests real-world production engineering judgment: diagnosing why a prompt cache hit rate dropped to zero, preventing runaway agentic loops, bounding context ceilings, writing deterministic security hooks, and choosing the right model trade-offs under latency and budget constraints. Here is Part 1 of our 3-part master guide, diving deep into the exam blueprint, scoring weights, and the core tested architectural domains.",
       sections: [
         {
           heading: "1. Exam Blueprint & Score Weighting: The 50% Rule",
@@ -851,12 +851,12 @@ Hi [First Name], hope you're well! I'm a Frontend Engineer (3.5+ yrs in React/Ty
         {
           heading: "2. Domain 1: Applications & Integration (33.1% — The Heavyweight)",
           paragraphs: [
-            "Stateless Messages API Mechanics: Claude's Messages API is strictly stateless. The server stores no conversational memory between HTTP round-trips. Your application must reconstruct and submit the entire conversational history on every turn. The role sequence strictly alternates between user and assistant, with tool calls represented as assistant tool_use blocks and execution results returned as user tool_result blocks.",
-            "Prompt Caching Prefix Economics: Prompt caching provides an ~80–90% cost reduction and dramatic latency drops on cached input tokens. However, the cache operates on an uncompromising byte-for-byte exact prefix starting at index 0. Your request structure must be arranged from static to dynamic: Static System Instructions -> Static Tool Schemas -> Static Knowledge Base / Docs -> Cache Breakpoint (type: ephemeral) -> Dynamic User Query & Timestamps.",
-            "If a developer injects a dynamic timestamp or user ID at the start of the system prompt, the index-0 prefix changes on every request, driving the cache hit rate to zero and blowing out the API bill.",
-            "Delivery Models & Cost Arbitrage: Streaming (stream=True) renders token deltas in real-time to slash perceived latency (Time to First Token). It does not change raw computation time or grant cost discounts. Conversely, the Message Batches API is an asynchronous pipeline offering a 50% discount on both input and output tokens with a 24-hour turnaround SLA—ideal for massive overnight classification or embedding backfills.",
-            "Production Resilience: HTTP 429 means you blew past your RPM or TPM rate limit. HTTP 529 means Anthropic's GPU clusters are temporarily overloaded. Never throw a permanent error and never loop in an immediate tight retry. Always execute Exponential Backoff with Jitter and strictly honor the server's Retry-After header. For write operations, always send idempotency keys so network retries do not trigger duplicate database mutations.",
-            "Prompt DevOps & Model Pinning: Prompts belong in Git repositories with Pull Requests, version tags, and automated evaluation suites. In production pipelines, never use floating aliases like claude-3-5-sonnet-latest. A silent backend snapshot migration can subtly alter JSON output keys. Always pin explicit dated snapshots such as claude-3-5-sonnet-20241022."
+            "• Stateless Messages API Mechanics: Claude's Messages API is strictly stateless. The server stores no conversational memory between HTTP round-trips. Your application must reconstruct and submit the entire conversational history on every turn. The role sequence strictly alternates between user and assistant, with tool calls represented as assistant tool_use blocks and execution results returned as user tool_result blocks.",
+            "• Prompt Caching Prefix Economics: Prompt caching provides an ~80–90% cost reduction and dramatic latency drops on cached input tokens. However, the cache operates on an uncompromising byte-for-byte exact prefix starting at index 0. Your request structure must be arranged from static to dynamic: Static System Instructions -> Static Tool Schemas -> Static Knowledge Base / Docs -> Cache Breakpoint (type: ephemeral) -> Dynamic User Query & Timestamps.",
+            "• Golden Rule on Dynamic Timestamps: If a developer injects a dynamic timestamp or user ID at the start of the system prompt, the index-0 prefix changes on every request, driving the cache hit rate to zero and blowing out the API bill.",
+            "• Delivery Models & Cost Arbitrage: Streaming (stream=True) renders token deltas in real-time to slash perceived latency (Time to First Token). It does not change raw computation time or grant cost discounts. Conversely, the Message Batches API is an asynchronous pipeline offering a 50% discount on both input and output tokens with a 24-hour turnaround SLA—ideal for massive overnight classification or embedding backfills.",
+            "• Production Resilience (HTTP 429 vs 529): HTTP 429 means you blew past your RPM or TPM rate limit. HTTP 529 means Anthropic's GPU clusters are temporarily overloaded. Never throw a permanent error and never loop in an immediate tight retry. Always execute Exponential Backoff with Jitter and strictly honor the server's Retry-After header. For write operations, always send idempotency keys so network retries do not trigger duplicate database mutations.",
+            "• Prompt DevOps & Model Pinning: Prompts belong in Git repositories with Pull Requests, version tags, and automated evaluation suites. In production pipelines, never use floating aliases like claude-3-5-sonnet-latest. A silent backend snapshot migration can subtly alter JSON output keys. Always pin explicit dated snapshots such as claude-3-5-sonnet-20241022."
           ],
           codeSnippet: {
             language: "typescript",
@@ -897,10 +897,10 @@ const requestPayload = {
         {
           heading: "3. Domain 2: Model Selection & Context Physics (16.8%)",
           paragraphs: [
-            "The Model Trade-off Triangle: Selecting a model is an architectural trade-off balancing accuracy, latency, cost, and volume. Claude Haiku is your throughput engine—sub-second latency, rock-bottom cost, ideal for high-volume text classification, intent routing, and lightweight data extraction. Claude Sonnet is the balanced enterprise workhorse—frontier intelligence, high speed, and the default choice for software engineering, complex coding, and agentic tool use. Claude Opus is the deep reasoning specialist—reserved for intricate multi-step academic research, complex novel system architectures, and workflows where precision overrides cost and latency limits.",
-            "Reasoning Budgets & Fast Mode: Adaptive thinking allows you to allocate an explicit reasoning token budget for complex logic prior to emitting final tokens. Higher reasoning effort improves mathematical and architectural deduction at the expense of latency and token cost. Fast Mode (speed: 'fast') provides premium latency acceleration on high-tier models for interactive user interfaces.",
-            "The Context Ceiling Formula: The context window (e.g., 200,000 tokens) is a hard ceiling shared between the input tokens and the reserved output buffer: Total Context Demand = Input Tokens + max_tokens (Requested Output). If your input prompt consumes 185,000 tokens and you request max_tokens: 20,000, your total demand is 205,000 > 200,000. The API will reject the request immediately with an HTTP 400 error without generating a single character.",
-            "The temperature = 0 Fallacy: Setting temperature = 0 does NOT guarantee bit-for-bit determinism. Floating-point variations across distributed GPU inference clusters introduce minute non-deterministic token selection variations. Production systems must never rely on temperature = 0 for validation; you must parse outputs through schema validators (Pydantic / Zod) with defensive error handling."
+            "• The Model Trade-off Triangle: Selecting a model is an architectural trade-off balancing accuracy, latency, cost, and volume. Claude Haiku is your throughput engine—sub-second latency, rock-bottom cost, ideal for high-volume text classification, intent routing, and lightweight data extraction. Claude Sonnet is the balanced enterprise workhorse—frontier intelligence, high speed, and the default choice for software engineering, complex coding, and agentic tool use. Claude Opus is the deep reasoning specialist—reserved for intricate multi-step academic research, complex novel system architectures, and workflows where precision overrides cost and latency limits.",
+            "• Reasoning Budgets & Fast Mode: Adaptive thinking allows you to allocate an explicit reasoning token budget for complex logic prior to emitting final tokens. Higher reasoning effort improves mathematical and architectural deduction at the expense of latency and token cost. Fast Mode (speed: 'fast') provides premium latency acceleration on high-tier models for interactive user interfaces.",
+            "• The Context Ceiling Formula: The context window (e.g., 200,000 tokens) is a hard ceiling shared between the input tokens and the reserved output buffer: Total Context Demand = Input Tokens + max_tokens (Requested Output). If your input prompt consumes 185,000 tokens and you request max_tokens: 20,000, your total demand is 205,000 > 200,000. The API will reject the request immediately with an HTTP 400 error without generating a single character.",
+            "• The temperature = 0 Fallacy: Setting temperature = 0 does NOT guarantee bit-for-bit determinism. Floating-point variations across distributed GPU inference clusters introduce minute non-deterministic token selection variations. Production systems must never rely on temperature = 0 for validation; you must parse outputs through schema validators (Pydantic / Zod) with defensive error handling."
           ],
           callout: {
             type: "note",
@@ -910,10 +910,10 @@ const requestPayload = {
         {
           heading: "4. Domain 3: Autonomous Agents & Bounded Workflows (14.7%)",
           paragraphs: [
-            "Fixed Workflow vs. Autonomous Agent: A Fixed Workflow (Pipeline / Router) is a deterministic, pre-programmed sequence of steps (Extract -> Validate -> Format). Use it when the task sequence is known ahead of time—it offers lowest token cost, predictable latency, and simple unit testing. An Autonomous Agent operates in an iterative discovery loop: Claude evaluates context, decides which tool to invoke, inspects the result, and loops until satisfied. Use agents when the path to the solution cannot be predicted in advance.",
-            "Termination Guarantees: An agentic loop terminates when Claude returns a response containing no tool calls (stop_reason = 'end_turn'). Never inspect model prose for natural language stop words like 'DONE' or 'FINISHED'—natural language parsing is notoriously brittle. In the Claude Agent SDK, bound loops programmatically using max_turns and max_budget_usd, and inspect the resulting ResultMessage for error_max_turns or error_max_budget_usd.",
-            "Subagent Context Isolation: When an agent needs to perform deep exploratory work (reading 30 files in a repo or scraping 100 search results), loading those raw payloads into the main conversational history triggers massive context bloat. The architectural fix is Subagent Context Isolation: spawn a dedicated subagent with a fresh, clean context window. The subagent executes the exploration locally and returns only a concise, synthesized summary back to the parent supervisor.",
-            "Supervisor / Orchestrator Pattern: The supervisor never does the heavy lifting. Its role is orchestration: decomposing the user's objective, dispatching discrete subtasks to specialized subagents, and synthesizing their individual outputs into a unified response."
+            "• Fixed Workflow vs. Autonomous Agent: A Fixed Workflow (Pipeline / Router) is a deterministic, pre-programmed sequence of steps (Extract -> Validate -> Format). Use it when the task sequence is known ahead of time—it offers lowest token cost, predictable latency, and simple unit testing. An Autonomous Agent operates in an iterative discovery loop: Claude evaluates context, decides which tool to invoke, inspects the result, and loops until satisfied. Use agents when the path to the solution cannot be predicted in advance.",
+            "• Termination Guarantees: An agentic loop terminates when Claude returns a response containing no tool calls (stop_reason = 'end_turn'). Never inspect model prose for natural language stop words like 'DONE' or 'FINISHED'—natural language parsing is notoriously brittle. In the Claude Agent SDK, bound loops programmatically using max_turns and max_budget_usd, and inspect the resulting ResultMessage for error_max_turns or error_max_budget_usd.",
+            "• Subagent Context Isolation: When an agent needs to perform deep exploratory work (reading 30 files in a repo or scraping 100 search results), loading those raw payloads into the main conversational history triggers massive context bloat. The architectural fix is Subagent Context Isolation: spawn a dedicated subagent with a fresh, clean context window. The subagent executes the exploration locally and returns only a concise, synthesized summary back to the parent supervisor.",
+            "• Supervisor / Orchestrator Pattern: The supervisor never does the heavy lifting. Its role is orchestration: decomposing the user's objective, dispatching discrete subtasks to specialized subagents, and synthesizing their individual outputs into a unified response."
           ],
           codeSnippet: {
             language: "typescript",
@@ -947,54 +947,28 @@ export async function runAutomatedInvestigation(userIncident: string) {
           }
         },
         {
-          heading: "5. Domain 4: Prompt & Context Engineering (11.0%)",
+          heading: "5. The 8-Domain Interactive Blueprint & Scoring Guide",
           paragraphs: [
-            "Structural Separation of Concerns: Place immutable behavioral rules, formatting schemas, and negative constraints inside the top-level system parameter. Place long static reference materials and knowledge bases before the user query. Place dynamic, per-request inputs at the very end to maximize prompt caching.",
-            "Context Bloat vs. Context Drift: Context bloat occurs when thousands of tokens of raw, stale JSON tool outputs accumulate over multi-turn interactions. Context drift occurs when that accumulated noise dilutes the model's attention, causing it to forget earlier instructions or revert to conversational chatter. The remedy is proactive Context Pruning: clear stale raw tool outputs (clear_tool_uses) once facts have been extracted, or summarize historical turns into compact narrative blocks.",
-            "Defensive Schema Validation: Asking Claude for JSON in a prompt does not guarantee valid JSON at runtime. Production code must always enforce a defensive boundary: Claude Output -> Schema Parser (Pydantic in Python, Zod in TypeScript) -> Business Logic. If parsing fails, catch the error and return the validation diff to Claude in a retry turn to allow self-correction."
-          ]
-        },
-        {
-          heading: "6. Domain 5: Tools & Model Context Protocol (MCP) (10.6%)",
-          paragraphs: [
-            "Tool Selection Criteria: Claude selects which tool to execute solely based on the tool's name, description, and JSON schema parameter definitions. If an agent confuses two similar tools (such as query_orders vs query_invoices), never build a fragile custom routing layer. The correct fix is to rewrite the tool descriptions to explicitly delineate their distinct functional boundaries, parameters, and mutual exclusions.",
-            "Defensive Tool Error Payloads: Tools must never fail silently or throw unhandled exceptions. When a tool fails (e.g. database record missing), return a structured error payload with is_error: true and a descriptive error message explaining the expected format. This gives Claude the exact context required to self-correct its arguments.",
-            "The Four Extensibility Pillars: Skills (SKILL.md) provide procedural markdown knowledge, brand guidelines, and checklists without running code. Built-in Tools are native platform utilities (Bash execution, file read/write). Custom Tools are in-process functions with JSON schemas defined inside a single codebase. MCP Servers (Model Context Protocol) expose tools, resources, and prompt templates over standard client-server protocols (local stdio for desktop/CLI or SSE/Streamable HTTP for remote enterprise services), allowing multiple decoupled applications to share tools without duplicating code."
+            "While Domains 1, 2, and 3 provide ~65% of your passing buffer, the remaining 35% of the exam covers specialized architectural capabilities:",
+            "• Domain 4: Prompt & Context Engineering (11.0%) — Context pruning (clear_tool_uses), mitigating attention dilution, and XML tags for data delimitation.",
+            "• Domain 5: Tools & Model Context Protocol (10.6%) — Delineating tool boundaries, returning structured error payloads, and stdio (local) vs SSE (network) MCP transports.",
+            "• Domain 6: Enterprise Security & BYOC (8.1%) — Pre-Execution Hooks (PreToolUse) in host application code, and Bring-Your-Own-Cloud deployments on Amazon Bedrock / Google Vertex AI.",
+            "• Domains 7 & 8: Claude Code & Observability (5.7%) — Settings precedence hierarchy, CLAUDE.md concatenation, headless automation, and execution traces for attribution.",
+            "Explore the interactive 8-domain bento grid below to inspect tested competencies, weighting bars, and practice questions for each domain."
           ],
           callout: {
             type: "tip",
-            text: "MCP Transports: Remember stdio is for local subprocesses on the same machine. SSE / Streamable HTTP is for remote, network-accessible, multi-tenant enterprise MCP servers."
+            text: "Click any domain in the interactive bento below to jump straight to its dedicated scenario practice in the Part 3 Mock Exam."
           }
         },
         {
-          heading: "7. Domain 6: Enterprise Security, Pre-Execution Hooks & BYOC (8.1%)",
+          heading: "6. The 3-Part Certification Strategy & Next Steps",
           paragraphs: [
-            "The Illusion of Prompt-Only Guardrails: Instructing Claude in the system prompt 'Under no circumstance should you execute DROP TABLE or delete files' is not a security guarantee. System prompts are probabilistic guidelines that can be bypassed by jailbreaks or unexpected reasoning paths. True safety requires deterministic code: implement Pre-Execution Hooks (PreToolUse) in host application code to intercept generated tool calls before dispatch, validate payloads against an allowlist, and block dangerous operations deterministically.",
-            "Prompt Injection Containment: Defend against untrusted external data (scraped web pages, user uploads, third-party emails) using a layered defense: 1) Delimit untrusted content inside explicit XML tags (e.g. <user_data>...</user_data>), 2) Apply the Principle of Least Privilege to tool scopes (e.g. read-only database query tools), and 3) Require Human-in-the-Loop approval for irreversible state-changing actions.",
-            "Data Residency & BYOC: Enterprises in banking, healthcare, and government operate under strict data sovereignty mandates forbidding customer data from leaving their cloud tenant. In these scenarios, deploy Claude through cloud partner integrations (Amazon Bedrock or Google Vertex AI) in Bring-Your-Own-Cloud (BYOC) self-hosted architectures within the enterprise VPC boundary, rather than using multi-tenant hosted agent services."
+            "Now that you understand the architectural physics behind the Messages API, prompt caching, context math, and agent loops, follow the roadmap to certification:",
+            "• Step 1 (Current): Review the 8-domain blueprint and verify your understanding of the 50% Rule.",
+            "• Step 2: Read Part 2: Quick Tips, 15-Min Cheat Sheet & 7 Trap Elimination Rules — Learn how Pearson VUE constructs distractor options and how to eliminate 2-3 choices in under 15 seconds.",
+            "• Step 3: Practice with Part 3: Interactive Mock Exam — Test your decision making on 13 realistic production incident scenarios with instant scoring, rationales, and the 100% preparation guarantee."
           ]
-        },
-        {
-          heading: "8. Domains 7 & 8: Claude Code & Production Observability (5.7%)",
-          paragraphs: [
-            "Claude Code Settings Hierarchy: Configuration resolves in strict priority order where highest precedence wins: 1. Enterprise Managed Settings (Administrator policies, non-overridable) -> 2. CLI Flags (runtime command arguments) -> 3. Local Project Settings (.claude/settings.local.json) -> 4. Committed Project Settings (.claude/settings.json) -> 5. Global User Settings (~/.claude/settings.json).",
-            "CLAUDE.md Hierarchical Concatenation: Guidelines stored in CLAUDE.md files concatenate hierarchically from global (~/.claude/CLAUDE.md) down to project root (./CLAUDE.md) and into nested subdirectories. They do not overwrite one another. Keep files under 200 lines to avoid context rot.",
-            "Headless CI/CD Automation: For unattended automated workflows (such as PR review bots or unit test triage in GitHub Actions), run Claude Code in Headless Print Mode: claude -p 'prompt' --json.",
-            "Root Cause Attribution via Production Traces: When a production LLM application returns faulty answers, never jump straight to swapping models or adding prompt warnings. Inspect execution traces first to identify whether the failure was an upstream Retrieval Failure (faulty RAG chunk), Context Truncation (missing relevant facts), Prompt Injection, or true Model Generation Hallucination.",
-            "Characterization Tests: Before refactoring production prompts or bumping model snapshots, establish characterization test suites across golden historical inputs to capture baseline performance and prevent regressions."
-          ]
-        },
-        {
-          heading: "9. Strategic Next Steps & Interlinked Certification Series",
-          paragraphs: [
-            "Now that you have mastered the core 8-domain architectural foundation and the 50% Rule, continue to the next installments of this series to optimize your exam readiness:",
-            "• Part 2: Quick Tips & 7 Trap Elimination Rules — Learn the 15-minute exam-day cheat sheet and the universal heuristics to instantly eliminate wrong distractor choices on Pearson VUE.",
-            "• Part 3: Interactive 13-Scenario Mock Test Simulator — Put your engineering judgment to the test with real production incidents, live scoring, domain filtering, and comprehensive architectural rationales."
-          ],
-          callout: {
-            type: "tip",
-            text: "Explore Part 2 and Part 3 below to complete your preparation and clear the CCDV-F exam with the highest score in minimal study time."
-          }
         }
       ]
     }

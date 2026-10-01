@@ -6,6 +6,7 @@ import {
   type TrapRule,
   type ScenarioQuestion,
 } from "../../content/ccdvfExamData";
+import { site } from "../../content/site";
 
 export const CCDV_SERIES = [
   {
@@ -507,17 +508,30 @@ export function CcdvfPart3Suite({
 
         {/* Explicit Author Notice & Preparation Guarantee Banner */}
         <div className="mt-6 pt-5 border-t border-line/50">
-          <div className="rounded-2xl border border-amber/40 bg-ink-1/90 p-4 sm:p-5 text-xs sm:text-sm text-paper/90 leading-relaxed shadow-sm">
-            <div className="flex items-center gap-2 text-amber font-mono font-bold text-xs uppercase tracking-wider mb-1.5">
-              <span className="h-2 w-2 rounded-full bg-amber animate-pulse" />
-              <span>Author Preparation Notice & Guarantee:</span>
+          <div className="rounded-2xl border border-amber/40 bg-gradient-to-r from-amber/10 via-ink-1 to-ink-2 p-5 sm:p-6 shadow-card">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <img
+                src={site.headshotSrc}
+                alt={site.name}
+                className="h-14 w-14 rounded-full border-2 border-amber object-cover shadow-glow shrink-0"
+              />
+              <div className="space-y-1.5 flex-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-amber font-mono font-bold text-xs uppercase tracking-wider">
+                    Author Preparation Notice & 100% Success Guarantee
+                  </span>
+                  <span className="rounded-full bg-phosphor/15 border border-phosphor/30 px-2 py-0.5 text-[10px] font-mono text-phosphor font-semibold">
+                    ✓ Exam Cleared
+                  </span>
+                </div>
+                <p className="text-paper text-sm sm:text-base font-medium leading-relaxed">
+                  &ldquo;This test is based on my preparation and eventually clearing the exam. They are not the exact question but these are <strong className="text-amber font-bold underline decoration-amber/60 decoration-2 underline-offset-4">100% guaranteed going to help you crack your exam with least efforts</strong>.&rdquo;
+                </p>
+                <p className="text-steel text-xs leading-relaxed">
+                  Every scenario below mirrors real production incidents testing prompt cache invalidation, agent loops, context boundaries, and tool error recovery — the exact architectural intuition required to achieve 720+/1000 on Pearson VUE.
+                </p>
+              </div>
             </div>
-            <p className="text-paper/95 leading-relaxed font-sans">
-              This test is based on my preparation and eventually clearing the exam. They are not the exact question but these are <strong>100% guaranteed going to help you crack your exam with least efforts</strong>.
-            </p>
-            <p className="mt-2 text-steel text-xs leading-relaxed font-sans">
-              Every scenario below mirrors real production incidents testing prompt cache invalidation, agent loops, context boundaries, and tool error recovery — the exact architectural intuition required to achieve 720+/1000 on Pearson VUE.
-            </p>
           </div>
         </div>
       </div>
