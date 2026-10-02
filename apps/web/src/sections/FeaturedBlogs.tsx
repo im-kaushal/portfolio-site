@@ -55,11 +55,6 @@ export function FeaturedBlogs() {
                     <span className="rounded bg-amber/10 border border-amber/25 px-2 py-0.5 text-amber text-[10px] font-medium">
                       {post.category}
                     </span>
-                    {post.slug === "anthropic-claude-certified-developer-foundations-ccdv-f-guide" && (
-                      <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-1.5 py-0.5 text-[9px] font-bold text-emerald-400">
-                        EXAM GUIDE • PART 1
-                      </span>
-                    )}
                     {post.sourceUrl && (
                       <span className="rounded bg-amber/20 border border-amber/40 px-1.5 py-0.5 text-[9px] font-bold text-amber">
                         {post.sourceUrl.includes("notion")

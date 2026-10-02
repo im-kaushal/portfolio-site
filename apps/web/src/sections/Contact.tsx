@@ -5,7 +5,6 @@ import { CardSpotlight } from "../components/ui/CardSpotlight";
 import { copyToClipboard } from "../lib/clipboard";
 import { playChime } from "../lib/audio";
 import { downloadResume } from "../lib/downloadResume";
-import { VoiceRecorder, type AudioRecording } from "../components/VoiceRecorder";
 import { Magnetic } from "../components/ui/Magnetic";
 import { ScrollReveal } from "../components/ui/ScrollReveal";
 
@@ -17,8 +16,6 @@ export function Contact() {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const [messageText, setMessageText] = useState("");
   const [topic, setTopic] = useState("role");
-  const [activeRecording, setActiveRecording] = useState<AudioRecording | null>(null);
-  const [inputMode, setInputMode] = useState<"text" | "voice">("text");
 
   // Automatically hide the success message after 5 seconds
   useEffect(() => {
@@ -48,18 +45,11 @@ export function Contact() {
     const data = new FormData(form);
     const name = String(data.get("name") ?? "").trim();
     const email = String(data.get("email") ?? "").trim();
-    let message = messageText.trim() || String(data.get("message") ?? "").trim();
+    const message = messageText.trim() || String(data.get("message") ?? "").trim();
 
-    // If audio is attached and message is brief or empty, provide descriptive text
-    if (activeRecording && message.length < 3) {
-      message = activeRecording.transcript
-        ? `[Voice memo transcript: ${activeRecording.transcript}]`
-        : `[Voice memo attached (${Math.round(activeRecording.duration)}s duration)]`;
-    }
-
-    if (!name || !email || (!activeRecording && message.length < 3)) {
+    if (!name || !email || message.length < 3) {
       setStatus("error");
-      setError("Please provide your name, email, and a message or record a voice note.");
+      setError("Please provide your name, email, and a message.");
       return;
     }
 
@@ -70,9 +60,6 @@ export function Contact() {
       message,
       website: String(data.get("website") ?? ""),
       source: window.location.pathname,
-      audioData: activeRecording?.base64,
-      audioDuration: activeRecording?.duration,
-      transcript: activeRecording?.transcript,
     };
 
     try {
@@ -91,18 +78,10 @@ export function Contact() {
       playChime();
       setStatus("ok");
       setMessageText("");
-      setActiveRecording(null);
       form.reset();
     } catch (err) {
       setStatus("error");
       setError(err instanceof Error ? err.message : "Could not send. Please email me directly.");
-    }
-  }
-
-  function handleVoiceRecordingComplete(rec: AudioRecording) {
-    setActiveRecording(rec);
-    if (rec.transcript && !messageText) {
-      setMessageText(rec.transcript);
     }
   }
 
@@ -287,80 +266,10 @@ export function Contact() {
 
         {/* Right Column: Async Inquiry Form & Voice Memo */}
         <CardSpotlight className="p-6 sm:p-7 border-line/70">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line/60 pb-3 mb-5">
-            <div>
-              <h3 className="text-base font-semibold text-paper">Send a Note</h3>
-              <p className="mt-0.5 text-xs text-steel">Directly reaches my primary inbox</p>
-            </div>
-
-            {/* Transmission Mode Switcher: Text vs Voice Memo */}
-            <div
-              role="tablist"
-              aria-label="Contact transmission mode"
-              className="flex items-center gap-1 rounded-xl border border-line/80 bg-ink-2/80 p-1"
-            >
-              <button
-                type="button"
-                role="tab"
-                aria-selected={inputMode === "text"}
-                onClick={() => setInputMode("text")}
-                className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
-                  inputMode === "text"
-                    ? "bg-amber text-white font-semibold shadow-sm"
-                    : "text-steel hover:text-paper"
-                }`}
-              >
-                Text
-              </button>
-              <button
-                type="button"
-                role="tab"
-                aria-selected={inputMode === "voice"}
-                onClick={() => setInputMode("voice")}
-                className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs transition-colors ${
-                  inputMode === "voice"
-                    ? "bg-phosphor/20 text-phosphor font-semibold border border-phosphor/40"
-                    : "text-steel hover:text-paper"
-                }`}
-              >
-                <span>🎙 Voice Memo</span>
-                {activeRecording && <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />}
-              </button>
-            </div>
+          <div className="border-b border-line/60 pb-3 mb-5">
+            <h3 className="text-base font-semibold text-paper">Send a Note</h3>
+            <p className="mt-0.5 text-xs text-steel">Directly reaches my primary inbox</p>
           </div>
-
-          {/* Voice Memo Recorder with Waveform Visualizer */}
-          {inputMode === "voice" && (
-            <div className="mb-5 overflow-hidden rounded-xl border border-line/80 bg-ink-2/90">
-              <VoiceRecorder
-                initialRecording={activeRecording}
-                onRecordingComplete={handleVoiceRecordingComplete}
-                onTranscriptUpdate={(text: string) => {
-                  if (!messageText) setMessageText(text);
-                }}
-                onClear={() => {
-                  setActiveRecording(null);
-                }}
-              />
-            </div>
-          )}
-
-          {/* Attached Audio Notification Pill */}
-          {activeRecording && inputMode === "text" && (
-            <div className="mb-4 flex items-center justify-between rounded-xl border border-phosphor/40 bg-phosphor/10 px-4 py-2.5 font-mono text-xs text-phosphor">
-              <div className="flex items-center gap-2">
-                <span>🎙 Voice Memo Attached</span>
-                <span className="text-steel">({Math.round(activeRecording.duration)}s)</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setInputMode("voice")}
-                className="text-[11px] uppercase tracking-wider underline text-paper hover:text-amber"
-              >
-                Review Audio
-              </button>
-            </div>
-          )}
 
           <form onSubmit={onSubmit} className="space-y-4" noValidate>
             <div>
@@ -410,30 +319,19 @@ export function Contact() {
             </div>
 
             <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="contact-message" className="block text-xs font-medium text-steel">
-                  Message {activeRecording && <span className="text-phosphor">(Voice Transcribed)</span>}
-                </label>
-                {activeRecording && (
-                  <span className="font-mono text-[10px] text-phosphor">
-                    🎙 Audio Attached ({Math.round(activeRecording.duration)}s)
-                  </span>
-                )}
-              </div>
+              <label htmlFor="contact-message" className="block text-xs font-medium text-steel">
+                Message
+              </label>
               <textarea
                 id="contact-message"
                 name="message"
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
-                required={!activeRecording}
-                minLength={activeRecording ? 0 : 3}
+                required
+                minLength={3}
                 maxLength={4000}
                 rows={4}
-                placeholder={
-                  activeRecording
-                    ? "Your voice transcript will appear here. You can freely edit or augment it..."
-                    : "Role scope, engineering project, or any questions..."
-                }
+                placeholder="Role scope, engineering project, or any questions..."
                 className="mt-1.5 w-full rounded-xl border border-line/80 bg-ink-2 px-3.5 py-2.5 text-sm text-paper placeholder-steel/60 outline-none focus:border-amber transition-colors"
               />
             </div>
@@ -445,29 +343,16 @@ export function Contact() {
               </label>
             </div>
 
-            <div className="pt-2 flex flex-wrap items-center gap-3">
+            <div className="pt-2">
               <Magnetic strength={0.2} className="w-full sm:w-auto">
                 <button
                   type="submit"
                   disabled={status === "sending"}
                   className="w-full sm:w-auto rounded-xl bg-amber px-6 py-3 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all disabled:opacity-50"
                 >
-                  {status === "sending"
-                    ? "Transmitting…"
-                    : activeRecording
-                    ? "Transmit Voice Note & Message"
-                    : "Send Message →"}
+                  {status === "sending" ? "Transmitting…" : "Send Message →"}
                 </button>
               </Magnetic>
-
-              <button
-                type="button"
-                onClick={() => setInputMode((prev) => (prev === "voice" ? "text" : "voice"))}
-                className="rounded-xl border border-line/80 bg-ink-2/60 px-4 py-3 font-mono text-xs uppercase tracking-wider text-steel hover:border-phosphor hover:text-phosphor transition-colors flex items-center gap-1.5"
-              >
-                <span>🎙</span>
-                <span>{inputMode === "voice" ? "Hide Mic" : "Record Voice Note"}</span>
-              </button>
             </div>
 
             <AnimatePresence>
@@ -482,9 +367,7 @@ export function Contact() {
                 >
                   <p className="font-semibold">✓ Message delivered successfully.</p>
                   <p className="text-steel">
-                    {activeRecording
-                      ? "Voice memo & note logged. Kaushal will reply promptly."
-                      : "Thank you for getting in touch. I will reply promptly."}
+                    Thank you for getting in touch. I will reply promptly.
                   </p>
                 </motion.div>
               )}

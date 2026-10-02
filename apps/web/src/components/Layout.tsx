@@ -424,18 +424,27 @@ export function Layout() {
             >
               WhatsApp ↗
             </a>
-
-            <button
-              type="button"
-              onClick={scrollToTop}
-              className="inline-flex items-center gap-1 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-[11px] font-mono text-steel hover:text-paper hover:border-amber transition-colors shrink-0 shadow-sm"
-              title="Scroll back to top"
-            >
-              <span>↑ Top</span>
-            </button>
           </div>
         </div>
       </footer>
+
+      {/* Fixed Back-to-Top Button */}
+      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-30">
+        <Magnetic strength={0.25}>
+          <button
+            type="button"
+            onClick={scrollToTop}
+            className="group flex items-center gap-1.5 rounded-full border border-line/80 bg-ink-2/90 px-3.5 py-2 text-xs font-mono font-medium text-steel hover:text-paper hover:border-amber/60 hover:bg-ink-3 backdrop-blur-md transition-all shadow-card hover:shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
+            title="Scroll to top"
+            aria-label="Scroll to top"
+          >
+            <span className="text-amber group-hover:-translate-y-0.5 transition-transform duration-200">
+              ↑
+            </span>
+            <span>Top</span>
+          </button>
+        </Magnetic>
+      </div>
     </div>
   );
 }
