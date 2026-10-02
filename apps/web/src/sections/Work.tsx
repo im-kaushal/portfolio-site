@@ -132,9 +132,15 @@ export function Work() {
       </div>
 
       {/* Case Studies Grid */}
-      <motion.div layout className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        layout
+        className={`mt-8 grid gap-6 ${
+          filteredStudies.length === 1 ? "grid-cols-1 w-full" : "md:grid-cols-2 lg:grid-cols-3"
+        }`}
+      >
         <AnimatePresence mode="popLayout">
           {filteredStudies.map((study: CaseStudy) => {
+            const isSingle = filteredStudies.length === 1;
             const isFeatured = study.slug === "marriott";
             const metrics = CASE_METRICS[study.slug] ?? {
               primary: { label: "Performance", value: "Optimized" },
@@ -150,120 +156,149 @@ export function Work() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="h-full"
+                className="h-full w-full"
               >
-                <CardSpotlight className="h-full p-6 sm:p-7 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative">
+                <CardSpotlight className="h-full w-full p-6 sm:p-8 flex flex-col justify-between hover:-translate-y-1 transition-transform duration-300 relative">
                   {/* Animated Border Beam on Featured Case Study */}
                   {isFeatured && (
                     <BorderBeam
-                      size={220}
+                      size={isSingle ? 340 : 220}
                       duration={8}
                       colorFrom="#f08a72"
                       colorTo="#34d399"
                     />
                   )}
 
-                  <div>
-                    {/* Header: Client & Period */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
+                  <div className={isSingle ? "grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" : ""}>
+                    {/* Left Column / Main Header */}
+                    <div className={isSingle ? "lg:col-span-5 space-y-4" : ""}>
+                      {/* Header: Client & Period (Featured badge removed per user request) */}
+                      <div className="flex items-center justify-between">
                         <span className="rounded-lg bg-phosphor/10 border border-phosphor/30 px-2.5 py-1 text-xs font-semibold text-phosphor font-mono">
                           {study.client}
                         </span>
-                        {isFeatured && (
-                          <span className="rounded-full bg-amber/10 border border-amber/30 px-2 py-0.5 text-[10px] font-mono text-amber font-semibold">
-                            ★ Featured
+                        <span className="text-xs font-mono text-steel">{study.period}</span>
+                      </div>
+
+                      {/* Title */}
+                      <h3
+                        className={`font-bold text-paper transition-colors group-hover:text-amber ${
+                          isSingle ? "text-2xl sm:text-3xl mt-3 leading-tight" : "text-xl mt-4"
+                        }`}
+                      >
+                        {study.title}
+                      </h3>
+
+                      {/* Blurb when expanded */}
+                      {isSingle && (
+                        <p className="text-sm text-steel leading-relaxed mt-2">
+                          {study.blurb}
+                        </p>
+                      )}
+
+                      {/* Tech Stack Pills */}
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {(isSingle ? study.stack : study.stack.slice(0, 4)).map((tech) => (
+                          <span
+                            key={tech}
+                            className="rounded-md border border-line/80 bg-ink/70 px-2.5 py-1 text-[11px] font-mono text-steel"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {!isSingle && study.stack.length > 4 && (
+                          <span className="self-center text-[10px] font-mono text-steel/70">
+                            +{study.stack.length - 4} more
                           </span>
                         )}
                       </div>
-                      <span className="text-xs font-mono text-steel">{study.period}</span>
+
+                      {/* High-Impact Metrics Callouts */}
+                      <div className="mt-5 grid grid-cols-2 gap-3">
+                        <div className="rounded-xl border border-line/70 bg-ink-3/80 p-3 sm:p-3.5">
+                          <div
+                            className={`${
+                              isSingle ? "text-xl sm:text-2xl" : "text-base sm:text-lg"
+                            } font-bold text-amber font-mono`}
+                          >
+                            {metrics.primary.value}
+                          </div>
+                          <div className="text-[11px] font-mono text-steel mt-0.5 line-clamp-1">
+                            {metrics.primary.label}
+                          </div>
+                        </div>
+
+                        <div className="rounded-xl border border-line/70 bg-ink-3/80 p-3 sm:p-3.5">
+                          <div
+                            className={`${
+                              isSingle ? "text-xl sm:text-2xl" : "text-base sm:text-lg"
+                            } font-bold text-phosphor font-mono`}
+                          >
+                            {metrics.secondary.value}
+                          </div>
+                          <div className="text-[11px] font-mono text-steel mt-0.5 line-clamp-1">
+                            {metrics.secondary.label}
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="mt-4 text-xl font-bold text-paper transition-colors group-hover:text-amber">
-                      {study.title}
-                    </h3>
-
-                    {/* Tech Stack Pills */}
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {study.stack.slice(0, 4).map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-md border border-line/80 bg-ink/70 px-2 py-0.5 text-[11px] font-mono text-steel"
+                    {/* Right Column / Structured PSI & Architecture */}
+                    <div className={isSingle ? "lg:col-span-7 space-y-4" : ""}>
+                      {/* Problem - Solution - Impact Structured Section */}
+                      {psi && (
+                        <div
+                          className={`rounded-xl border border-line/50 bg-ink-3/40 p-4 sm:p-5 text-xs sm:text-sm ${
+                            isSingle ? "space-y-3" : "mt-5 space-y-2 text-xs p-3.5"
+                          }`}
                         >
-                          {tech}
-                        </span>
-                      ))}
-                      {study.stack.length > 4 && (
-                        <span className="self-center text-[10px] font-mono text-steel/70">
-                          +{study.stack.length - 4} more
-                        </span>
+                          <div>
+                            <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-rose-400">
+                              Problem
+                            </span>
+                            <p className="mt-1 text-steel leading-relaxed">{psi.problem}</p>
+                          </div>
+                          <div className="pt-3 border-t border-line/40">
+                            <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-amber">
+                              Solution
+                            </span>
+                            <p className="mt-1 text-steel leading-relaxed">{psi.solution}</p>
+                          </div>
+                          <div className="pt-3 border-t border-line/40">
+                            <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-wider text-phosphor">
+                              Impact
+                            </span>
+                            <p className="mt-1 text-paper font-medium font-mono leading-relaxed">
+                              {psi.impact}
+                            </p>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Key Architecture Pillars (when single) */}
+                      {isSingle && study.architecture && study.architecture.length > 0 && (
+                        <div className="rounded-xl border border-line/40 bg-ink-3/20 p-4 sm:p-4.5 text-xs">
+                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-steel/80">
+                            Key Architecture Pillars
+                          </span>
+                          <ul className="mt-2.5 space-y-1.5">
+                            {study.architecture.slice(0, 3).map((item, idx) => (
+                              <li key={idx} className="flex items-start gap-2 text-steel">
+                                <span className="text-phosphor font-mono mt-0.5">▸</span>
+                                <span className="leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       )}
                     </div>
-
-                    {/* High-Impact Metrics Callouts */}
-                    <div className="mt-5 grid grid-cols-2 gap-2">
-                      <div className="rounded-xl border border-line/70 bg-ink-3/80 p-2.5">
-                        <div className="text-base sm:text-lg font-bold text-amber font-mono">
-                          {metrics.primary.value}
-                        </div>
-                        <div className="text-[10px] font-mono text-steel mt-0.5 line-clamp-1">
-                          {metrics.primary.label}
-                        </div>
-                      </div>
-
-                      <div className="rounded-xl border border-line/70 bg-ink-3/80 p-2.5">
-                        <div className="text-base sm:text-lg font-bold text-phosphor font-mono">
-                          {metrics.secondary.value}
-                        </div>
-                        <div className="text-[10px] font-mono text-steel mt-0.5 line-clamp-1">
-                          {metrics.secondary.label}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Problem - Solution - Impact Structured Section */}
-                    {psi && (
-                      <div className="mt-5 space-y-2 rounded-xl border border-line/50 bg-ink-3/40 p-3.5 text-xs">
-                        <div>
-                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-rose-400">
-                            Problem
-                          </span>
-                          <p className="mt-0.5 text-steel leading-relaxed">{psi.problem}</p>
-                        </div>
-                        <div className="pt-2 border-t border-line/40">
-                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-amber">
-                            Solution
-                          </span>
-                          <p className="mt-0.5 text-steel leading-relaxed">{psi.solution}</p>
-                        </div>
-                        <div className="pt-2 border-t border-line/40">
-                          <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-phosphor">
-                            Impact
-                          </span>
-                          <p className="mt-0.5 text-paper font-medium font-mono leading-relaxed">{psi.impact}</p>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Interactive Simulator Hook for Marriott (temporarily commented out) */}
-                    {/* {isFeatured && (
-                      <div className="mt-4">
-                        <a
-                          href="#demo"
-                          className="inline-flex items-center gap-2 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-mono font-semibold text-amber hover:bg-amber hover:text-white transition-all w-full justify-center shadow-sm"
-                        >
-                          <span>⚡ Try Live Desk Simulator ↓</span>
-                        </a>
-                      </div>
-                    )} */}
                   </div>
 
                   {/* Actions */}
                   <div className="mt-6 pt-5 border-t border-line/60 flex items-center justify-between text-xs">
                     <Link
                       to={`/work/${study.slug}`}
-                      className="font-semibold text-amber hover:text-amber-dim flex items-center gap-1 group/link"
+                      className="font-semibold text-amber hover:text-amber-dim flex items-center gap-1 group/link text-sm"
                     >
                       <span>Read Deep Dive</span>
                       <span className="transition-transform group-hover/link:translate-x-1">→</span>

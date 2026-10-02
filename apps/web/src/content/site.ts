@@ -53,10 +53,11 @@ export const site = {
     ],
     domains: ["Banking & Financial Services", "Hospitality & Operational Platforms", "Mobile Platforms"],
     certifications: [
+      "Claude Certified Developer – Foundations (CCDV-F)",
+      "Claude Certified Architect – Foundations (CCA-F)",
       "AWS Certified Developer – Associate",
-      "AWS Certified Cloud Practitioner (Deloitte ACE 3.0)",
-      "Claude Certified Architect – Foundations",
-      "Deloitte Certified Front End Developer",
+      "AWS Certified Cloud Practitioner",
+      "JavaScript Security Specialization (Infosec)",
     ],
     status: "Software Engineer at HashedIn by Deloitte · Shipping for Tier-1 Enterprise Clients",
     education: "B.Tech Computer Science, Lovely Professional University (Class of 2023)",
@@ -178,7 +179,7 @@ export const caseStudies: CaseStudy[] = [
       "Reduced Largest Contentful Paint by 35% and bundle size by 28% via modern performance engineering patterns.",
     ],
     role: "Software Engineer I · Frontend Lead",
-    period: "Mar 2026 — Present",
+    period: "Mar 2026 — Oct 2026",
   },
   {
     slug: "citi",
@@ -454,21 +455,21 @@ export type Award = {
 
 export const awards: Award[] = [
   {
+    id: "high-five-deloitte",
+    title: "High Five Award",
+    org: "HashedIn by Deloitte",
+    date: "Jun 2026",
+    note: "Awarded for exceptional ownership and instrumental impact on the frontend track, building the coordinator flow for Marriott mTrust end-to-end and successful production release.",
+    metric: "Marriott mTrust Delivery",
+    official: true,
+  },
+  {
     id: "excellence-deloitte",
     title: "Excellence Award",
     org: "Deloitte",
     date: "Jan 2026",
     note: "Recognized for technical contributions to production releases of two Java services while working at Citi project, while simultaneously guiding 50+ interns on the Angular track.",
     metric: "Technical Leadership & Mentorship",
-    official: true,
-  },
-  {
-    id: "high-five-deloitte",
-    title: "High Five Award",
-    org: "HashedIn by Deloitte",
-    date: "Jun 2025",
-    note: "Awarded for exceptional ownership and instrumental impact on the frontend track, building the coordinator flow for Marriott mTrust end-to-end and successful production release.",
-    metric: "Marriott mTrust Delivery",
     official: true,
   },
   {
@@ -493,8 +494,16 @@ export type Cert = {
 
 export const certs: Cert[] = [
   {
-    id: "claude",
-    code: "CLAUDE",
+    id: "claude-dev",
+    code: "CCDV-F",
+    title: "Claude Certified Developer — Foundations",
+    issuer: "Anthropic",
+    date: "Sep 2026",
+    href: "https://www.credly.com/org/anthropic",
+  },
+  {
+    id: "claude-arch",
+    code: "CCA-F",
     title: "Claude Certified Architect — Foundations",
     issuer: "Anthropic",
     date: "Jun 2026",

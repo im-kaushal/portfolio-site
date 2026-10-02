@@ -5,16 +5,104 @@ import { site } from "../content/site";
 import { downloadResume } from "../lib/downloadResume";
 import { copyToClipboard } from "../lib/clipboard";
 import { playChime } from "../lib/audio";
-import { CardSpotlight } from "../components/ui/CardSpotlight";
-import { BorderBeam } from "../components/ui/BorderBeam";
 import { Magnetic } from "../components/ui/Magnetic";
+
+type EnterpriseProjectKey = "citi" | "marriott" | "huntsjob" | "colina";
+
+interface EnterpriseProjectData {
+  client: string;
+  role: string;
+  metric: string;
+  metricDetail: string;
+  summary: string;
+  architecture: string[];
+  award: string;
+  stack: string[];
+  citation: string;
+  citationAuthor: string;
+}
+
+const enterpriseProjects: Record<EnterpriseProjectKey, EnterpriseProjectData> = {
+  citi: {
+    client: "Citi Bank",
+    role: "Financial Trade Settlements Desk · HashedIn by Deloitte",
+    metric: "4.1s → 2.6s",
+    metricDetail: "Zero layout shift (CLS < 0.02)",
+    summary:
+      "Engineered multi-row high-concurrency virtual grid handling live market transaction feeds with sub-12ms frame budgets and zero frame drops.",
+    architecture: [
+      "Multi-row virtualized DOM windowing for 10,000+ financial records",
+      "RxJS reactive event stream pipelines for market settlement tickers",
+      "Automated Java + Angular QA reconciliation utility (cut manual QA by 70%)",
+    ],
+    award: "★ Deloitte Spot Award Winner",
+    stack: ["Angular", "RxJS", "TypeScript", "Virtual Grid", "CSS Grid"],
+    citation:
+      "Spearheaded the high-frequency trading reconciliation utility, cutting manual verification effort by 70% and eliminating client-side layout shifts.",
+    citationAuthor: "Financial Desk Architecture Review · Citi Project Governance",
+  },
+  marriott: {
+    client: "Marriott International",
+    role: "Enterprise Coordinator UI Track · HashedIn by Deloitte",
+    metric: "−35% LCP",
+    metricDetail: "28% JS bundle reduction",
+    summary:
+      "Architected enterprise operations coordinator platform with ServiceNow REST integrations, optimistic caching, and sub-second rendering for mission-critical hotel workflows.",
+    architecture: [
+      "Route code-splitting & dynamic vendor chunking for 35% LCP boost",
+      "Optimistic mutation cache normalized via TanStack Query",
+      "Zero-jank UI component architecture with strict WCAG 2.1 AA accessibility",
+    ],
+    award: "★ Deloitte High Five Award Winner",
+    stack: ["React 18", "TanStack Query", "TypeScript", "Tailwind CSS"],
+    citation:
+      "Kaushal has demonstrated outstanding ownership on the frontend track, playing an instrumental role in building the enterprise coordinator flow. He consistently drove the work end-to-end and kept delivery on track.",
+    citationAuthor: "Himanshu Mahajan & Amit Bhavikatti · Engineering Leads @ Deloitte",
+  },
+  huntsjob: {
+    client: "HuntsJob",
+    role: "Software Consultant · Mobile Lead",
+    metric: "Play Store Shipped",
+    metricDetail: "Real-time FCM push engine",
+    summary:
+      "Delivered a pixel-perfect React Native mobile job discovery application end-to-end with real-time push engagement and full Google Play Store compliance.",
+    architecture: [
+      "End-to-end mobile candidate onboarding & job matching workflows",
+      "Real-time event notification pipeline with Firebase Cloud Messaging (FCM)",
+      "Technical mentorship of 3 junior developers in React Native code craftsmanship",
+    ],
+    award: "★ Google Play Store Production Delivery",
+    stack: ["React Native", "TypeScript", "Firebase FCM", "Redux Toolkit"],
+    citation:
+      "Delivered a seamless React Native mobile recruitment experience, driving engagement with real-time push notifications and mentoring junior engineers in code craftsmanship.",
+    citationAuthor: "Product Engineering Lead · HuntsJob Platform Operations",
+  },
+  colina: {
+    client: "Colina Insurance",
+    role: "Enterprise Mobile Core · Damco",
+    metric: "180+ Defects Fixed",
+    metricDetail: "3 production apps shipped",
+    summary:
+      "Architected offline-first React Native applications for field insurance agents in low-connectivity environments with Realm DB persistence and biometric security.",
+    architecture: [
+      "Offline-first local Realm DB sync state machine for remote policy submissions",
+      "Secure biometric authentication & JWT token rotation protocols",
+      "Hermes engine bridge profiling achieving 60fps across iOS & Android devices",
+    ],
+    award: "★ App Store & Google Play Deployed",
+    stack: ["React Native", "Realm DB", "Redux Toolkit", "JWT Auth", "TypeScript"],
+    citation:
+      "Architected 100% offline-resilient insurance policy submission workflows, eliminating field agent data loss and deploying 3 production apps to Apple & Google stores.",
+    citationAuthor: "Mobile Release Governance · Enterprise Platform Operations",
+  },
+};
 
 export function Hero() {
   const reduce = useReducedMotion();
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"overview" | "contact" | "endorsement">("overview");
+  const [activeProject, setActiveProject] = useState<EnterpriseProjectKey>("citi");
   const [currentTime, setCurrentTime] = useState<string>("");
   const [isPlayingVoice, setIsPlayingVoice] = useState(false);
   const [playbackProgress, setPlaybackProgress] = useState(0);
@@ -22,6 +110,7 @@ export function Hero() {
   const [audioDuration, setAudioDuration] = useState("0:58");
   const audioElementRef = useRef<HTMLAudioElement | null>(null);
 
+  // Audio greeting lifecycle
   useEffect(() => {
     const audio = new Audio("/greeting.mp3");
     audio.preload = "metadata";
@@ -64,6 +153,7 @@ export function Hero() {
     };
   }, []);
 
+  // Live Bengaluru Clock
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -72,6 +162,7 @@ export function Hero() {
         hour12: false,
         hour: "2-digit",
         minute: "2-digit",
+        second: "2-digit",
       });
       setCurrentTime(`${timeStr} IST`);
     };
@@ -134,161 +225,80 @@ export function Hero() {
     setCurrentPlayTime(`${mins}:${secs < 10 ? "0" : ""}${secs}`);
   };
 
+  const currentProject = enterpriseProjects[activeProject];
+
   return (
-    <section className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 pt-6 pb-12 sm:pt-8 sm:pb-14 md:pt-12 md:pb-20 w-full overflow-hidden">
-      <div className="grid min-w-0 gap-8 lg:grid-cols-[1.12fr_0.88fr] lg:gap-10 items-center w-full">
-        {/* Left Column: Personal Story, Identity & High-Intent Conversion CTAs */}
+    <section className="relative mx-auto max-w-6xl px-4 sm:px-6 md:px-8 pt-4 pb-14 sm:pt-8 sm:pb-20 md:pt-12 md:pb-24 w-full">
+      {/* Ambient Atmospheric Radial Glows (Zero hard lines) */}
+      <div
+        className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-gradient-to-b from-amber/12 via-phosphor/5 to-transparent blur-3xl opacity-50"
+        aria-hidden="true"
+      />
+
+      {/* 1. MINIMALIST TOP TELEMETRY STRIP (Borderless) */}
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono pb-6 sm:pb-8 border-b border-white/[0.06]"
+      >
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
+          </span>
+          <span className="font-semibold text-paper">
+            Open to SDE II Roles
+          </span>
+          <span className="text-white/20">/</span>
+          <span className="text-amber font-medium">
+            Software Engineer @ HashedIn by Deloitte
+          </span>
+        </div>
+
+        <div className="flex items-center gap-4 text-steel text-[11px]">
+          <span className="flex items-center gap-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-phosphor/80" />
+            <span>{currentTime || "IST · Bengaluru"}</span>
+          </span>
+          <span className="hidden sm:inline text-white/20">·</span>
+          <span className="hidden sm:inline text-steel hover:text-amber transition-colors">
+            AWS & Anthropic Certified Developer
+          </span>
+        </div>
+      </motion.div>
+
+      {/* 2. THE MONUMENTAL EDITORIAL HORIZON & ORGANIC LIVING PORTRAIT */}
+      <div className="mt-8 sm:mt-12 grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 lg:gap-14 items-center">
+        {/* Left: Fluid Typographic Lockup & High-Intent Conversion */}
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 14 }}
+          initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
-          className="flex flex-col min-w-0 w-full"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          {/* Status Beacon & Credentials */}
-          <div className="inline-flex max-w-full flex-wrap items-center gap-2 sm:gap-2.5 self-start rounded-full border border-line/80 bg-ink-2/90 px-3.5 py-1.5 text-xs text-paper backdrop-blur-md shadow-sm">
-            <span className="relative flex h-2 w-2 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-phosphor" />
-            </span>
-            <span className="font-mono text-xs font-semibold text-amber">
-              Software Engineer @ HashedIn by Deloitte
-            </span>
-            <span className="text-line text-xs">·</span>
-            <span className="font-mono text-xs text-paper/90 font-medium">
-              Open for new opportunities
-            </span>
+          <div className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">
+            Enterprise Frontend & Mobile Architect
           </div>
 
-          {/* Editorial Kicker & Name */}
-          <div className="mt-4 sm:mt-5">
-            <span className="font-mono text-xs sm:text-sm uppercase tracking-wider text-amber font-semibold">
-              Enterprise Frontend & Mobile Architecture
-            </span>
-            <h1 className="mt-1 font-sans text-3xl sm:text-5xl lg:text-[3.5rem] font-extrabold tracking-tight leading-[1.08] text-paper">
-              Kaushal Kumar<span className="font-serif italic font-normal text-amber">.</span>
-            </h1>
-            <p className="mt-2 text-lg sm:text-2xl font-bold text-gradient-amber">
-              Software Engineer at HashedIn by Deloitte · Shipping Enterprise Banking & Hospitality Platforms
-            </p>
-          </div>
+          <h1 className="mt-2 font-sans text-4xl sm:text-6xl lg:text-[4.25rem] font-extrabold tracking-tight leading-[1.04] text-paper">
+            Kaushal Kumar<span className="font-serif italic font-normal text-amber">.</span>
+          </h1>
 
-          {/* Authentic Personal Narrative */}
-          <p className="mt-4 max-w-xl text-base sm:text-lg leading-relaxed text-steel">
-            With <strong className="text-paper font-semibold">3.5+ years of enterprise engineering experience</strong> at{" "}
-            <strong className="text-paper font-semibold">HashedIn by Deloitte</strong>, I architect high-performance web systems and cross-platform mobile apps for Fortune 500 enterprises across Banking, Financial Services, and Global Hospitality. Focused on sub-second Core Web Vitals, accessible component design, and zero-jank client architectures.
+          <p className="mt-4 text-lg sm:text-2xl font-bold text-gradient-amber leading-snug">
+            Building scalable web & mobile systems with React, Angular, React Native & TypeScript.
           </p>
 
-          {/* Authentic Voice Audio Introduction Player */}
-          <div className="mt-5 max-w-xl">
-            <div
-              onClick={toggleVoiceGreeting}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  toggleVoiceGreeting();
-                }
-              }}
-              className={`group relative overflow-hidden rounded-2xl border p-3.5 sm:p-4 transition-all cursor-pointer ${
-                isPlayingVoice
-                  ? "border-amber/70 bg-gradient-to-r from-amber/15 via-ink-2/90 to-ink-3/90 shadow-glow"
-                  : "border-line/80 bg-ink-2/90 hover:border-amber/40 hover:bg-ink-3/80 shadow-sm"
-              }`}
-              aria-label="Play authentic voice summary by Kaushal Kumar"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3 min-w-0">
-                  <div
-                    className={`h-10 w-10 shrink-0 rounded-xl flex items-center justify-center font-mono text-sm font-bold transition-all shadow-sm ${
-                      isPlayingVoice
-                        ? "bg-amber text-white scale-105 shadow-glow"
-                        : "bg-ink-3 border border-line text-amber group-hover:bg-amber group-hover:text-white"
-                    }`}
-                  >
-                    {isPlayingVoice ? "❚❚" : "▶"}
-                  </div>
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-semibold text-paper">
-                        Voice Introduction
-                      </span>
-                      <span className="font-mono text-[11px] text-steel">
-                        {isPlayingVoice ? `${currentPlayTime} / ${audioDuration}` : audioDuration}
-                      </span>
-                      {isPlayingVoice ? (
-                        <span className="rounded-full bg-phosphor/20 text-phosphor px-2 py-0.5 text-[9px] font-mono font-medium animate-pulse">
-                          PLAYING
-                        </span>
-                      ) : (
-                        <span className="rounded-full bg-amber/10 text-amber border border-amber/20 px-1.5 py-0.2 text-[9px] font-mono font-medium">
-                          AUTHENTIC AUDIO
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-0.5 text-[11px] sm:text-xs text-steel font-mono truncate">
-                      &ldquo;Hey, I am Kaushal. I am a software engineer at HashedIn by Deloitte...&rdquo;
-                    </p>
-                  </div>
-                </div>
+          <p className="mt-4 max-w-xl text-base sm:text-lg leading-relaxed text-steel">
+            Software Engineer with <strong className="text-paper font-semibold">3.5+ years of enterprise production experience</strong> at{" "}
+            <strong className="text-paper font-semibold">HashedIn by Deloitte</strong>. Architecting sub-second Core Web Vitals, high-concurrency virtualized streaming grids, and offline-first mobile apps.
+          </p>
 
-                {/* Animated Waveform Equalizer */}
-                <div className="flex items-end gap-1 h-6 shrink-0 px-2" aria-hidden="true">
-                  {[35, 75, 95, 60, 85, 45, 80, 55].map((h, i) => (
-                    <span
-                      key={i}
-                      style={{
-                        height: isPlayingVoice ? `${h}%` : "25%",
-                        animationDelay: `${i * 120}ms`,
-                      }}
-                      className={`w-1 rounded-full transition-all duration-300 ${
-                        isPlayingVoice ? "bg-amber animate-pulse" : "bg-steel/30"
-                      }`}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Interactive Scrubbing / Progress Track */}
-              <div
-                onClick={handleSeek}
-                className="mt-3 relative h-1.5 w-full bg-ink-4/80 rounded-full overflow-hidden cursor-pointer"
-                title="Click to jump in audio"
-              >
-                <div
-                  className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-amber to-phosphor rounded-full transition-[width] duration-150"
-                  style={{ width: `${playbackProgress}%` }}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Key Metric Snapshot Chips */}
-          <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-xl text-xs font-mono">
-            <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
-              <div className="text-amber font-bold text-sm">3.5+ Years</div>
-              <div className="text-steel text-[10px] mt-0.5">Production Exp</div>
-            </div>
-            <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
-              <div className="text-phosphor font-bold text-sm">Fintech & Hospitality</div>
-              <div className="text-steel text-[10px] mt-0.5">Enterprise Sectors</div>
-            </div>
-            <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
-              <div className="text-paper font-bold text-sm">−35% LCP</div>
-              <div className="text-steel text-[10px] mt-0.5">LCP Speedup</div>
-            </div>
-            <div className="rounded-xl border border-line/80 bg-ink-2/80 p-2.5 text-center">
-              <div className="text-amber font-bold text-sm">High Five ★</div>
-              <div className="text-steel text-[10px] mt-0.5">Deloitte Award</div>
-            </div>
-          </div>
-
-          {/* Primary High-Intent Magnetic CTAs (Harmonized Heights & Hierarchy) */}
-          <div className="mt-7 flex flex-wrap items-center gap-3 w-full">
+          {/* Floating High-Intent Conversion Cluster (Borderless Magnetic Actions) */}
+          <div className="mt-8 flex flex-wrap items-center gap-3.5">
             <Magnetic strength={0.25}>
               <a
                 href="#work"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-amber px-6 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-amber px-6 text-sm font-semibold text-white shadow-glow transition-all hover:bg-amber-dim active:scale-[0.98]"
               >
                 <span>Explore Enterprise Work ↓</span>
               </a>
@@ -306,7 +316,7 @@ export function Hero() {
                     }
                   });
                 }}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-amber/40 bg-amber/10 px-5 text-sm font-semibold text-amber hover:bg-amber hover:text-white transition-all active:scale-[0.98]"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-5 text-sm font-semibold text-paper hover:border-amber/50 hover:text-amber transition-all active:scale-[0.98]"
                 title="Download latest resume PDF"
               >
                 {downloading ? (
@@ -331,364 +341,370 @@ export function Hero() {
             </Magnetic>
 
             <Magnetic strength={0.25}>
-              <Link
-                to="/blog"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-line/80 bg-ink-2/90 px-5 text-sm font-semibold text-paper hover:text-amber hover:border-amber/50 transition-all active:scale-[0.98]"
-              >
-                <span>Tech Blogs</span>
-                <span className="rounded-full bg-amber/15 border border-amber/30 px-2 py-0.5 text-[11px] font-mono font-bold text-amber">
-                  15.5k+
-                </span>
-              </Link>
-            </Magnetic>
-          </div>
-
-          {/* Multi-Intent WhatsApp Instant Connect Chips */}
-          <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-mono text-steel uppercase tracking-wider">Fast-Track:</span>
-            <a
-              href={site.whatsappLinks.recruiter}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line/70 bg-ink-2/80 px-2.5 py-1 text-xs font-mono text-paper hover:border-phosphor hover:text-phosphor transition-colors"
-            >
-              <span>💼 Recruiter Chat</span>
-            </a>
-            <a
-              href={site.whatsappLinks.techChat}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line/70 bg-ink-2/80 px-2.5 py-1 text-xs font-mono text-paper hover:border-amber hover:text-amber transition-colors"
-            >
-              <span>⚡ Tech Discussion</span>
-            </a>
-            <a
-              href={site.whatsappLinks.coffee}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-line/70 bg-ink-2/80 px-2.5 py-1 text-xs font-mono text-steel hover:border-line hover:text-paper transition-colors"
-            >
-              <span>☕ Casual Coffee</span>
-            </a>
-          </div>
-
-          {/* Quick Contact Line */}
-          <div className="mt-5 flex flex-wrap items-center gap-3 text-xs text-steel">
-            <span className="font-medium text-paper">Bengaluru, India</span>
-            <span className="text-line">•</span>
-            <button
-              type="button"
-              onClick={handleCopyEmail}
-              className="hover:text-amber transition-colors font-mono flex items-center gap-1"
-              title="Click to copy email address"
-            >
-              <span>{copiedEmail ? "✓ Email Copied" : site.publicEmail}</span>
-            </button>
-            <span className="text-line">•</span>
-            <button
-              type="button"
-              onClick={handleCopyPhone}
-              className="hover:text-amber transition-colors font-mono flex items-center gap-1"
-              title="Click to copy phone number"
-            >
-              <span>{copiedPhone ? "✓ Phone Copied" : site.phoneDisplay}</span>
-            </button>
-            <span className="text-line">•</span>
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-amber transition-colors font-medium"
-            >
-              LinkedIn ↗
-            </a>
-            <span className="text-line">•</span>
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-amber transition-colors font-medium"
-            >
-              GitHub ↗
-            </a>
-          </div>
-        </motion.div>
-
-        {/* Right Column: The Personal Showcase & Recruiter Dossier Card */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative w-full min-w-0"
-        >
-          <CardSpotlight className="relative shadow-2xl border border-line/80 bg-ink-2/95 w-full rounded-3xl overflow-hidden p-6 sm:p-7 min-h-[540px] flex flex-col justify-between">
-            <BorderBeam duration={10} size={260} colorFrom="#f08a72" colorTo="#34d399" />
-
-            <div>
-              {/* Profile Bar with 115x135 Dual-Rim Portrait Aperture */}
-              <div className="flex items-center gap-4 pb-5 border-b border-line/60">
-                <div className="relative h-[135px] w-[115px] flex-shrink-0 overflow-hidden rounded-2xl border-2 border-line/80 bg-ink-3 shadow-2xl ring-1 ring-amber/40 ring-offset-2 ring-offset-ink-1">
-                  <img
-                    src={site.headshotSrc}
-                    alt={site.name}
-                    className="h-full w-full object-cover"
-                  />
-                  {/* Dual-rim atmospheric edge lighting */}
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-amber/20 via-transparent to-phosphor/15" />
-                  <span className="absolute bottom-2 right-2 h-3.5 w-3.5 rounded-full bg-phosphor border-2 border-ink shadow-sm" />
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <h2 className="text-xl sm:text-2xl font-bold text-paper truncate">
-                      {site.name}
-                    </h2>
-                    <span className="rounded-full bg-phosphor/10 border border-phosphor/30 px-2.5 py-0.5 text-[10px] font-mono font-medium text-phosphor shrink-0">
-                      SDE II @ Deloitte
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-amber font-medium mt-1 truncate">
-                    React · TypeScript · Angular · React Native
-                  </p>
-                  <p className="text-[11px] text-steel font-mono mt-1 truncate">
-                    Bengaluru, Karnataka, India (IST)
-                  </p>
-                  <div className="mt-2.5 flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded bg-amber/10 border border-amber/30 px-2 py-0.5 text-[10px] font-mono text-amber font-semibold">
-                      ★ High Five Award
-                    </span>
-                    <span className="inline-flex items-center gap-1 rounded bg-ink-3 border border-line px-2 py-0.5 text-[10px] font-mono text-steel">
-                      AWS Certified
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Dossier Tabs Switcher */}
-              <div className="mt-4 flex items-center gap-1 rounded-xl border border-line/80 bg-ink-3/80 p-1 font-mono text-xs">
-                {(
-                  [
-                    { id: "overview", label: "At a Glance" },
-                    { id: "contact", label: "Direct Channels" },
-                    { id: "endorsement", label: "Leadership Quote" },
-                  ] as const
-                ).map((tab) => {
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      type="button"
-                      onClick={() => setActiveTab(tab.id)}
-                      className={`relative flex-1 py-1.5 rounded-lg transition-colors text-center ${
-                        isActive ? "text-white font-semibold" : "text-steel hover:text-paper"
-                      }`}
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="dossierTabActive"
-                          className="absolute inset-0 rounded-lg bg-amber shadow-glow"
-                          transition={{ type: "spring", stiffness: 450, damping: 32 }}
-                        />
-                      )}
-                      <span className="relative z-10">{tab.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Tab Contents */}
-              <div className="mt-4">
-                <AnimatePresence mode="wait">
-                  {/* --- TAB 1: AT A GLANCE (Professional Taxonomy) --- */}
-                  {activeTab === "overview" && (
-                    <motion.div
-                      key="overview"
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className="space-y-2.5 font-mono text-xs"
-                    >
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 hover:border-amber/40 transition-colors">
-                        <div className="flex items-center justify-between text-paper font-semibold">
-                          <span className="flex items-center gap-2">
-                            <svg className="h-3.5 w-3.5 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                            </svg>
-                            <span>Education & Discipline</span>
-                          </span>
-                          <span className="text-[10px] text-steel">Class of 2023</span>
-                        </div>
-                        <p className="mt-1 text-[11px] text-steel font-sans leading-relaxed">
-                          B.Tech in Computer Science & Engineering · Lovely Professional University (7.61 CGPA)
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 hover:border-phosphor/40 transition-colors">
-                        <div className="flex items-center justify-between text-paper font-semibold">
-                          <span className="flex items-center gap-2">
-                            <svg className="h-3.5 w-3.5 text-phosphor" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                            <span>Cloud & AI Certifications</span>
-                          </span>
-                          <span className="text-[10px] text-phosphor font-semibold">Verified</span>
-                        </div>
-                        <p className="mt-1 text-[11px] text-steel font-sans leading-relaxed">
-                          AWS Certified Developer – Associate · AWS Cloud Practitioner · Claude Certified Architect
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 hover:border-amber/40 transition-colors">
-                        <div className="flex items-center justify-between text-paper font-semibold">
-                          <span className="flex items-center gap-2">
-                            <svg className="h-3.5 w-3.5 text-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                            </svg>
-                            <span>Enterprise Experience</span>
-                          </span>
-                          <span className="text-[10px] text-amber">Enterprise Platforms</span>
-                        </div>
-                        <p className="mt-1 text-[11px] text-steel font-sans leading-relaxed">
-                          HashedIn by Deloitte · Financial Data Grid (4.1s → 2.6s) · Operations Coordinator (−35% LCP)
-                        </p>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 hover:border-steel transition-colors">
-                        <div className="flex items-center justify-between text-paper font-semibold">
-                          <span className="flex items-center gap-2">
-                            <svg className="h-3.5 w-3.5 text-steel" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                            </svg>
-                            <span>Mobile & Community Impact</span>
-                          </span>
-                          <span className="text-[10px] text-steel">App Store & Play</span>
-                        </div>
-                        <p className="mt-1 text-[11px] text-steel font-sans leading-relaxed">
-                          3 Commercial React Native Apps Published · 15.5k+ reach JavaScript Interview Guide
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* --- TAB 2: DIRECT CHANNELS (Frictionless Reach) --- */}
-                  {activeTab === "contact" && (
-                    <motion.div
-                      key="contact"
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className="space-y-2.5 font-mono text-xs"
-                    >
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 flex items-center justify-between">
-                        <div>
-                          <div className="text-paper font-semibold text-[11px]">Primary Email</div>
-                          <div className="text-steel text-xs font-mono select-all mt-0.5">{site.publicEmail}</div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={handleCopyEmail}
-                          className="rounded-lg border border-line bg-ink-2 px-2.5 py-1 text-[11px] text-amber hover:bg-ink-3 transition-colors"
-                        >
-                          {copiedEmail ? "✓ Copied" : "Copy"}
-                        </button>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 flex items-center justify-between">
-                        <div>
-                          <div className="text-paper font-semibold text-[11px]">Phone & WhatsApp</div>
-                          <div className="text-steel text-xs font-mono select-all mt-0.5">{site.phoneDisplay}</div>
-                        </div>
-                        <a
-                          href={site.whatsappLinks.general}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg bg-amber px-2.5 py-1 text-[11px] text-white hover:bg-amber-dim transition-colors"
-                        >
-                          Chat ↗
-                        </a>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 flex items-center justify-between">
-                        <div>
-                          <div className="text-paper font-semibold text-[11px]">LinkedIn Profile</div>
-                          <div className="text-steel text-xs font-mono mt-0.5">linkedin.com/in/im-kaushal</div>
-                        </div>
-                        <a
-                          href={site.linkedin}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg border border-line bg-ink-2 px-2.5 py-1 text-[11px] text-paper hover:text-amber transition-colors"
-                        >
-                          View ↗
-                        </a>
-                      </div>
-
-                      <div className="rounded-xl border border-line/60 bg-ink-3/50 p-3 flex items-center justify-between">
-                        <div>
-                          <div className="text-paper font-semibold text-[11px]">GitHub Engineering</div>
-                          <div className="text-steel text-xs font-mono mt-0.5">github.com/im-kaushal</div>
-                        </div>
-                        <a
-                          href={site.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="rounded-lg border border-line bg-ink-2 px-2.5 py-1 text-[11px] text-paper hover:text-amber transition-colors"
-                        >
-                          View ↗
-                        </a>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* --- TAB 3: ENDORSEMENT --- */}
-                  {activeTab === "endorsement" && (
-                    <motion.div
-                      key="endorsement"
-                      initial={{ opacity: 0, y: 6 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -6 }}
-                      className="rounded-xl border border-amber/40 bg-amber/5 p-4 space-y-3"
-                    >
-                      <div className="flex items-center justify-between border-b border-amber/20 pb-2">
-                        <span className="text-amber font-mono font-bold text-xs uppercase tracking-wider">
-                          ★ Deloitte High Five Award
-                        </span>
-                        <span className="text-[10px] font-mono text-steel">Official Citation</span>
-                      </div>
-
-                      <p className="text-xs sm:text-sm italic text-paper/95 leading-relaxed font-sans">
-                        &ldquo;Kaushal has demonstrated outstanding ownership and impact on the frontend track, playing an instrumental role in building the enterprise coordinator flow. He consistently drove the work end-to-end, collaborated closely with stakeholders and relevant developers, and ensured alignment across teams to keep delivery on track.&rdquo;
-                      </p>
-
-                      <div className="pt-2 border-t border-amber/20 flex items-center justify-between text-[11px] font-mono">
-                        <span className="text-paper font-semibold">Himanshu Mahajan & Amit Bhavikatti</span>
-                        <span className="text-amber">Engineering Leads @ Deloitte</span>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Bottom Status & Immediate Intro Call */}
-            <div className="mt-5 pt-3 border-t border-line/60 flex items-center justify-between text-xs font-mono text-steel">
-              <div className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-phosphor animate-pulse" />
-                <span>{currentTime ? `${currentTime} · ` : ""}Bengaluru, India</span>
-              </div>
               <a
                 href={site.whatsappLinks.recruiter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-amber hover:underline text-[11px] font-semibold flex items-center gap-1"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-phosphor/30 bg-phosphor/10 px-5 text-sm font-semibold text-phosphor hover:bg-phosphor hover:text-ink-1 transition-all active:scale-[0.98]"
               >
-                <span>Schedule Intro Call ↗</span>
+                <span className="h-2 w-2 rounded-full bg-phosphor" />
+                <span>Recruiter WhatsApp ↗</span>
               </a>
+            </Magnetic>
+          </div>
+
+          {/* Shipped Product & Features E2E for Clients */}
+          <div className="mt-8 pt-6 border-t border-white/[0.06] space-y-2.5">
+            <div className="text-[11px] font-mono uppercase tracking-widest text-steel/70 font-semibold">
+              Shipped Product & Features E2E for Clients:
             </div>
-          </CardSpotlight>
+            <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-paper font-semibold hover:border-amber/50 hover:text-amber transition-colors">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                Citi Bank
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-paper font-semibold hover:border-amber/50 hover:text-amber transition-colors">
+                <span className="h-1.5 w-1.5 rounded-full bg-phosphor" />
+                Marriott International
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-paper font-semibold hover:border-amber/50 hover:text-amber transition-colors">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                HuntsJob
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-paper font-semibold hover:border-amber/50 hover:text-amber transition-colors">
+                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                Colina Insurance
+              </span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right: The Organic Atmospheric Portrait & Bio-Acoustic Hub */}
+        <motion.div
+          initial={reduce ? false : { opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-center lg:items-end w-full"
+        >
+          <div className="relative flex flex-col items-center max-w-sm w-full">
+            {/* Seamless Organic Portrait (No rigid rectangular card) */}
+            <div className="relative group">
+              {/* Atmospheric Halo Glow */}
+              <div className="pointer-events-none absolute -inset-4 rounded-full bg-gradient-to-tr from-amber/25 via-phosphor/20 to-transparent blur-2xl opacity-70 group-hover:opacity-100 transition-opacity" />
+
+              <div className="relative h-44 w-44 sm:h-52 sm:w-52 rounded-full overflow-hidden p-1.5 bg-gradient-to-b from-white/20 via-white/5 to-transparent shadow-2xl ring-1 ring-white/15">
+                <img
+                  src={site.headshotSrc}
+                  alt={site.name}
+                  className="h-full w-full object-cover rounded-full"
+                  loading="eager"
+                />
+                <span className="absolute bottom-4 right-4 h-4 w-4 rounded-full bg-phosphor border-2 border-[#09090b] shadow-md" />
+              </div>
+            </div>
+
+            {/* Profile Meta & Credentials (Borderless Floating Text) */}
+            <div className="mt-4 text-center">
+              <h2 className="text-xl font-bold text-paper">
+                Kaushal Kumar
+              </h2>
+              <p className="text-xs text-amber font-mono font-medium mt-0.5">
+                Software Engineer @ HashedIn by Deloitte
+              </p>
+              <div className="mt-2 flex items-center justify-center gap-2 text-[11px] font-mono text-steel">
+                <span>Bengaluru, India</span>
+                <span className="text-white/20">•</span>
+                <span className="text-amber">★ High Five Award</span>
+                <span className="text-white/20">•</span>
+                <span>AWS Certified</span>
+              </div>
+            </div>
+
+            {/* Organic Bio-Acoustic Voice Player Pill */}
+            <div className="mt-5 w-full">
+              <div
+                onClick={toggleVoiceGreeting}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleVoiceGreeting();
+                  }
+                }}
+                className={`group relative overflow-hidden rounded-2xl border p-3.5 transition-all cursor-pointer ${
+                  isPlayingVoice
+                    ? "border-amber/60 bg-gradient-to-r from-amber/15 via-white/[0.04] to-transparent shadow-glow"
+                    : "border-white/10 bg-white/[0.03] hover:border-amber/40 hover:bg-white/[0.05]"
+                }`}
+                aria-label="Play authentic voice summary by Kaushal Kumar"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div
+                      className={`h-9 w-9 shrink-0 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all shadow-sm ${
+                        isPlayingVoice
+                          ? "bg-amber text-white scale-105 shadow-glow"
+                          : "bg-white/10 text-amber group-hover:bg-amber group-hover:text-white"
+                      }`}
+                    >
+                      {isPlayingVoice ? "❚❚" : "▶"}
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-paper">
+                          Voice Introduction
+                        </span>
+                        <span className="font-mono text-[10px] text-steel">
+                          {isPlayingVoice ? `${currentPlayTime} / ${audioDuration}` : audioDuration}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-steel font-mono truncate mt-0.5">
+                        &ldquo;Hey, I am Kaushal. Software engineer at HashedIn...&rdquo;
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Dynamic Animated Frequency Equalizer */}
+                  <div className="flex items-end gap-1 h-5 shrink-0 px-1" aria-hidden="true">
+                    {[40, 75, 95, 60, 85, 50, 80, 55].map((h, i) => (
+                      <span
+                        key={i}
+                        style={{
+                          height: isPlayingVoice ? `${h}%` : "25%",
+                          animationDelay: `${i * 110}ms`,
+                        }}
+                        className={`w-0.5 rounded-full transition-all duration-300 ${
+                          isPlayingVoice ? "bg-amber animate-pulse" : "bg-white/20"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Interactive Click-to-Seek Track */}
+                <div
+                  onClick={handleSeek}
+                  className="mt-2.5 relative h-1 w-full bg-white/10 rounded-full overflow-hidden cursor-pointer"
+                  title="Click to seek audio"
+                >
+                  <div
+                    className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-amber to-phosphor rounded-full transition-[width] duration-150"
+                    style={{ width: `${playbackProgress}%` }}
+                  />
+                </div>
+              </div>
+
+              {/* Status & Intro Line */}
+              <div className="mt-3 flex items-center justify-between text-[11px] font-mono text-steel px-1">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
+                  <span>Notice: Standard 60 Days</span>
+                </span>
+                <a
+                  href={site.whatsappLinks.recruiter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-amber hover:underline font-semibold"
+                >
+                  Schedule Intro Call ↗
+                </a>
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
+
+
+      {/* 4. EDITORIAL INTERACTIVE PROOF STREAM: 4 CLIENTS SHIPPED E2E */}
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="mt-14 sm:mt-20 pt-10 border-t border-white/[0.08]"
+      >
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
+          <div>
+            <span className="font-mono text-xs uppercase tracking-widest text-amber font-semibold">
+              Live Production Showcase
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-paper mt-1">
+              Shipped Product & Features E2E for Clients
+            </h2>
+          </div>
+
+          {/* Borderless Underline Tabs for 4 Clients */}
+          <div className="flex items-center gap-5 sm:gap-6 font-mono text-xs overflow-x-auto pb-1">
+            {(
+              [
+                { id: "citi", label: "Citi Bank" },
+                { id: "marriott", label: "Marriott International" },
+                { id: "huntsjob", label: "HuntsJob" },
+                { id: "colina", label: "Colina Insurance" },
+              ] as const
+            ).map((tab) => {
+              const isActive = activeProject === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveProject(tab.id)}
+                  className={`relative py-2 transition-colors whitespace-nowrap ${
+                    isActive ? "text-paper font-semibold" : "text-steel hover:text-paper"
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  {isActive && (
+                    <motion.div
+                      layoutId="proofUnderline"
+                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-amber to-phosphor"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Dynamic Project Editorial Content */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeProject}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.25 }}
+            className="mt-4 grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start"
+          >
+            {/* Left: Problem & Architecture pillars */}
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="text-xs font-mono font-bold text-amber px-2.5 py-1 rounded-full bg-amber/10 border border-amber/30">
+                  {currentProject.award}
+                </span>
+                <span className="text-xs font-mono text-steel">
+                  {currentProject.role}
+                </span>
+              </div>
+
+              <p className="text-base text-steel leading-relaxed">
+                {currentProject.summary}
+              </p>
+
+              <div className="space-y-2 pt-2">
+                <div className="text-xs font-mono text-steel/80 uppercase tracking-wider">
+                  Engineered Architectural Pillars:
+                </div>
+                <ul className="space-y-2 text-sm text-paper">
+                  {currentProject.architecture.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-phosphor font-mono mt-0.5">▸</span>
+                      <span className="leading-relaxed">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Core Stack Badges */}
+              <div className="flex flex-wrap gap-2 pt-2">
+                {currentProject.stack.map((tech, i) => (
+                  <span
+                    key={i}
+                    className="font-mono text-xs text-steel border-b border-white/20 pb-0.5"
+                  >
+                    #{tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Right: Unboxed Leadership Citation */}
+            <div className="relative pl-6 sm:pl-8 border-l-2 border-amber/40 py-2 space-y-3">
+              <span className="text-xs font-mono uppercase tracking-wider text-amber font-semibold block">
+                Production Impact & Verification
+              </span>
+              <blockquote className="text-base sm:text-lg italic text-paper/95 font-serif leading-relaxed">
+                &ldquo;{currentProject.citation}&rdquo;
+              </blockquote>
+              <div className="text-xs font-mono text-steel pt-1">
+                {currentProject.citationAuthor}
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
+
+      {/* 5. FLUID RECRUITER QUICK-CONNECT BASELINE (Borderless Channels) */}
+      <motion.div
+        initial={reduce ? false : { opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.15 }}
+        className="mt-14 sm:mt-20 pt-8 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-steel"
+      >
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="text-steel/60 uppercase tracking-wider text-[11px]">Direct Reach:</span>
+
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="hover:text-amber transition-colors flex items-center gap-1.5"
+            title="Click to copy email address"
+          >
+            <span>{copiedEmail ? "✓ Copied" : site.publicEmail}</span>
+          </button>
+
+          <span className="text-white/20">·</span>
+
+          <button
+            type="button"
+            onClick={handleCopyPhone}
+            className="hover:text-amber transition-colors flex items-center gap-1.5"
+            title="Click to copy phone number"
+          >
+            <span>{copiedPhone ? "✓ Copied" : site.phoneDisplay}</span>
+          </button>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-4">
+          <a
+            href={site.whatsappLinks.recruiter}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-phosphor hover:underline flex items-center gap-1 font-medium"
+          >
+            WhatsApp Recruiter ↗
+          </a>
+          <span className="text-white/20">·</span>
+          <a
+            href={site.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-amber transition-colors"
+          >
+            LinkedIn ↗
+          </a>
+          <span className="text-white/20">·</span>
+          <a
+            href={site.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-amber transition-colors"
+          >
+            GitHub ↗
+          </a>
+          <span className="text-white/20">·</span>
+          <Link
+            to="/blog"
+            className="text-amber hover:underline flex items-center gap-1"
+          >
+            <span>Tech Blogs</span>
+            <span className="text-[10px] text-amber/80">(15.5k+)</span>
+          </Link>
+        </div>
+      </motion.div>
     </section>
   );
 }
