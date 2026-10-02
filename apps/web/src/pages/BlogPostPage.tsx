@@ -24,6 +24,7 @@ import {
   CcdvfPart3Suite,
   CcdvfSeriesBottomNav,
 } from "../components/ccdvf/CcdvfSuites";
+import { LcpInteractiveLab } from "../components/performance/LcpInteractiveLab";
 
 export function BlogPostPage() {
   const { slug } = useParams();
@@ -1192,6 +1193,11 @@ export function BlogPostPage() {
                   </div>
                 )}
               </div>
+            )}
+
+            {/* Interactive LCP Performance Sandbox */}
+            {post.slug === "optimizing-lcp-core-web-vitals-enterprise-react" && (
+              <LcpInteractiveLab />
             )}
 
             {/* Interactive CCDV-F Exam Suites: Segregated by Post */}
