@@ -21,16 +21,16 @@ export function Awards() {
   }, [letterOpen]);
 
   return (
-    <section id="awards" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <section id="awards" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
       {/* Header */}
       <div className="flex flex-col max-w-2xl">
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-          Honors & Validation
-        </span>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+        <span className="section-label">
+            06. Honors & Validation
+          </span>
+        <h2 className="mt-2 font-display text-headline-lg-mobile text-text-primary md:text-headline-lg">
           Awards & Certifications
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+        <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
           Industry-recognized cloud architecture certifications and corporate spot awards received for engineering excellence, performance optimization, and automation tooling.
         </p>
       </div>
@@ -78,7 +78,7 @@ export function Awards() {
                     <button
                       type="button"
                       onClick={() => setLetterOpen(true)}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-xs text-amber hover:bg-amber hover:text-white transition-all shadow-sm"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-xs text-amber hover:bg-amber hover:text-on-accent transition-all shadow-sm"
                     >
                       <span>Spot Award Letter</span>
                       <span aria-hidden="true">↗</span>

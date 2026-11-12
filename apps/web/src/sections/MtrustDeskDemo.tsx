@@ -174,7 +174,7 @@ export function MtrustDeskDemo() {
       {/* Simulator Desk Container */}
       <div className="mt-8">
         <CardSpotlight className="overflow-hidden p-0 shadow-2xl border-line/80">
-          <BorderBeam size={220} duration={12} colorFrom="#f08a72" colorTo="#34d399" />
+          <BorderBeam size={220} duration={12} colorFrom="#00ff66" colorTo="#38bdf8" />
 
           <div ref={rootRef} className="outline-none" tabIndex={-1}>
             {/* Filter & Search Bar */}
@@ -212,7 +212,7 @@ export function MtrustDeskDemo() {
                   onClick={() => setBreachedOnly((v) => !v)}
                   className={`rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors ${
                     breachedOnly
-                      ? "border-amber bg-amber text-white"
+                      ? "border-amber bg-amber text-on-accent"
                       : "border-line bg-ink-2/60 text-steel hover:text-paper"
                   }`}
                 >
@@ -317,7 +317,7 @@ export function MtrustDeskDemo() {
                       <button
                         type="button"
                         onClick={() => runAction("✓ Synthetic notification transmitted to property GM.")}
-                        className="rounded-lg bg-amber px-3.5 py-2 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+                        className="rounded-lg bg-amber px-3.5 py-2 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors"
                       >
                         Notify Property
                       </button>

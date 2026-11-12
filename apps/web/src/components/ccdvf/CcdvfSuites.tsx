@@ -69,7 +69,7 @@ export function CcdvfPart1Suite() {
           <div className="pt-2 flex flex-wrap gap-2 text-xs font-mono">
             <Link
               to="/blog/anthropic-ccdv-f-exam-quick-tips-trap-elimination-guide"
-              className="rounded-xl border border-amber/40 bg-amber/10 px-3 py-1.5 text-amber hover:bg-amber hover:text-white transition-all font-semibold"
+              className="rounded-xl border border-amber/40 bg-amber/10 px-3 py-1.5 text-amber hover:bg-amber hover:text-on-accent transition-all font-semibold"
             >
               ⚡ Go to Part 2: Quick Tips & 7 Trap Rules →
             </Link>
@@ -172,7 +172,7 @@ export function CcdvfPart1Suite() {
                   to={`/blog/anthropic-ccdv-f-interactive-mock-test-practice-scenarios?domain=${encodeURIComponent(
                     domain.name
                   )}`}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-mono text-amber hover:bg-amber hover:text-white transition-all shadow-sm"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-mono text-amber hover:bg-amber hover:text-on-accent transition-all shadow-sm"
                 >
                   <span>Practice Domain in Mock Exam →</span>
                 </Link>
@@ -197,7 +197,7 @@ export function CcdvfPart1Suite() {
         <div className="pt-2 flex flex-wrap gap-3">
           <Link
             to="/blog/anthropic-ccdv-f-exam-quick-tips-trap-elimination-guide"
-            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all"
           >
             <span>Read Part 2: Quick Tips & 7 Trap Rules</span>
             <span>→</span>
@@ -268,7 +268,7 @@ export function CcdvfPart2Suite({
             </Link>
             <Link
               to="/blog/anthropic-ccdv-f-interactive-mock-test-practice-scenarios"
-              className="rounded-xl border border-amber/40 bg-amber/10 px-3 py-1.5 text-amber hover:bg-amber hover:text-white transition-all font-semibold"
+              className="rounded-xl border border-amber/40 bg-amber/10 px-3 py-1.5 text-amber hover:bg-amber hover:text-on-accent transition-all font-semibold"
             >
               Go to Part 3: 13-Scenario Mock Exam →
             </Link>
@@ -311,7 +311,7 @@ export function CcdvfPart2Suite({
           <button
             type="button"
             onClick={handleCopyCheatSheet}
-            className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all shrink-0 font-mono"
+            className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all shrink-0 font-mono"
           >
             <span>{copiedCheatSheet ? "✓ Cheat Sheet Copied!" : "📋 Copy Full Cheat Sheet"}</span>
           </button>
@@ -412,7 +412,7 @@ export function CcdvfPart2Suite({
         <div className="pt-2 flex flex-wrap gap-3">
           <Link
             to="/blog/anthropic-ccdv-f-interactive-mock-test-practice-scenarios"
-            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all"
           >
             <span>Take the 13-Scenario Mock Exam (Part 3)</span>
             <span>→</span>
@@ -620,7 +620,7 @@ export function CcdvfPart3Suite({
                 onClick={() => setExamDomainFilter("All")}
                 className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
                   examDomainFilter === "All"
-                    ? "bg-amber text-white font-semibold shadow-sm"
+                    ? "bg-amber text-on-accent font-semibold shadow-sm"
                     : "bg-ink-3 text-steel hover:text-paper"
                 }`}
               >
@@ -635,7 +635,7 @@ export function CcdvfPart3Suite({
                     onClick={() => setExamDomainFilter(d)}
                     className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
                       examDomainFilter === d
-                        ? "bg-amber text-white font-semibold shadow-sm"
+                        ? "bg-amber text-on-accent font-semibold shadow-sm"
                         : "bg-ink-3 text-steel hover:text-paper"
                     }`}
                   >
@@ -808,7 +808,7 @@ export function CcdvfPart3Suite({
         <div className="pt-2 flex flex-wrap gap-3">
           <Link
             to="/blog/anthropic-claude-certified-developer-foundations-ccdv-f-guide"
-            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all"
+            className="inline-flex items-center gap-2 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all"
           >
             <span>← Part 1: Architecture & 8 Domains Guide</span>
           </Link>

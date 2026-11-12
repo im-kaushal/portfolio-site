@@ -11,29 +11,29 @@ export function FeaturedBlogs() {
   ];
 
   return (
-    <section id="blog" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <section id="blog" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
       {/* Section Header & View All Link */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div className="max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-              Engineering Knowledge Base
-            </span>
+            <span className="section-label">
+            08. Engineering Knowledge Base
+          </span>
             <span className="rounded-full bg-phosphor/10 border border-phosphor/30 px-2 py-0.5 font-mono text-[10px] text-phosphor">
               Technical Writing
             </span>
           </div>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          <h2 className="mt-2 font-display text-headline-lg-mobile text-text-primary md:text-headline-lg">
             Featured Tech Articles & Deep Dives
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
             In-depth architectural breakdowns covering Anthropic Claude certification, JavaScript runtime internals, Core Web Vitals optimization, and recruiter outreach playbooks.
           </p>
         </div>
 
         <Link
           to="/blog"
-          className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl border border-amber/40 bg-amber/10 px-4 py-2.5 font-mono text-xs font-semibold text-amber hover:bg-amber hover:text-white transition-all shadow-glow"
+          className="self-start sm:self-auto inline-flex items-center gap-1.5 rounded-xl border border-amber/40 bg-amber/10 px-4 py-2.5 font-mono text-xs font-semibold text-amber hover:bg-amber hover:text-on-accent transition-all shadow-glow"
         >
           <span>View All Articles</span>
           <span>→</span>
@@ -46,7 +46,7 @@ export function FeaturedBlogs() {
           <Link key={post.slug} to={`/blog/${post.slug}`} className="group block h-full">
             <CardSpotlight className="relative h-full p-6 sm:p-7 flex flex-col justify-between border border-line/70 bg-ink-2/80 hover:-translate-y-1 hover:border-amber/50 transition-all">
               {idx === 0 && (
-                <BorderBeam size={180} duration={8} colorFrom="#f08a72" colorTo="#34d399" />
+                <BorderBeam size={180} duration={8} colorFrom="#00ff66" colorTo="#38bdf8" />
               )}
 
               <div>

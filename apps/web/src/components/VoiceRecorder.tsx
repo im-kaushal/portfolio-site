@@ -164,9 +164,9 @@ export function VoiceRecorder({
 
           // Luminous gradient: Phosphor green -> Cyan -> Amber
           const grad = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-          grad.addColorStop(0, "#34d399");
+          grad.addColorStop(0, "#38bdf8");
           grad.addColorStop(0.65, "#38bdf8");
-          grad.addColorStop(1, val > 170 ? "#f08a72" : "#34d399");
+          grad.addColorStop(1, val > 170 ? "#00ff66" : "#38bdf8");
 
           ctx.fillStyle = grad;
           ctx.fillRect(
@@ -177,7 +177,7 @@ export function VoiceRecorder({
           );
 
           // Glowing peak hold tick
-          ctx.fillStyle = peaks[i] > (canvas.height * 0.65) ? "#f08a72" : "#34d399";
+          ctx.fillStyle = peaks[i] > (canvas.height * 0.65) ? "#00ff66" : "#38bdf8";
           ctx.fillRect(x, Math.max(canvas.height - peaks[i] - 2, 0), Math.max(barWidth - 2, 2), 2);
 
           x += barWidth;
@@ -408,9 +408,9 @@ export function VoiceRecorder({
         const barHeight = Math.max(4, (Math.sin(norm * Math.PI) * 0.55 + wave * 0.45) * (canvas.height - 8));
 
         const grad = ctx.createLinearGradient(0, canvas.height, 0, canvas.height - barHeight);
-        grad.addColorStop(0, "#34d399");
+        grad.addColorStop(0, "#38bdf8");
         grad.addColorStop(0.6, "#38bdf8");
-        grad.addColorStop(1, "#f08a72");
+        grad.addColorStop(1, "#00ff66");
 
         ctx.fillStyle = grad;
         ctx.fillRect(i * barWidth + 1, canvas.height - barHeight, Math.max(barWidth - 2, 2), barHeight);
@@ -418,7 +418,7 @@ export function VoiceRecorder({
 
       // Playhead vertical scrubber line
       const playheadX = (playProgress / 100) * canvas.width;
-      ctx.strokeStyle = "#f08a72";
+      ctx.strokeStyle = "#00ff66";
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(playheadX, 0);

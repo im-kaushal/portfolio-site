@@ -3,16 +3,16 @@ import { CardSpotlight } from "../components/ui/CardSpotlight";
 
 export function Builds() {
   return (
-    <section id="builds" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <section id="builds" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
       {/* Header */}
       <div className="flex flex-col max-w-2xl">
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-          Open Source & Experimental
-        </span>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+        <span className="section-label">
+            09. Open Source & Experimental
+          </span>
+        <h2 className="mt-2 font-display text-headline-lg-mobile text-text-primary md:text-headline-lg">
           Independent Projects & Builds
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+        <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
           Open-source developer tools, AI-assisted agents, and web applications exploring emerging patterns in modern frontend engineering, LLM orchestration, and high-performance client architectures.
         </p>
       </div>
@@ -73,7 +73,7 @@ export function Builds() {
                     href={project.liveHref}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber/10 border border-amber/30 px-3 py-1.5 text-amber hover:bg-amber hover:text-white transition-all font-mono"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-amber/10 border border-amber/30 px-3 py-1.5 text-amber hover:bg-amber hover:text-on-accent transition-all font-mono"
                   >
                     <span>Launch Live App</span>
                     <span aria-hidden="true">↗</span>

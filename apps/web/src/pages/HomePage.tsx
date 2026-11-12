@@ -7,12 +7,11 @@ import { Education } from "../sections/Education";
 import { Experience } from "../sections/Experience";
 import { FeaturedBlogs } from "../sections/FeaturedBlogs";
 import { Hero } from "../sections/Hero";
-import { Impact } from "../sections/Impact";
+import { ImpactMatrix } from "../sections/ImpactMatrix";
+import { StackArsenal } from "../sections/StackArsenal";
+import { WorkspaceInspector } from "../sections/WorkspaceInspector";
 import { KindWords } from "../sections/KindWords";
 // import { MtrustDeskDemo } from "../sections/MtrustDeskDemo";
-import { QualityProof } from "../sections/QualityProof";
-import { Skills } from "../sections/Skills";
-import { Work } from "../sections/Work";
 
 export function HomePage() {
   const location = useLocation();
@@ -34,12 +33,11 @@ export function HomePage() {
   return (
     <div className="w-full min-w-0">
       <Hero />
-      <Impact />
-      <QualityProof />
-      <Work />
+      <ImpactMatrix />
+      <WorkspaceInspector />
+      <StackArsenal />
       {/* Interactive Architecture Simulation / Incident Coordinator Desk (temporarily disabled) */}
       {/* <MtrustDeskDemo /> */}
-      <Skills />
       <Experience />
       <Awards />
       <KindWords />

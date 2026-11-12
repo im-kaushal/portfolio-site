@@ -54,7 +54,7 @@ export function CardSpotlight({
         style={{
           opacity: "var(--spotlight-opacity, 0)",
           background: `radial-gradient(${gradientSize}px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), ${
-            gradientColor || "rgba(240, 138, 114, 0.12)"
+            gradientColor || "rgba(0, 255, 102, 0.12)"
           }, transparent 80%)`,
         }}
         aria-hidden="true"

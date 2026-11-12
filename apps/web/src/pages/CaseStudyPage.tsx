@@ -14,7 +14,7 @@ export function CaseStudyPage() {
         <p className="mt-2 text-sm text-steel">The requested project profile could not be located.</p>
         <Link
           to="/"
-          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors"
         >
           ← Return to Portfolio Overview
         </Link>
@@ -26,7 +26,7 @@ export function CaseStudyPage() {
     <article className="relative mx-auto max-w-4xl px-4 sm:px-6 md:px-8 py-12 md:py-20">
       {/* Breadcrumb Navigation */}
       <Link
-        to="/#work"
+        to="/#impact"
         className="inline-flex items-center gap-1.5 text-xs font-semibold text-steel hover:text-amber transition-colors mb-8"
       >
         <span>← Back to Selected Work</span>
@@ -72,7 +72,7 @@ export function CaseStudyPage() {
       <section className="mt-10">
         <h2 className="text-xl font-bold text-paper">Key Engineering Highlights</h2>
         <CardSpotlight className="mt-4 p-6 sm:p-8">
-          <BorderBeam size={200} duration={10} colorFrom="#f08a72" colorTo="#34d399" />
+          <BorderBeam size={200} duration={10} colorFrom="#00ff66" colorTo="#38bdf8" />
           <ul className="space-y-3.5">
             {study.highlights.map((h, i) => (
               <li key={i} className="flex items-start gap-3 text-sm text-steel leading-relaxed">
@@ -115,7 +115,7 @@ export function CaseStudyPage() {
       {/* Bottom Action */}
       <div className="mt-12 pt-8 border-t border-line/60 flex items-center justify-between">
         <Link
-          to="/#work"
+          to="/#impact"
           className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-ink-2 px-4 py-2.5 text-xs font-medium text-paper hover:border-amber hover:text-amber transition-colors"
         >
           ← Return to All Case Studies
@@ -126,7 +126,7 @@ export function CaseStudyPage() {
           onClick={() => {
             window.location.href = "/#contact";
           }}
-          className="rounded-xl bg-amber px-4 py-2.5 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+          className="rounded-xl bg-amber px-4 py-2.5 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors"
         >
           Discuss This Project →
         </a>

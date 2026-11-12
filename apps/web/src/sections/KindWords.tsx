@@ -32,7 +32,7 @@ function QuoteBlock({
         <button
           type="button"
           onClick={onOpenLetter}
-          className="mt-6 inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-medium text-amber hover:bg-amber hover:text-white transition-all font-mono"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-medium text-amber hover:bg-amber hover:text-on-accent transition-all font-mono"
           aria-haspopup="dialog"
           aria-expanded={letterOpen}
         >
@@ -70,16 +70,16 @@ export function KindWords() {
   }, [letterOpen]);
 
   return (
-    <section id="kind-words" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <section id="kind-words" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
       {/* Header */}
       <div className="flex flex-col max-w-2xl">
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-          Leadership Endorsements
-        </span>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+        <span className="section-label">
+            07. Leadership Endorsements
+          </span>
+        <h2 className="mt-2 font-display text-headline-lg-mobile text-text-primary md:text-headline-lg">
           Kind Words & Feedback
         </h2>
-        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+        <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
           {kindWords.intro}
         </p>
       </div>

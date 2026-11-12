@@ -252,7 +252,7 @@ export function CommandPalette() {
                         onClick={() => run(item)}
                         className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-xs transition-colors ${
                           isSelected
-                            ? "bg-amber text-white"
+                            ? "bg-amber text-on-accent"
                             : "text-paper hover:bg-ink-3/70"
                         }`}
                       >
@@ -264,7 +264,7 @@ export function CommandPalette() {
                         </div>
                         <span
                           className={`text-[11px] truncate font-mono ml-3 ${
-                            isSelected ? "text-white/80" : "text-steel"
+                            isSelected ? "text-on-accent/80" : "text-steel"
                           }`}
                         >
                           {item.hint}

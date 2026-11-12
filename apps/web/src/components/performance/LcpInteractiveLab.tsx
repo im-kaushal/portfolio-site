@@ -267,7 +267,7 @@ export function LcpInteractiveLab() {
               onClick={() => setActiveTab("simulator")}
               className={`rounded-lg px-3 py-1.5 text-xs font-mono font-medium transition-all ${
                 activeTab === "simulator"
-                  ? "bg-amber text-white font-semibold shadow-sm"
+                  ? "bg-amber text-on-accent font-semibold shadow-sm"
                   : "text-steel hover:text-paper"
               }`}
             >
@@ -278,7 +278,7 @@ export function LcpInteractiveLab() {
               onClick={() => setActiveTab("playgrounds")}
               className={`rounded-lg px-3 py-1.5 text-xs font-mono font-medium transition-all ${
                 activeTab === "playgrounds"
-                  ? "bg-amber text-white font-semibold shadow-sm"
+                  ? "bg-amber text-on-accent font-semibold shadow-sm"
                   : "text-steel hover:text-paper"
               }`}
             >
@@ -289,7 +289,7 @@ export function LcpInteractiveLab() {
               onClick={() => setActiveTab("checklist")}
               className={`rounded-lg px-3 py-1.5 text-xs font-mono font-medium transition-all ${
                 activeTab === "checklist"
-                  ? "bg-amber text-white font-semibold shadow-sm"
+                  ? "bg-amber text-on-accent font-semibold shadow-sm"
                   : "text-steel hover:text-paper"
               }`}
             >

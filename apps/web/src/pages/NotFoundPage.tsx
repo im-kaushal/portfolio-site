@@ -12,7 +12,7 @@ export function NotFoundPage() {
       </p>
       <Link
         to="/"
-        className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+        className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors"
       >
         ← Return to Homepage
       </Link>
