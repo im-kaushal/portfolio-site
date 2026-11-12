@@ -357,7 +357,7 @@ export function BlogPostPage() {
         <p className="mt-2 text-sm text-steel">The requested technical deep dive could not be found.</p>
         <Link
           to="/blog"
-          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-white hover:bg-amber-dim transition-colors"
+          className="mt-6 inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors"
         >
           ← Back to Tech Blogs
         </Link>
@@ -484,7 +484,7 @@ export function BlogPostPage() {
                               {item.icon} PART {item.part}
                             </span>
                             {isCurrent ? (
-                              <span className="rounded bg-amber px-1.5 py-0.5 text-[10px] font-bold text-white">
+                              <span className="rounded bg-amber px-1.5 py-0.5 text-[10px] font-bold text-on-accent">
                                 CURRENT
                               </span>
                             ) : (
@@ -545,7 +545,7 @@ export function BlogPostPage() {
                   href={post.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all shrink-0"
+                  className="inline-flex items-center gap-1.5 rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all shrink-0"
                 >
                   <span>Open in Notion ↗</span>
                 </a>
@@ -594,7 +594,7 @@ export function BlogPostPage() {
                           onClick={() => setSelectedDifficulty(diff)}
                           className={`rounded px-2 py-0.5 transition-colors ${
                             selectedDifficulty === diff
-                              ? "bg-amber text-white font-semibold shadow-sm"
+                              ? "bg-amber text-on-accent font-semibold shadow-sm"
                               : "bg-ink-3 text-steel hover:text-paper"
                           }`}
                         >
@@ -991,7 +991,7 @@ export function BlogPostPage() {
                         onClick={() => setAgencyCategory("All")}
                         className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
                           agencyCategory === "All"
-                            ? "bg-amber text-white font-semibold shadow-sm"
+                            ? "bg-amber text-on-accent font-semibold shadow-sm"
                             : "bg-ink-3 text-steel hover:text-paper"
                         }`}
                       >
@@ -1006,7 +1006,7 @@ export function BlogPostPage() {
                             onClick={() => setAgencyCategory(cat)}
                             className={`rounded-lg px-2.5 py-1 text-xs font-mono transition-colors ${
                               agencyCategory === cat
-                                ? "bg-amber text-white font-semibold shadow-sm"
+                                ? "bg-amber text-on-accent font-semibold shadow-sm"
                                 : "bg-ink-3 text-steel hover:text-paper"
                             }`}
                           >
@@ -1153,7 +1153,7 @@ export function BlogPostPage() {
                             <button
                               type="button"
                               onClick={() => handleCopyAgencyOutreach(agency)}
-                              className="inline-flex items-center gap-1 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-[11px] font-mono text-amber hover:bg-amber hover:text-white transition-colors"
+                              className="inline-flex items-center gap-1 rounded-lg border border-amber/40 bg-amber/10 px-2.5 py-1 text-[11px] font-mono text-amber hover:bg-amber hover:text-on-accent transition-colors"
                               title="Copy tailored recruiter outreach pitch"
                             >
                               <span>{isCopiedOutreach ? "✓ Pitch Copied" : "📋 Copy Outreach"}</span>
@@ -1261,7 +1261,7 @@ export function BlogPostPage() {
                     href={site.whatsapp}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all"
+                    className="rounded-xl bg-amber px-4 py-2 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all"
                   >
                     💬 Discuss on WhatsApp
                   </a>
@@ -1323,7 +1323,7 @@ export function BlogPostPage() {
                 <button
                   type="button"
                   onClick={handleCopyPostLink}
-                  className="w-full rounded-lg bg-amber px-3 py-2 text-xs font-semibold text-white hover:bg-amber-dim transition-colors text-center shadow-glow"
+                  className="w-full rounded-lg bg-amber px-3 py-2 text-xs font-semibold text-on-accent hover:bg-amber-dim transition-colors text-center shadow-glow"
                 >
                   {copiedLink ? "✓ Link Copied" : "Share This Article"}
                 </button>

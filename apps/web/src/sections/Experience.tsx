@@ -23,7 +23,7 @@ const COMPANY_DETAILS: Record<string, CompanyMeta> = {
     badgeBg: "bg-emerald-500/10",
     badgeBorder: "border-emerald-500/30",
     badgeText: "text-emerald-400",
-    glowColor: "rgba(52, 211, 153, 0.2)",
+    glowColor: "rgba(56, 189, 248, 0.2)",
     metrics: [
       { label: "LCP Optimization", value: "−35%" },
       { label: "Data Grid Load", value: "4.1s → 2.6s" },
@@ -92,17 +92,17 @@ export function Experience() {
   const activeMeta = COMPANY_DETAILS[activeRole.id] ?? COMPANY_DETAILS.hashedin;
 
   return (
-    <section id="experience" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
+    <section id="experience" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
       {/* Section Header & Dual View Switcher */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <ScrollReveal className="max-w-2xl">
-          <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-            Career Progression
+          <span className="section-label">
+            05. Career Progression
           </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
+          <h2 className="mt-2 font-display text-headline-lg-mobile text-text-primary md:text-headline-lg">
             Professional Experience
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
+          <p className="mt-3 text-sm leading-relaxed text-text-muted md:text-base">
             3.5+ years of delivering high-concurrency enterprise web and mobile solutions at HashedIn by Deloitte for Fortune 500 financial, hospitality, and insurance leaders.
           </p>
         </ScrollReveal>
@@ -161,7 +161,7 @@ export function Experience() {
 
       {viewMode === "timeline" ? (
         /* Continuous Timeline Flow with Vertical Glowing Line */
-        <div className="relative mt-12 pl-6 sm:pl-10 before:absolute before:left-2 sm:before:left-4 before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-amber before:via-phosphor before:to-line/30 before:shadow-[0_0_12px_rgba(240,138,114,0.6)]">
+        <div className="relative mt-12 pl-6 sm:pl-10 before:absolute before:left-2 sm:before:left-4 before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-amber before:via-phosphor before:to-line/30 before:shadow-[0_0_12px_rgba(0, 255, 102,0.6)]">
           <div className="space-y-8">
             {timeline.map((item) => {
               const meta = COMPANY_DETAILS[item.id] ?? COMPANY_DETAILS.hashedin;

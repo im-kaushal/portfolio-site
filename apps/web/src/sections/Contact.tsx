@@ -86,18 +86,51 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="relative mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-16 md:py-24">
-      {/* Header */}
-      <ScrollReveal className="max-w-2xl">
-        <span className="font-mono text-xs font-semibold uppercase tracking-wider text-amber">
-          Frictionless Conversion Hub
-        </span>
-        <h2 className="mt-2 text-3xl sm:text-4xl font-bold tracking-tight text-paper">
-          Let&apos;s Connect
-        </h2>
-        <p className="mt-3 text-sm sm:text-base text-steel leading-relaxed">
-          Open to senior engineering roles, technical advisory, Core Web Vitals optimization, and high-impact software craft. Choose whichever channel is easiest for you.
-        </p>
+    <section id="contact" aria-label="Contact" className="relative mx-auto w-full max-w-shell scroll-mt-24 px-4 py-10 md:px-12 md:py-14">
+      {/* Board CTA panel */}
+      <ScrollReveal>
+        <div className="tm-window relative overflow-hidden p-6 md:p-10">
+          <div
+            className="pointer-events-none absolute -right-24 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-t-lime/10 blur-3xl"
+            aria-hidden="true"
+          />
+          <span className="relative inline-flex items-center gap-2 rounded border border-border-subtle bg-card px-2.5 py-1 font-mono text-[11px] text-t-lime">
+            <span className="h-1.5 w-1.5 rounded-full bg-t-lime" />
+            RUN: ping -c 1 kaushal@deloitte
+            <span className="h-3.5 w-1.5 animate-blink bg-t-lime motion-reduce:animate-none" aria-hidden="true" />
+          </span>
+          <h2 className="relative mt-5 font-display text-headline-lg-mobile text-text-primary md:text-[40px] md:leading-[48px]">
+            Ready to scale your next frontend mission?
+          </h2>
+          <p className="relative mt-3 max-w-2xl text-sm leading-relaxed text-text-secondary md:text-base">
+            Open to senior frontend, mobile and full-stack roles with distributed teams, plus technical
+            conversations on Core Web Vitals and UI architecture. Based in {site.location}.
+          </p>
+          <div className="relative mt-7 flex flex-wrap gap-3 font-mono text-xs">
+            <a
+              href={`mailto:${site.publicEmail}`}
+              className="inline-flex items-center gap-2 rounded bg-t-lime px-4 py-3 font-bold uppercase tracking-wide text-on-accent shadow-glow transition-transform hover:-translate-y-px"
+            >
+              Send terminal mail
+            </a>
+            <a
+              href={site.whatsappLinks.recruiter}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded border border-border-strong bg-card px-4 py-3 text-text-primary transition-colors hover:border-t-emerald/50"
+            >
+              <span className="text-t-emerald">▸</span> Direct ping ({site.phoneDisplay})
+            </a>
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded border border-border-strong bg-card px-4 py-3 text-text-primary transition-colors hover:border-t-cyan/50"
+            >
+              <span className="text-t-cyan">&lt;/&gt;</span> Audit source repo
+            </a>
+          </div>
+        </div>
       </ScrollReveal>
 
       {/* Contact Grid: Recruiter Fast-Track + Async Inquiry */}
@@ -255,7 +288,7 @@ export function Contact() {
                   playChime();
                   downloadResume("Kaushal_Kumar_Resume.pdf");
                 }}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-mono font-semibold text-amber hover:bg-amber hover:text-white transition-all shadow-sm"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-amber/40 bg-amber/10 px-3.5 py-2 text-xs font-mono font-semibold text-amber hover:bg-amber hover:text-on-accent transition-all shadow-sm"
               >
                 <span>Download PDF</span>
                 <span>↓</span>
@@ -348,7 +381,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === "sending"}
-                  className="w-full sm:w-auto rounded-xl bg-amber px-6 py-3 text-xs font-semibold text-white shadow-glow hover:bg-amber-dim transition-all disabled:opacity-50"
+                  className="w-full sm:w-auto rounded-xl bg-amber px-6 py-3 text-xs font-semibold text-on-accent shadow-glow hover:bg-amber-dim transition-all disabled:opacity-50"
                 >
                   {status === "sending" ? "Transmitting…" : "Send Message →"}
                 </button>

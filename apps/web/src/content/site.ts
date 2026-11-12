@@ -95,12 +95,12 @@ export const site = {
 } as const;
 
 export const nav = [
-  { id: "skills", label: "Skills", href: "/#skills" },
+  { id: "overview", label: "Overview", href: "/#overview" },
+  { id: "impact", label: "Impact", href: "/#impact" },
+  { id: "architecture", label: "Inspector", href: "/#architecture" },
+  { id: "stack", label: "Stack", href: "/#stack" },
   { id: "experience", label: "Timeline", href: "/#experience" },
-  { id: "work", label: "Work", href: "/#work" },
   { id: "blog", label: "Blog", href: "/blog" },
-  { id: "awards", label: "Awards", href: "/#awards" },
-  { id: "kind-words", label: "Feedbacks", href: "/#kind-words" },
   { id: "contact", label: "Contact", href: "/#contact" },
 ] as const;
 

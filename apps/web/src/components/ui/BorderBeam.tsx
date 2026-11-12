@@ -18,8 +18,8 @@ interface BorderBeamProps {
 export function BorderBeam({
   className,
   duration = 8,
-  colorFrom = "#f08a72",
-  colorTo = "#34d399",
+  colorFrom = "#00ff66",
+  colorTo = "#38bdf8",
   borderWidth = 1.5,
 }: BorderBeamProps) {
   const shouldReduceMotion = useReducedMotion();

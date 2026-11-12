@@ -53,7 +53,7 @@ export function BlogListPage() {
           </span>
           <Link to={`/blog/${featuredPost.slug}`} className="block group">
             <CardSpotlight className="relative p-6 sm:p-9 border border-line/80 bg-ink-2/90 overflow-hidden hover:border-amber/50 transition-all">
-              <BorderBeam size={220} duration={9} colorFrom="#f08a72" colorTo="#34d399" />
+              <BorderBeam size={220} duration={9} colorFrom="#00ff66" colorTo="#38bdf8" />
 
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-steel">
                 <div className="flex items-center gap-2.5">

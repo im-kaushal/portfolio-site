@@ -1,357 +1,232 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { nav, site } from "../content/site";
 import { CommandPalette } from "./CommandPalette";
 import { SkipLink } from "./SkipLink";
-import { downloadResume } from "../lib/downloadResume";
 import { ThemeToggle } from "./ThemeToggle";
-import { Magnetic } from "./ui/Magnetic";
+import { Icon } from "./telemetry/Icon";
+import { downloadResume } from "../lib/downloadResume";
+
+function openCommandPalette() {
+  window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
+}
 
 export function Layout() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-  const [currentTime, setCurrentTime] = useState<string>("");
+  const [activeSection, setActiveSection] = useState("overview");
   const location = useLocation();
 
-  // Live Bengaluru clock
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString("en-IN", {
-        timeZone: "Asia/Kolkata",
-        hour12: false,
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
-      setCurrentTime(`${timeStr} IST`);
-    };
-    updateTime();
-    const timer = setInterval(updateTime, 1000);
-    return () => clearInterval(timer);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Scrollspy for active nav section
+  // Scrollspy for the active nav tab
   useEffect(() => {
     if (location.pathname.startsWith("/blog")) {
       setActiveSection("blog");
       return;
     }
-
-    const sectionIds = nav.filter((item) => item.id !== "blog").map((item) => item.id);
+    if (location.pathname !== "/") {
+      setActiveSection("");
+      return;
+    }
     const observers: IntersectionObserver[] = [];
-
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              setActiveSection(id);
-            }
-          });
-        },
-        { rootMargin: "-25% 0px -60% 0px" },
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-
-    return () => {
-      observers.forEach((obs) => obs.disconnect());
-    };
+    nav
+      .filter((item) => item.href.startsWith("/#"))
+      .forEach((item) => {
+        const el = document.getElementById(item.id);
+        if (!el) return;
+        const obs = new IntersectionObserver(
+          (entries) => entries.forEach((e) => e.isIntersecting && setActiveSection(item.id)),
+          { rootMargin: "-25% 0px -60% 0px" },
+        );
+        obs.observe(el);
+        observers.push(obs);
+      });
+    return () => observers.forEach((o) => o.disconnect());
   }, [location.pathname]);
 
-  // Close mobile nav on route change
-  useEffect(() => {
-    setMobileNavOpen(false);
-  }, [location.pathname]);
+  useEffect(() => setMobileNavOpen(false), [location.pathname, location.hash]);
 
-  const triggerCmdK = () => {
-    window.dispatchEvent(
-      new KeyboardEvent("keydown", {
-        key: "k",
-        metaKey: true,
-        bubbles: true,
-      }),
-    );
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const isActive = (item: (typeof nav)[number]) =>
+    item.href.startsWith("/#") ? location.pathname === "/" && activeSection === item.id : location.pathname.startsWith(item.href);
 
   return (
-    <div className="min-h-screen relative selection:bg-amber selection:text-white flex flex-col w-full overflow-x-hidden">
-      {/* Mobile-responsive fixed background: Dot grid + ambient lighting */}
-      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden" aria-hidden="true">
-        <div className="absolute inset-0 grid-bg opacity-75" />
+    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+      {/* Fixed workstation grid + phosphor back-glow */}
+      <div className="pointer-events-none fixed inset-0 -z-10" aria-hidden="true">
+        <div className="absolute inset-0 grid-bg" />
         <div className="absolute inset-0 ambient-glow" />
       </div>
 
       <SkipLink />
 
-      {/* Floating Header */}
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 w-full ${
-          scrolled
-            ? "py-2.5 backdrop-blur-xl bg-ink/80 border-b border-line/70 shadow-card"
-            : "py-4 bg-transparent border-b border-transparent"
+        className={`sticky top-0 z-40 w-full border-b transition-colors duration-200 ${
+          scrolled ? "border-border-subtle bg-canvas/85 backdrop-blur-xl" : "border-border-subtle/60 bg-canvas/60 backdrop-blur-md"
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 sm:gap-4 px-4 sm:px-6 md:px-8 w-full">
-          {/* Logo & Online Status */}
-          <Link
-            to="/"
-            className="group flex items-center gap-2 sm:gap-2.5 font-sans font-medium text-paper transition-opacity hover:opacity-90 min-w-0 shrink"
-          >
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-phosphor opacity-75" />
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-phosphor" />
+        <div className="mx-auto flex h-16 w-full max-w-shell items-center justify-between gap-4 px-4 md:px-6">
+          {/* Prompt identity */}
+          <div className="flex min-w-0 items-center gap-3">
+            <Link to="/" className="group flex shrink-0 items-center gap-2 font-mono text-sm font-semibold text-t-lime" aria-label={`${site.name}, home`}>
+              <span className="h-2.5 w-2.5 rounded-full bg-t-lime shadow-glow-sm" />
+              <span className="hidden sm:inline">kaushal@hashedin:~#</span>
+              <span className="sm:hidden">kaushal:~#</span>
+              <span className="h-4 w-2 animate-blink bg-t-lime motion-reduce:animate-none" aria-hidden="true" />
+            </Link>
+            <span className="hidden items-center gap-2 whitespace-nowrap rounded border border-border-subtle bg-card px-2.5 py-1 font-mono text-[11px] xl:inline-flex">
+              <span className="text-t-emerald">systemd</span>
+              <span className="text-text-muted">active (running)</span>
             </span>
-            <span className="text-sm font-bold tracking-tight text-paper group-hover:text-amber transition-colors">
-              {site.name}
-            </span>
-            <span className="hidden sm:inline-block rounded-full border border-line bg-ink-2/80 px-2 py-0.5 text-[10px] font-mono text-steel">
-              SDE II
-            </span>
-            {currentTime && (
-              <span
-                className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-line/70 bg-ink-2/80 px-2.5 py-0.5 text-[10px] font-mono text-steel"
-                title="Live Local Time (Bengaluru, India)"
-              >
-                <span className="h-1.5 w-1.5 rounded-full bg-phosphor animate-pulse" />
-                <span className="tabular-nums">{currentTime}</span>
-              </span>
-            )}
-          </Link>
+          </div>
 
-          {/* Desktop Nav with Sliding Active Pill */}
-          <nav
-            aria-label="Primary Navigation"
-            className="hidden lg:flex items-center gap-1 rounded-full border border-line/80 bg-ink-2/80 p-1.5 backdrop-blur-md shadow-subtle"
-          >
+          {/* Desktop tabs */}
+          <nav aria-label="Primary" className="hidden h-full items-stretch lg:flex">
             {nav.map((item) => {
-              const isPageLink = item.href.startsWith("/") && !item.href.startsWith("/#");
-              const isActive = isPageLink
-                ? location.pathname.startsWith(item.href)
-                : location.pathname === "/" && activeSection === item.id;
-
+              const on = isActive(item);
               return (
                 <Link
                   key={item.id}
                   to={item.href}
-                  onClick={() => {
-                    if (!isPageLink) setActiveSection(item.id);
-                  }}
-                  className={`relative rounded-full px-3.5 py-1.5 font-sans text-xs font-medium transition-colors flex items-center gap-1.5 ${
-                    isActive ? "text-paper font-semibold" : "text-steel hover:text-paper"
+                  onClick={() => item.href.startsWith("/#") && setActiveSection(item.id)}
+                  aria-current={on ? "page" : undefined}
+                  className={`relative flex items-center px-3 font-display text-[15px] transition-colors xl:px-4 ${
+                    on ? "text-text-primary" : "text-text-muted hover:text-text-primary"
                   }`}
                 >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavPill"
-                      className="absolute inset-0 rounded-full bg-ink-3 border border-line/80 shadow-sm"
-                      transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                  {item.label}
+                  {on && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      className="absolute inset-x-3 bottom-0 h-0.5 bg-t-lime xl:inset-x-4"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
                     />
-                  )}
-                  <span className="relative z-10">{item.label}</span>
-                  {item.id === "blog" && (
-                    <span className="relative z-10 rounded-full bg-amber/20 border border-amber/40 px-1.5 py-0.5 text-[9px] font-mono font-bold text-amber leading-none">
-                      NEW
-                    </span>
                   )}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Quick Cmd+K Search Button */}
+          {/* Actions */}
+          <div className="flex shrink-0 items-center gap-2">
             <button
               type="button"
-              onClick={triggerCmdK}
-              className="hidden sm:inline-flex items-center gap-1.5 rounded-lg border border-line bg-ink-2/80 px-2.5 py-1.5 text-xs text-steel transition-colors hover:border-line hover:text-paper hover:bg-ink-3/70"
-              title="Open Command Palette (Cmd+K)"
+              onClick={openCommandPalette}
+              className="hidden h-9 items-center gap-2 rounded border border-border-subtle bg-card px-2.5 text-text-muted transition-colors hover:border-border-strong hover:text-text-primary md:inline-flex"
+              title="Command palette (⌘K)"
             >
-              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <kbd className="rounded border border-line/80 bg-ink px-1 py-0.5 font-mono text-[9px] text-steel">
-                ⌘K
-              </kbd>
+              <Icon name="search" className="h-4 w-4" />
+              <kbd className="font-mono text-[10px]">⌘K</kbd>
             </button>
-
-            {/* 3D Theme Flip Toggle */}
             <ThemeToggle />
-
-            {/* Resume Button */}
-            <Magnetic strength={0.25} className="hidden sm:inline-block">
-              <button
-                type="button"
-                onClick={() => downloadResume("Kaushal_Kumar_Resume.pdf")}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-amber/40 bg-amber/10 px-3 py-1.5 font-sans text-xs font-semibold text-amber transition-all hover:bg-amber hover:text-white shadow-glow"
-              >
-                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                <span>Resume</span>
-              </button>
-            </Magnetic>
-
-            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => downloadResume("Kaushal_Kumar_Resume.pdf")}
+              className="hidden h-9 items-center gap-2 rounded border border-border-strong bg-card px-3 font-mono text-xs text-text-primary transition-colors hover:border-t-lime/50 sm:inline-flex"
+            >
+              <Icon name="download" className="h-4 w-4" /> Fetch Resume
+            </button>
+            <Link
+              to="/#contact"
+              className="hidden h-9 items-center gap-2 rounded bg-t-lime px-3 font-mono text-xs font-bold uppercase tracking-wide text-on-accent shadow-glow transition-transform hover:-translate-y-px md:inline-flex"
+            >
+              <Icon name="send" className="h-4 w-4" /> Execute Ping
+            </Link>
             <button
               type="button"
               aria-expanded={mobileNavOpen}
               aria-controls="mobile-navigation"
-              onClick={() => setMobileNavOpen((open) => !open)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-line bg-ink-2/80 text-steel transition-colors hover:text-paper lg:hidden"
               aria-label={mobileNavOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMobileNavOpen((o) => !o)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded border border-border-subtle bg-card text-text-secondary lg:hidden"
             >
-              <span className="sr-only">{mobileNavOpen ? "Close menu" : "Open menu"}</span>
-              <span className="flex flex-col gap-1.5">
-                <span
-                  className={`h-0.5 w-4 bg-current transition-transform duration-200 ${
-                    mobileNavOpen ? "rotate-45 translate-y-2" : ""
-                  }`}
-                />
-                <span
-                  className={`h-0.5 w-4 bg-current transition-opacity duration-200 ${
-                    mobileNavOpen ? "opacity-0" : ""
-                  }`}
-                />
-                <span
-                  className={`h-0.5 w-4 bg-current transition-transform duration-200 ${
-                    mobileNavOpen ? "-rotate-45 -translate-y-2" : ""
-                  }`}
-                />
-              </span>
+              <Icon name={mobileNavOpen ? "close" : "menu"} className="h-4 w-4" />
             </button>
           </div>
         </div>
+
+        {/* Mobile service strip (from the mobile board) */}
+        <div className="flex items-center justify-between border-t border-border-subtle bg-subtle/80 px-4 py-2 font-mono text-[11px] lg:hidden">
+          <span className="flex items-center gap-2 text-text-muted">
+            SERVICE:
+            <span className="inline-flex items-center gap-1.5 rounded border border-t-emerald/30 bg-t-emerald/10 px-2 py-0.5 text-t-emerald">
+              <span className="h-1.5 w-1.5 rounded-full bg-t-emerald" /> active (running)
+            </span>
+          </span>
+          <span className="flex items-center gap-1 text-text-muted">
+            <Icon name="pin" className="h-3.5 w-3.5" /> BLR, IND
+          </span>
+        </div>
       </header>
 
-      {/* Mobile Slide-Down Drawer & Backdrop Overlay */}
       <AnimatePresence>
         {mobileNavOpen && (
           <>
-            {/* Backdrop click-away overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
               onClick={() => setMobileNavOpen(false)}
-              className="fixed inset-0 z-30 bg-ink/75 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-30 bg-canvas/70 backdrop-blur-sm lg:hidden"
               aria-hidden="true"
             />
-
             <motion.nav
               id="mobile-navigation"
-              initial={{ opacity: 0, y: -14, scaleY: 0.96 }}
-              animate={{ opacity: 1, y: 0, scaleY: 1 }}
-              exit={{ opacity: 0, y: -14, scaleY: 0.96 }}
-              transition={{ type: "spring", stiffness: 360, damping: 28 }}
-              aria-label="Mobile Navigation"
-              className="fixed inset-x-0 top-[57px] z-40 origin-top border-b border-line bg-ink/95 px-5 py-6 backdrop-blur-2xl lg:hidden shadow-2xl"
+              aria-label="Mobile"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18 }}
+              className="fixed inset-x-0 top-[101px] z-40 border-b border-border-strong bg-subtle px-4 py-4 lg:hidden"
             >
-              <div className="mx-auto flex max-w-lg flex-col gap-1.5">
-                {nav.map((item, idx) => {
-                  const isPageLink = item.href.startsWith("/") && !item.href.startsWith("/#");
-                  const isActive = isPageLink
-                    ? location.pathname.startsWith(item.href)
-                    : location.pathname === "/" && activeSection === item.id;
-
+              <ul className="mx-auto max-w-lg space-y-1 font-mono text-sm">
+                {nav.map((item, i) => {
+                  const on = isActive(item);
                   return (
-                    <motion.div
-                      key={item.id}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.035, duration: 0.2 }}
-                    >
+                    <li key={item.id}>
                       <Link
                         to={item.href}
-                        onClick={() => {
-                          if (!isPageLink) setActiveSection(item.id);
-                          setMobileNavOpen(false);
-                        }}
-                        className={`flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
-                          isActive
-                            ? "bg-ink-3 text-amber font-semibold border border-line/80"
-                            : "text-steel hover:bg-ink-2 hover:text-paper"
+                        onClick={() => setMobileNavOpen(false)}
+                        className={`flex items-center justify-between rounded border px-3 py-2.5 ${
+                          on ? "border-t-lime/40 bg-t-lime/5 text-t-lime" : "border-transparent text-text-secondary hover:bg-card"
                         }`}
                       >
-                        <span className="flex items-center gap-2">
-                          {isActive && <span className="h-1.5 w-1.5 rounded-full bg-amber" />}
-                          <span>{item.label}</span>
-                          {item.id === "blog" && (
-                            <span className="rounded-full bg-amber/20 border border-amber/40 px-2 py-0.5 text-[10px] font-mono font-bold text-amber">
-                              NEW
-                            </span>
-                          )}
+                        <span>
+                          <span className="text-text-muted">{String(i + 1).padStart(2, "0")}.</span> {item.label}
                         </span>
-                        <span className="text-xs text-steel/60" aria-hidden="true">
-                          →
-                        </span>
+                        <span aria-hidden="true">→</span>
                       </Link>
-                    </motion.div>
+                    </li>
                   );
                 })}
-
-                <div className="mt-4 pt-4 border-t border-line/60 flex flex-col gap-2.5">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileNavOpen(false);
-                      downloadResume("Kaushal_Kumar_Resume.pdf");
-                    }}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-amber px-4 py-3 font-semibold text-white transition-opacity hover:opacity-95 shadow-glow"
-                  >
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      />
-                    </svg>
-                    <span>Download Resume (PDF)</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setMobileNavOpen(false);
-                      triggerCmdK();
-                    }}
-                    className="flex items-center justify-center gap-2 rounded-xl border border-line bg-ink-2 px-4 py-2.5 text-xs text-steel hover:text-paper"
-                  >
-                    <span>Search Commands & Pages (⌘K)</span>
-                  </button>
-                </div>
+              </ul>
+              <div className="mx-auto mt-4 grid max-w-lg grid-cols-2 gap-2 border-t border-border-subtle pt-4 font-mono text-xs">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileNavOpen(false);
+                    void downloadResume("Kaushal_Kumar_Resume.pdf");
+                  }}
+                  className="flex items-center justify-center gap-2 rounded bg-t-lime px-3 py-2.5 font-bold text-on-accent"
+                >
+                  <Icon name="download" className="h-4 w-4" /> Fetch Resume
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMobileNavOpen(false);
+                    openCommandPalette();
+                  }}
+                  className="flex items-center justify-center gap-2 rounded border border-border-strong bg-card px-3 py-2.5 text-text-secondary"
+                >
+                  <Icon name="search" className="h-4 w-4" /> Search ⌘K
+                </button>
               </div>
             </motion.nav>
           </>
@@ -360,91 +235,39 @@ export function Layout() {
 
       <CommandPalette />
 
-      <main id="main" className="min-w-0 w-full flex-1">
+      <main id="main" className="w-full min-w-0 flex-1">
         <Outlet />
       </main>
 
-      {/* Clean Unified Developer Footer */}
-      <footer className="border-t border-line/70 bg-ink-2/70 backdrop-blur-md py-8 px-4 sm:px-6 md:px-8 mt-16">
-        <div className="mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between gap-5 text-xs text-steel">
-          {/* Left: Copyright, Role & Bengaluru Location Tag */}
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 text-center md:text-left">
-            <span className="font-semibold text-paper">
-              © {new Date().getFullYear()} {site.name}
+      <footer className="mt-10 border-t border-border-subtle bg-subtle/80">
+        <div className="mx-auto flex w-full max-w-shell flex-col gap-4 px-4 py-6 font-mono text-xs md:flex-row md:items-center md:justify-between md:px-6">
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-muted">
+            <span className="flex items-center gap-1.5 font-semibold text-t-lime">
+              <span className="h-2 w-2 rounded-full bg-t-lime" /> PROD_OK
             </span>
-            <span className="hidden sm:inline text-steel/60">·</span>
-            <span>Software Engineer @ HashedIn by Deloitte</span>
-            <span className="text-line">•</span>
-            <span className="font-mono text-[11px] text-steel">
-              BENGALURU, INDIA · UTC+5:30
+            <span>
+              © {new Date().getFullYear()} {site.name} (SDE II, {site.employer}). Bengaluru, UTC+5:30.
             </span>
-          </div>
-
-          {/* Right: Live Clock, Socials, Blogs & Scroll-to-Top Button */}
-          <div className="flex flex-wrap items-center justify-center md:justify-end gap-3.5 text-xs font-medium">
-            {currentTime && (
-              <div
-                className="inline-flex items-center gap-1.5 rounded-lg border border-line/80 bg-ink-3/70 px-2.5 py-1 text-paper font-mono text-[11px]"
-                title="Live Bengaluru Local Time"
-              >
-                <span className="text-[10px] text-amber">🕒</span>
-                <span className="tabular-nums">{currentTime}</span>
-              </div>
-            )}
-
-            <Link
-              to="/blog"
-              className="text-amber hover:underline font-semibold flex items-center gap-1"
-            >
-              <span>Tech Blogs</span>
-              <span className="rounded bg-amber/20 px-1 py-0.2 text-[9px] font-mono font-bold">NEW</span>
+          </p>
+          <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-text-secondary">
+            <a href={site.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-text-primary">
+              LinkedIn
+            </a>
+            <a href={site.github} target="_blank" rel="noopener noreferrer" className="hover:text-text-primary">
+              GitHub
+            </a>
+            <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-text-primary">
+              WhatsApp
+            </a>
+            <Link to="/blog" className="hover:text-text-primary">
+              Blog
             </Link>
-
-            <a
-              href={site.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-steel hover:text-amber transition-colors"
-            >
-              GitHub ↗
-            </a>
-            <a
-              href={site.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-steel hover:text-amber transition-colors"
-            >
-              LinkedIn ↗
-            </a>
-            <a
-              href={site.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-steel hover:text-amber transition-colors"
-            >
-              WhatsApp ↗
-            </a>
-          </div>
+            <Link to="/#overview" className="text-t-lime hover:underline">
+              Terminal CLI
+            </Link>
+          </nav>
         </div>
       </footer>
-
-      {/* Fixed Back-to-Top Button */}
-      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-30">
-        <Magnetic strength={0.25}>
-          <button
-            type="button"
-            onClick={scrollToTop}
-            className="group flex items-center gap-1.5 rounded-full border border-line/80 bg-ink-2/90 px-3.5 py-2 text-xs font-mono font-medium text-steel hover:text-paper hover:border-amber/60 hover:bg-ink-3 backdrop-blur-md transition-all shadow-card hover:shadow-subtle focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber"
-            title="Scroll to top"
-            aria-label="Scroll to top"
-          >
-            <span className="text-amber group-hover:-translate-y-0.5 transition-transform duration-200">
-              ↑
-            </span>
-            <span>Top</span>
-          </button>
-        </Magnetic>
-      </div>
     </div>
   );
 }
