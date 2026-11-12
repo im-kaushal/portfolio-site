@@ -19,10 +19,10 @@ export function Hero() {
     <section
       id="overview"
       aria-labelledby="hero-title"
-      className="mx-auto grid w-full max-w-shell grid-cols-1 items-start gap-8 px-4 pb-10 pt-8 md:px-12 md:pt-14 lg:grid-cols-12 lg:pb-14"
+      className="mx-auto grid w-full max-w-shell grid-cols-1 items-start gap-8 lg:items-stretch px-4 pb-10 pt-8 md:px-12 md:pt-14 lg:grid-cols-12 lg:pb-14"
     >
       {/* Left: identity + headline + telemetry tiles */}
-      <div className="min-w-0 space-y-7 lg:col-span-7">
+      <div className="flex min-w-0 flex-col gap-7 lg:col-span-7">
         <motion.div
           {...rise(0)}
           className="inline-flex max-w-full items-center gap-2 rounded border border-border-strong bg-card px-3 py-1.5 font-mono text-[11px] sm:text-xs"
@@ -72,7 +72,7 @@ export function Hero() {
         </motion.ul>
 
         {/* Direct channels */}
-        <motion.div {...rise(0.2)} className="flex flex-wrap gap-2.5 font-mono text-xs">
+        <motion.div {...rise(0.2)} className="flex flex-wrap gap-2.5 font-mono text-xs lg:mt-auto">
           <a
             href={site.whatsapp}
             target="_blank"
@@ -104,8 +104,10 @@ export function Hero() {
       </div>
 
       {/* Right: interactive CLI */}
-      <motion.div {...rise(0.12)} className="min-w-0 lg:col-span-5">
-        <TerminalRunner />
+      <motion.div {...rise(0.12)} className="relative min-w-0 lg:col-span-5">
+        <div className="lg:absolute lg:inset-0">
+          <TerminalRunner />
+        </div>
       </motion.div>
     </section>
   );
