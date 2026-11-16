@@ -42,6 +42,63 @@ function TickBadge() {
   return <span className="shrink-0 text-text-muted tabular-nums">TICK #{tick}</span>;
 }
 
+/** Shift a sparkline one step left and append a new sample. */
+function nextSeries(series: number[], min: number, max: number) {
+  const last = series[series.length - 1];
+  const next = Math.max(min, Math.min(max, last + (Math.random() - 0.5) * (max - min) * 0.6));
+  return [...series.slice(1), next];
+}
+
+function sparkPoints(series: number[], w: number, h: number, min: number, max: number) {
+  const step = w / (series.length - 1);
+  return series.map((v, i) => `${(i * step).toFixed(1)},${(h - 1 - ((v - min) / (max - min)) * (h - 2)).toFixed(1)}`);
+}
+
+function SystemMeters() {
+  const [cpu, setCpu] = useState([12, 15, 13, 20, 16, 22, 17, 24, 18]);
+  const [mem, setMem] = useState([63.6, 63.8, 63.5, 64.0, 63.9, 64.1, 64.0]);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => {
+      setCpu((s) => nextSeries(s, 8, 28));
+      setMem((s) => nextSeries(s, 63.4, 64.4));
+    }, 2400);
+    return () => clearInterval(t);
+  }, []);
+  const cpuPts = sparkPoints(cpu, 40, 12, 8, 28);
+  const memPts = sparkPoints(mem, 32, 12, 63.4, 64.4);
+  const cpuLast = cpuPts[cpuPts.length - 1].split(",");
+  const memLast = memPts[memPts.length - 1].split(",");
+  return (
+    <div className="flex min-w-0 items-center gap-2" aria-hidden="true">
+      <span className="hidden items-center gap-1.5 rounded border border-border-subtle/60 bg-canvas/80 px-1.5 py-0.5 sm:flex">
+        <span className="text-[10px] text-text-muted">CPU:</span>
+        <span className="w-6 text-[10px] font-bold tabular-nums text-t-lime">{Math.round(cpu[cpu.length - 1])}%</span>
+        <svg viewBox="0 0 40 12" className="h-3 w-10 overflow-visible text-t-lime">
+          <defs>
+            <linearGradient id="cpu-spark-grad" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stopColor="currentColor" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          <polygon fill="url(#cpu-spark-grad)" points={`${cpuPts.join(" ")} 40,12 0,12`} />
+          <polyline fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" points={cpuPts.join(" ")} />
+          <circle cx={cpuLast[0]} cy={cpuLast[1]} r={1.5} fill="currentColor" className="animate-pulse" />
+        </svg>
+      </span>
+      <span className="hidden items-center gap-1.5 rounded border border-border-subtle/60 bg-canvas/80 px-1.5 py-0.5 md:flex">
+        <span className="text-[10px] text-text-muted">MEM:</span>
+        <span className="text-[10px] font-bold tabular-nums text-t-cyan">{mem[mem.length - 1].toFixed(1)}M</span>
+        <span className="text-[9px] text-text-muted">/12%</span>
+        <svg viewBox="0 0 32 12" className="h-3 w-8 overflow-visible text-t-cyan">
+          <polyline fill="none" stroke="currentColor" strokeWidth={1.2} strokeLinecap="round" strokeLinejoin="round" points={memPts.join(" ")} />
+          <circle cx={memLast[0]} cy={memLast[1]} r={1.2} fill="currentColor" />
+        </svg>
+      </span>
+    </div>
+  );
+}
+
 function statusEntry(): ReactNode {
   return (
     <div className="space-y-1">
@@ -240,7 +297,7 @@ export function TerminalRunner() {
   }
 
   return (
-    <div className="tm-window flex h-full min-h-[420px] flex-col overflow-hidden font-mono" id="cli">
+    <div className="tm-window flex h-[520px] flex-col overflow-hidden font-mono lg:h-full lg:min-h-[480px]" id="cli">
       {/* Title bar */}
       <div className="flex items-center justify-between gap-3 border-b border-border-strong bg-card px-4 py-2.5">
         <div className="flex min-w-0 items-center gap-3">
@@ -279,8 +336,7 @@ export function TerminalRunner() {
         ref={scrollRef}
         data-lenis-prevent
         onClick={() => inputRef.current?.focus()}
-        className="flex-1 space-y-3 overflow-y-auto px-4 py-4 text-xs leading-relaxed"
-        style={{ maxHeight: 360 }}
+        className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-4 text-xs leading-relaxed"
         role="log"
         aria-live="polite"
         aria-label="Terminal output"
@@ -296,49 +352,54 @@ export function TerminalRunner() {
             {e.out}
           </div>
         ))}
-        <form
-          onSubmit={(ev) => {
-            ev.preventDefault();
-            run(value);
-            setValue("");
-          }}
-          className="flex items-center gap-2"
-        >
-          <label htmlFor="cli-input" className="shrink-0 font-bold text-t-lime">
-            {PROMPT}
-          </label>
-          <input
-            id="cli-input"
-            ref={inputRef}
-            value={value}
-            onChange={(ev) => setValue(ev.target.value)}
-            onKeyDown={(ev) => {
-              const h = history.current;
-              if (ev.key === "ArrowUp" && h.length) {
-                ev.preventDefault();
-                historyIdx.current = Math.max(0, historyIdx.current - 1);
-                setValue(h[historyIdx.current] ?? "");
-              } else if (ev.key === "ArrowDown" && h.length) {
-                ev.preventDefault();
-                historyIdx.current = Math.min(h.length, historyIdx.current + 1);
-                setValue(h[historyIdx.current] ?? "");
-              }
-            }}
-            autoComplete="off"
-            spellCheck={false}
-            placeholder="type 'help' or a command…"
-            className="min-w-0 flex-1 bg-transparent text-text-primary caret-t-lime outline-none placeholder:text-text-muted focus-visible:outline-none"
-            aria-label="Terminal command"
-          />
-        </form>
       </div>
+
+      {/* Prompt, pinned to the bottom of the window */}
+      <form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          run(value);
+          setValue("");
+        }}
+        className="flex shrink-0 items-center gap-2 border-t border-border-subtle/60 bg-subtle px-4 py-3 text-xs"
+      >
+        <label htmlFor="cli-input" className="shrink-0 font-bold text-t-lime">
+          {PROMPT}
+        </label>
+        <input
+          id="cli-input"
+          ref={inputRef}
+          value={value}
+          onChange={(ev) => setValue(ev.target.value)}
+          onKeyDown={(ev) => {
+            const h = history.current;
+            if (ev.key === "ArrowUp" && h.length) {
+              ev.preventDefault();
+              historyIdx.current = Math.max(0, historyIdx.current - 1);
+              setValue(h[historyIdx.current] ?? "");
+            } else if (ev.key === "ArrowDown" && h.length) {
+              ev.preventDefault();
+              historyIdx.current = Math.min(h.length, historyIdx.current + 1);
+              setValue(h[historyIdx.current] ?? "");
+            }
+          }}
+          autoComplete="off"
+          spellCheck={false}
+          placeholder="type 'help' or a command…"
+          className="min-w-0 flex-1 bg-transparent text-text-primary caret-t-lime outline-none placeholder:text-text-muted focus-visible:outline-none"
+          aria-label="Terminal command"
+        />
+      </form>
 
       {/* Status bar */}
       <div className="flex items-center justify-between gap-3 border-t border-border-strong bg-card px-4 py-2 text-[10px] sm:text-[11px]">
-        <span className="flex items-center gap-1.5 text-t-lime">
-          <span className="h-1.5 w-1.5 rounded-full bg-t-lime" /> STATUS: BASH_READY
-        </span>
-        <span className="truncate text-t-emerald">● {site.location.toUpperCase()} · IST</span>
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-t-lime">
+            <span className="h-1.5 w-1.5 rounded-full bg-t-lime" /> STATUS: BASH_READY
+          </span>
+          <SystemMeters />
+        </div>
+        <span className="hidden truncate whitespace-nowrap text-t-emerald sm:inline">● BLR · IST</span>
       </div>
     </div>
   );
